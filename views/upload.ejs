@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Fox University - Free Bootstrap 4 Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/styles/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/css/animate.css">
+    
+    <link rel="stylesheet" href="/styles/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/styles/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/styles/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/styles/css/aos.css">
+
+    <link rel="stylesheet" href="/styles/css/ionicons.min.css">
+    
+    <link rel="stylesheet" href="/styles/css/flaticon.css">
+    <link rel="stylesheet" href="/styles/css/icomoon.css">
+    <link rel="stylesheet" href="/styles/css/style.css" type="text/css">
+  </head>
+  <body>
+  <div style="background-color: midnightblue;">
+    <div class="bg-top navbar-light" style="width: 100%">
+      <div class="container">
+        <div class="row no-gutters d-flex align-items-center align-items-stretch">
+          <div class="col-md-4 d-flex align-items-center py-4">
+            <a class="navbar-brand" style="color: whitesmoke" href="#!">Project Hub<span>FR.CRCE</span></a>
+          </div>
+          <div class="col-lg-8 d-block">
+            <div class="row d-flex">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar" style="width:100%">
+      <div class="container d-flex align-items-center px-4">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+        <form action="#" class="searchform order-lg-last">
+          <div class="form-group d-flex">
+            <input type="text" class="form-control pl-3" placeholder="Search">
+            <button type="submit" placeholder="" class="form-control search"><span class="ion-ios-search"></span></button>
+          </div>
+        </form>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a href="/" class="nav-link pl-0">Home</a></li>
+            <li class="nav-item active"><a href="#!" class="nav-link">Upload</a></li>
+            <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
+          </ul>
+        </div>
+      </div>
+      <br>
+    </nav>
+
+      <!-- END nav -->
+  
+		<section class="ftco-section ftco-no-pt ftco-no-pb contact-section">
+			<div class="container" >
+				<div class="row d-flex align-items-stretch no-gutters">
+					<div class="col-md-12 p-4 p-md-5 order-md-last bg-light">
+            <%  if(msg!=''){ %>
+                  <label class="px-5"  style="font-size:30px; color: white; background-color:orangered; padding:10px"><%= msg %></label>
+            <%  } %>
+						<form action='/upload' method="post" enctype="multipart/form-data">
+              
+              <h1>Uploader Information</h1>
+                
+              <div class="form-group">
+                <span>Enter Roll Number</span>
+                <input type="text" name="rollNo" required>
+              </div>
+              <div class="form-group">
+                <span>Select Your Department</span>
+                <select name="dept" class="btn btn-primary" required>
+                  <option value="InfoTech">IT</option>
+                  <option value="Computers">COMPS</option>
+                  <option value="Electronics">ELEX</option>
+                  <option value="Production">PROD</option>
+                  <option value="Mechanical">MECH</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <span>Select Current Year</span>
+                <select name="year" class="btn btn-primary" required>
+                  <option value=1>I</option>
+                  <option value=2>II</option>
+                  <option value=3>III</option>
+                  <option value=4>IV</option>
+                </select>
+              </div>
+              
+              <h1>Project Information</h1>
+              <div class="form-group">
+                <span>Project Title</span>
+                <input type="text" name="p_title" required>
+              </div>
+              <div class="form-group"><span>Upload Report & Presentation</span>
+                <input type="file" name="project" class="btn btn-primary py-3 " multiple><br><br>
+              </div>
+              <div class="form-group">
+                <span>Youtube Link</span>
+                <input type="text" name="youtubeLink">
+              </div>
+              <div class="form-group">
+                <span>Github Repository</span>
+                <input type="text" name="githubRepo">
+              </div>
+              <div class="form-group">
+                <span>Field</span>
+                <select name="domain" class="btn btn-primary" required>
+                  <option value="ML">ML</option>
+                  <option value="WEB">WEB</option>
+                  <option value="IOT">IOT</option>
+                  <option value="DSA">DSA</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <textarea name="desc" id="" cols="30" rows="7" class="form-control" placeholder="Enter the description of your project "></textarea>
+              </div>
+              <div class="form-group">
+                <span>Is report published?</span>
+                <select name="published" class="btn btn-primary" required>
+                  <option value="yes">YES</option>
+                  <option value="no">NO</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Upload" class="btn btn-primary py-3 px-5">
+              </div>
+            </form>
+            <br/>
+            <a href="/projects">Click</a>
+
+					</div>	
+				</div>
+			</div>
+    </section>
+    <br>
+    <br>
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+</div>
+
+  <script src="/styles/js/jquery.min.js"></script>
+  <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="/styles/js/popper.min.js"></script>
+  <script src="/styles/js/bootstrap.min.js"></script>
+  <script src="/styles/js/jquery.easing.1.3.js"></script>
+  <script src="/styles/js/jquery.waypoints.min.js"></script>
+  <script src="/styles/js/jquery.stellar.min.js"></script>
+  <script src="/styles/js/owl.carousel.min.js"></script>
+  <script src="/styles/js/jquery.magnific-popup.min.js"></script>
+  <script src="/styles/js/aos.js"></script>
+  <script src="/styles/js/jquery.animateNumber.min.js"></script>
+  <script src="/styles/js/scrollax.min.js"></script>
+  <script src="/styles/js/main.js"></script>
+
+  <script>
+    
+    // $(document).ready(function(){
+    //   $('.btn').on('click', function(e){
+    //     e.preventDefault();
+    //     $.ajax({
+    //     url:'http://localhost:3000/projects',
+    //     method: 'GET'
+    //     }).done(function(response){
+    //       console.log(response);
+    //     });
+    //   });
+    // });
+    
+  </script>
+    
+  </body>
+</html>
