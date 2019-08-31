@@ -51,8 +51,8 @@
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a href="/" class="nav-link pl-0">Home</a></li>
-            <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
             <li class="nav-item active"><a href="/upload" class="nav-link">Upload</a></li>
+            <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
           </ul>
         </div>
       </div>
@@ -65,57 +65,53 @@
 			<div class="container" >
 				<div class="row d-flex align-items-stretch no-gutters">
 					<div class="col-md-12 p-4 p-md-5 order-md-last bg-light">
-            <% let msg=''; 
+            <% let msg ='';
             if(msg!=''){ %>
                   <label class="px-5"  style="font-size:30px; color: white; background-color:orangered; padding:10px"><%= msg %></label>
             <%  } %>
-						<form action='/upload' method="post" enctype="multipart/form-data">
+						<form action='/login/register' method="post">
+              
                 
-              <h1>Project Information</h1>
               <div class="form-group">
-                <span>Project Title</span>
-                <input type="text" name="p_title" style="border-radius: 25px; padding: 10px" required><sup style="font-size: 25px">*</sup>
-              </div>
-              <div class="form-group"><span>Upload Report & Presentation</span>
-                <input type="file" name="project" class="btn btn-primary py-3 " multiple><sup style="font-size: 25px">*</sup><br><br>
-
+                <span>Username</span>
+                <input type="text" name="rollNo" style="border-radius: 25px; padding: 10px" placeholder="Enter username" required>
               </div>
               <div class="form-group">
-                <span>Youtube Embeded Link</span>
-                <input type="text" name="youtubeLink" style="border-radius: 25px; padding: 10px; width:50%">
+                <span>Password</span>
+                <input type="password" name="password" style="border-radius: 25px; padding: 10px" placeholder="Enter password" required>
               </div>
               <div class="form-group">
-                <span>Github Repository</span>
-                <input type="text" name="githubRepo" style="border-radius: 25px; padding: 10px; width:50%">
+                <span>Name</span>
+                <input type="text" name="name" style="border-radius: 25px; padding: 10px" placeholder="Enter your name" required>
               </div>
               <div class="form-group">
-                <span>Field</span>
-                <select name="domain" class="btn btn-primary" required>
-                  <option value="ML">ML</option>
-                  <option value="WEB">WEB</option>
-                  <option value="IOT">IOT</option>
-                  <option value="DSA">DSA</option>
-                </select><sup style="font-size: 25px;">*</sup>
-              </div>
-              <div class="form-group">
-                <textarea name="desc" id="" cols="30" rows="7" class="form-control" placeholder="Enter the description of your project*" style="width:80%"></textarea>
-              </div>
-              <div class="form-group">
-                <span>Is report published?</span>
-                <select name="published" class="btn btn-primary" required>
-                  <option value="yes">YES</option>
-                  <option value="no">NO</option>
+                <span>Select Your Department</span>
+                <select name="dept" class="btn btn-primary" required>
+                  <option value="InfoTech">IT</option>
+                  <option value="Computers">COMPS</option>
+                  <option value="Electronics">ELEX</option>
+                  <option value="Production">PROD</option>
+                  <option value="Mechanical">MECH</option>
                 </select>
               </div>
               <div class="form-group">
-                <input type="submit" value="Upload" class="btn btn-primary py-3 px-5">
+                <span>Select Current Year</span>
+                <select name="year" class="btn btn-primary" required>
+                  <option value=1>I</option>
+                  <option value=2>II</option>
+                  <option value=3>III</option>
+                  <option value=4>IV</option>
+                </select>
               </div>
+              
+              <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-primary py-3 px-5">
+              </div>
+
             </form>
-            <br/>
-            
-					</div>	
-				</div>
-			</div>
+      </div>
+      </div>
+    </div>
     </section>
     <br>
     <br>

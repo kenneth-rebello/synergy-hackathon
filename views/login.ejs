@@ -66,44 +66,29 @@
 			<div class="container" >
 				<div class="row d-flex align-items-stretch no-gutters">
 					<div class="col-md-12 p-4 p-md-5 order-md-last bg-light">
-            <% let msg ='';
-            if(msg!=''){ %>
+            <% let msg='';
+              if(msg!=''){ %>
                   <label class="px-5"  style="font-size:30px; color: white; background-color:orangered; padding:10px"><%= msg %></label>
             <%  } %>
-						<form action='/upload' method="post" enctype="multipart/form-data">
-              
-              <h1>Uploader Information</h1>
-                
-              <div class="form-group">
-                <span>Enter Roll Number</span>
-                <input type="text" name="rollNo" style="border-radius: 25px; padding: 10px" required>
-              </div>
-              <div class="form-group">
-                <span>Select Your Department</span>
-                <select name="dept" class="btn btn-primary" required>
-                  <option value="InfoTech">IT</option>
-                  <option value="Computers">COMPS</option>
-                  <option value="Electronics">ELEX</option>
-                  <option value="Production">PROD</option>
-                  <option value="Mechanical">MECH</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <span>Select Current Year</span>
-                <select name="year" class="btn btn-primary" required>
-                  <option value=1>I</option>
-                  <option value=2>II</option>
-                  <option value=3>III</option>
-                  <option value=4>IV</option>
-                </select>
-              </div>
-              
+						<form action='/login' method="post">
               
               <div class="form-group">
-                <input type="submit" value="Upload" class="btn btn-primary py-3 px-5">
+                <span>Username</span>
+                <input type="text" name="rollNo" style="border-radius: 25px; padding: 10px" placeholder="Enter username" required>
+              </div>
+              <div class="form-group">
+                <span>Password</span>
+                <input type="password" name="password" style="border-radius: 25px; padding: 10px" placeholder="Enter password" required>
+              </div>
+              
+              <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary py-3 px-5">
               </div>
             </form>
-			</div>
+            <a href="/login/register">Not a user? Register Now!</a>
+      </div>
+      </div>
+    </div>
     </section>
     <br>
     <br>
