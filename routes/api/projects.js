@@ -27,25 +27,85 @@ router.get('/', async function(req, res){
     }
 });
 
-// ML
-router.get('/ml', async function(req, res){
-    try{
+// // ML
+// router.get('/ml', async function(req, res){
+//     try{
 
-        const uploads = await Project.find({'domain': "ML"}).populate('uploader',['rollNo', 'dept','year']);
-        console.log(uploads);
-        if(uploads == []){     
-            res.render('projects.ejs',{msg:'No Projects To Show'});
-        }else{
-            res.render('projects.ejs',{uploads});
-        }
+//         const uploads = await Project.find({'domain': "ML"}).populate('uploader',['rollNo', 'dept','year']);
+//         console.log(uploads);
+//         if(uploads == []){     
+//             res.render('projects.ejs',{msg:'No Projects To Show'});
+//         }else{
+//             res.render('projects.ejs',{uploads});
+//         }
         
 
-    }catch(err){
+//     }catch(err){
         
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-});
+//         console.error(err.message);
+//         res.status(500).send('Server Error');
+//     }
+// });
+
+// // WB
+// router.get('/ml', async function(req, res){
+//     try{
+
+//         const uploads = await Project.find({'domain': "WB"}).populate('uploader',['rollNo', 'dept','year']);
+//         console.log(uploads);
+//         if(uploads == []){     
+//             res.render('projects.ejs',{msg:'No Projects To Show'});
+//         }else{
+//             res.render('projects.ejs',{uploads});
+//         }
+        
+
+//     }catch(err){
+        
+//         console.error(err.message);
+//         res.status(500).send('Server Error');
+//     }
+// });
+
+// // DSA
+// router.get('/ml', async function(req, res){
+//     try{
+
+//         const uploads = await Project.find({'domain': "DSA"}).populate('uploader',['rollNo', 'dept','year']);
+//         console.log(uploads);
+//         if(uploads == []){     
+//             res.render('projects.ejs',{msg:'No Projects To Show'});
+//         }else{
+//             res.render('projects.ejs',{uploads});
+//         }
+        
+
+//     }catch(err){
+        
+//         console.error(err.message);
+//         res.status(500).send('Server Error');
+//     }
+// });
+
+// // IOT
+// router.get('/ml', async function(req, res){
+//     try{
+
+//         const uploads = await Project.find({'domain': "IOT"}).populate('uploader',['rollNo', 'dept','year']);
+//         console.log(uploads);
+//         if(uploads == []){     
+//             res.render('projects.ejs',{msg:'No Projects To Show'});
+//         }else{
+//             res.render('projects.ejs',{uploads});
+//         }
+        
+
+//     }catch(err){
+        
+//         console.error(err.message);
+//         res.status(500).send('Server Error');
+//     }
+// });
 
 router.get('/:id', async function(req, res){
     try{
