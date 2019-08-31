@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Synergy Hackathon</title>
+    <title>Project Hub</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -37,18 +37,24 @@
 	    <div class="container d-flex align-items-center px-4">
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
-	      </button>
+        </button>
+        <% let logged =false
+        if (logged){ %>
 	      <form action="#" class="searchform order-lg-last">
           <div class="form-group d-flex">
             <input type="text" class="form-control pl-3" placeholder="Search">
             <button type="submit" placeholder="" class="form-control search"><span class="ion-ios-search"></span></button>
           </div>
         </form>
+        <% } %>
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav mr-auto">
-	        	<li class="nav-item active"><a href="#!" class="nav-link pl-0">Home</a></li>
-	        	<li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
-	        	<li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
+            <li class="nav-item active"><a href="#!" class="nav-link pl-0">Home</a></li>
+            <% if (logged){ %>
+            <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
+            <% } %>
+            <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
+            <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
 	        </ul>
 	      </div>
 	    </div>
@@ -90,7 +96,7 @@
             		<span class="flaticon-teacher"></span>
               </div>
               <div class="media-body p-2 mt-3">
-                <a href="contact.html"><h3 class="heading">Web Developmnet</h3></a>
+                <a href="contact.html"><h3 class="heading">Web Development</h3></a>
                 <p>Ranges from developing the simplest static single page to the most complex web-based internet applications electronic businesses, and social network services.</p>
               </div>
             </div>      

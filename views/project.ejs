@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/styles/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/css/animate.css">
+    
+    <link rel="stylesheet" href="/styles/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/styles/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/styles/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/styles/css/aos.css">
+
+    <link rel="stylesheet" href="/styles/css/ionicons.min.css">
+    
+    <link rel="stylesheet" href="/styles/css/flaticon.css">
+    <link rel="stylesheet" href="/styles/css/icomoon.css">
+    <link rel="stylesheet" href="/styles/css/style.css">
+    <title><%= title %> - <%= uploader.rollNo %> - Project Hub</title>
+</head>
+<body>
+    <div style="background-color: midnightblue">
+        <div class="bg-top navbar-light">
+                <div class="container">
+                <div class="row no-gutters d-flex align-items-center align-items-stretch">
+                    <div class="col-md-4 d-flex align-items-center py-4">
+                    <a class="navbar-brand" style="color: whitesmoke" href="#!">Project Hub<span>FR.CRCE</span></a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar">
+                <div class="container d-flex align-items-center px-4">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="oi oi-menu"></span> Menu
+                </button>
+                <form action="#" class="searchform order-lg-last">
+                    <div class="form-group d-flex">
+                    <input type="text" class="form-control pl-3" placeholder="Search">
+                    <button type="submit" placeholder="" class="form-control search"><span class="ion-ios-search"></span></button>
+                    </div>
+                </form>
+                <div class="collapse navbar-collapse" id="ftco-nav">
+                    <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a href="/" class="nav-link pl-0">Home</a></li>
+                    <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
+                    <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
+                    </ul>
+                </div>
+                </div>
+            </nav>
+    
+            <!-- END nav -->
+        <% let project %>
+        <% if(project){
+            let {_id, datOfUpload, keywords, reportName, pptName, title, uploader, youtubeLink, githubRepo, desc, published, domain} = project;
+            id = parseString(_id);
+        }%>
+        <section class="ftco-section">
+            <div class="container" style="background-color: white; padding: 20px;">
+                <div class="row">
+                    <div class="col-lg-8 ftco-animate">
+                        <h1 class="mb-3" style="color: orangered; font-weight: bold; font-family: Georgia"><%= title %></h1>
+                        <p style="font-size:25px"><%= desc %></p>
+                        <br><br>
+                        <% if(youtubeLink){ %>
+                        <iframe src="<%= youtubeLink %>" width=960 height=480></iframe>
+                        <% } %>
+                        <h3 style="padding:5px" >
+                            <span><strong>Project Report: </strong></span>
+                            <a style="text-decoration: underline" href="/uploads/<%=reportName%>"><%=reportName%></a>
+                        </h3>
+                        <h3 style="padding:5px" >
+                            <span><strong>Presentation: </strong></span>
+                            <% if(pptName){ %>
+                                <a style="text-decoration: underline" href="/uploads/<%=pptName%>"><%=pptName%></a>
+                            <% }else{ %>
+                                <span>Not Available</span>
+                            <% } %>
+                        </h3>
+                        <hr>
+                        <h4 style="padding:10px">
+                            Project Creator:<br>
+                            <table cellpadding="8">
+                                <tr>
+                                    <td><strong>Roll No: </strong></td><td><%= uploader.rollNo %></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Department:</strong></td><td><%= uploader.dept %></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Year: </strong></td><td><%= uploader.year %></td>
+                                </tr>
+                            </table>
+                        </h4>
+                        <div class="tag-widget post-tag-container mb-5 mt-5">
+                            <div class="tagcloud">
+                            <a href="#" class="tag-cloud-link">Life</a>
+                            <a href="#" class="tag-cloud-link">Sport</a>
+                            <a href="#" class="tag-cloud-link">Tech</a>
+                            <a href="#" class="tag-cloud-link">Travel</a>
+                            </div>
+                        </div>
+                        <a class="btn btn-danger" href="/projects/delete/<%=id%>">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="/styles/js/jquery.min.js"></script>
+    <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="/styles/js/popper.min.js"></script>
+    <script src="/styles/js/bootstrap.min.js"></script>
+    <script src="/styles/js/jquery.easing.1.3.js"></script>
+    <script src="/styles/js/jquery.waypoints.min.js"></script>
+    <script src="/styles/js/jquery.stellar.min.js"></script>
+    <script src="/styles/js/owl.carousel.min.js"></script>
+    <script src="/styles/js/jquery.magnific-popup.min.js"></script>
+    <script src="/styles/js/aos.js"></script>
+    <script src="/styles/js/jquery.animateNumber.min.js"></script>
+    <script src="/styles/js/scrollax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="/styles/js/main.js"></script>
+        
+</body>
+</html>
