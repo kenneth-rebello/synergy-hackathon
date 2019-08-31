@@ -41,17 +41,26 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> Menu
             </button>
+            <% if(logged) { %>
             <form action="#" class="searchform order-lg-last">
                 <div class="form-group d-flex">
                 <input type="text" class="form-control pl-3" placeholder="Search">
                 <button type="submit" placeholder="" class="form-control search"><span class="ion-ios-search"></span></button>
                 </div>
             </form>
+            <% } %>
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a href="/" class="nav-link pl-0">Home</a></li>
-                <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
-                <li class="nav-item active"><a href="#!" class="nav-link">Projects</a></li>
+                <% if(logged) { %>
+                    <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
+                    <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
+                    <% } else { %>
+                    <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
+                    <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
+                    <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+                    <li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
+                    <% } %>
                 </ul>
             </div>
             </div>
@@ -104,6 +113,10 @@
         if(msg != ''){ %>
             <label class="px-5"  style="font-size:30px; color: white; background-color:orangered; padding:10px"><%= msg %></label>    
         <% } %>
+    
+    <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+</div>
 
     <script src="/styles/js/jquery.min.js"></script>
     <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
