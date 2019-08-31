@@ -23,13 +23,13 @@
     <title>Project Hub</title>
 </head>
 <body>
-    <% let logged=false %>
+    <!-- <% let logged=false %> -->
     <div style="background-color: midnightblue">
         <div class="bg-top navbar-light">
                 <div class="container">
                 <div class="row no-gutters d-flex align-items-center align-items-stretch">
                     <div class="col-md-4 d-flex align-items-center py-4">
-                    <a class="navbar-brand" style="color: whitesmoke" href="#!">Project Hub<span>FR.CRCE</span></a>
+                    <a class="navbar-brand" style="color: whitesmoke" href="/">Project Hub<span>FR.CRCE</span></a>
                     </div>
                 </div>
                 </div>
@@ -53,9 +53,9 @@
                     <% if(logged) { %>
                         <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
                         <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
+                        <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
                         <% } else { %>
                         <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-                        <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
                         <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
                         <li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
                         <% } %>
@@ -65,8 +65,8 @@
             </nav>
     
             <!-- END nav -->
-        <% if(project){
-            let {_id, datOfUpload, keywords, reportName, pptName, title, uploader, youtubeLink, githubRepo, desc, published, domain} = project;
+        <% 
+            let {_id, dateOfUpload, keywords, reportName, pptName, title, uploader, youtubeLink, githubRepo, desc, published, domain} = project;
         %>
         <section class="ftco-section">
             <div class="container" style="background-color: white; padding: 20px;">
@@ -113,7 +113,7 @@
                             <a href="#" class="tag-cloud-link">Travel</a>
                             </div>
                         </div>
-                        <a class="btn btn-danger" href="/projects/delete/<%=id%>">Delete</a>
+                        <a class="btn btn-danger" href="/projects/delete/<%=_id %>">Delete</a>
                     </div>
                 </div>
             </div>

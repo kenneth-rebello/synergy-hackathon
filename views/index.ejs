@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="/styles/css/style.css">
   </head>
   <body>
-  <% let logged %>
+  
   <div style="background-color: midnightblue">  
     <div class="bg-top navbar-light">
     	<div class="container">
@@ -51,16 +51,15 @@
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav mr-auto">
 
-            <li class="nav-item active"><a href="#!" class="nav-link pl-0">Home</a></li>
+            <li class="nav-item active"><a href="/" class="nav-link pl-0">Home</a></li>
             <% if(logged) { %>
             <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-
             <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
+            <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
             <% } else { %>
             <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-            <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
             <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-            <li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
+            <li class="nav-item"><a href="/login/register" class="nav-link">Register</a></li>
             <% } %>
 	        </ul>
 	      </div>
@@ -103,7 +102,7 @@
             		<span class="flaticon-teacher"></span>
               </div>
               <div class="media-body p-2 mt-3">
-                <a href="/projects/wb"><h3 class="heading">Web Development</h3></a>
+                <a href="/projects/web"><h3 class="heading">Web Development</h3></a>
                 <p>Ranges from developing the simplest static single page to the most complex web-based internet applications electronic businesses, and social network services.</p>
               </div>
             </div>      

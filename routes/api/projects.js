@@ -11,7 +11,7 @@ const user = require('../../public/config/default');
 router.get('/', async function(req, res){
     try{
 
-        const uploads = await Project.find().populate('uploader',['rollNo', 'dept','year']);
+        const uploads = await Project.find().populate('uploader',['rollNo', 'dept','year','name']);
         console.log(uploads);
         if(uploads == []){     
             res.render('projects.ejs',{msg:'No Projects To Show',logged:user.logged});
@@ -31,12 +31,12 @@ router.get('/', async function(req, res){
 router.get('/ml', async function(req, res){
     try{
 
-        const uploads = await Project.find({'domain': "ML"}).populate('uploader',['rollNo', 'dept','year']);
+        const uploads = await Project.find({'domain': "ML"}).populate('uploader',['rollNo', 'dept','year','name']);
         console.log(uploads);
         if(uploads == []){     
             res.render('projects.ejs',{msg:'No Projects To Show'});
         }else{
-            res.render('projects.ejs',{uploads});
+            res.render('projects.ejs',{uploads,logged:user.logged});
         }
         
 
@@ -47,16 +47,16 @@ router.get('/ml', async function(req, res){
     }
 });
 
-// WB
-router.get('/ml', async function(req, res){
+// WEB
+router.get('/web', async function(req, res){
     try{
 
-        const uploads = await Project.find({'domain': "WB"}).populate('uploader',['rollNo', 'dept','year']);
+        const uploads = await Project.find({'domain': "WEB"}).populate('uploader',['rollNo', 'dept','year','name']);
         console.log(uploads);
         if(uploads == []){     
             res.render('projects.ejs',{msg:'No Projects To Show'});
         }else{
-            res.render('projects.ejs',{uploads});
+            res.render('projects.ejs',{uploads,logged:user.logged});
         }
         
 
@@ -68,15 +68,15 @@ router.get('/ml', async function(req, res){
 });
 
 // DSA
-router.get('/ml', async function(req, res){
+router.get('/dsa', async function(req, res){
     try{
 
-        const uploads = await Project.find({'domain': "DSA"}).populate('uploader',['rollNo', 'dept','year']);
+        const uploads = await Project.find({'domain': "DSA"}).populate('uploader',['rollNo', 'dept','year','name']);
         console.log(uploads);
         if(uploads == []){     
             res.render('projects.ejs',{msg:'No Projects To Show'});
         }else{
-            res.render('projects.ejs',{uploads});
+            res.render('projects.ejs',{uploads,logged:user.logged});
         }
         
 
@@ -88,15 +88,15 @@ router.get('/ml', async function(req, res){
 });
 
 // IOT
-router.get('/ml', async function(req, res){
+router.get('/iot', async function(req, res){
     try{
 
-        const uploads = await Project.find({'domain': "IOT"}).populate('uploader',['rollNo', 'dept','year']);
+        const uploads = await Project.find({'domain': "IOT"}).populate('uploader',['rollNo', 'dept','year','name']);
         console.log(uploads);
         if(uploads == []){     
             res.render('projects.ejs',{msg:'No Projects To Show'});
         }else{
-            res.render('projects.ejs',{uploads});
+            res.render('projects.ejs',{uploads,logged:user.logged});
         }
         
 
@@ -111,7 +111,7 @@ router.get('/:id', async function(req, res){
     try{
 
         console.log(user);
-        const project = await Project.findOne({_id: req.params.id}).populate('uploader',['rollNo','dept','year']);
+        const project = await Project.findOne({_id: req.params.id}).populate('uploader',['rollNo','dept','year','name']);
         console.log(project);
         res.render('project.ejs',{project});
 
@@ -144,7 +144,7 @@ router.get('/delete/:id', async function(req, res){
         await Project.findOneAndRemove({_id: req.params.id});
 
 
-        let uploads = await Project.find().populate('uploader',['rollNo', 'dept','year']);
+        let uploads = await Project.find().populate('uploader',['rollNo', 'dept','year','name']);
         if(uploads != []){  
             res.render('projects.ejs', {uploads,logged:user.logged});
         }else{

@@ -31,7 +31,7 @@
             <div class="container">
             <div class="row no-gutters d-flex align-items-center align-items-stretch">
                 <div class="col-md-4 d-flex align-items-center py-4">
-                <a class="navbar-brand" style="color: whitesmoke" href="#!">Project Hub<span>FR.CRCE</span></a>
+                <a class="navbar-brand" style="color: whitesmoke" href="/">Project Hub<span>FR.CRCE</span></a>
                 </div>
             </div>
             </div>
@@ -55,9 +55,9 @@
                 <% if(logged) { %>
                     <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
                     <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
+                    <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
                     <% } else { %>
                     <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-                    <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
                     <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
                     <li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
                     <% } %>
@@ -68,8 +68,8 @@
 
         <!-- END nav -->
 
-    <% function displayer(upload, user){ %>
-        <% let{ _id, dateOfUpload, title, desc} = upload %>
+    <% function displayer(upload, creator){ %>
+        <% let{ _id, dateOfUpload, title, desc, domain} = upload %>
         <div class="col-md-6 col-lg-4 ftco-animate" style="padding: 10px">
             <div class="blog-entry">
                 <a href="blog-single.html" class="block-20 d-flex align-items-end" style="background-image: url('/styles/images/image_6.jpg');">
@@ -85,13 +85,21 @@
                 <p>
                     <%= desc %>
                 </p>
-                <div class="d-flex align-items-center mt-4">
-                    <p class="ml-auto mb-0" style="padding-right: 70px">
+                <div class="d-flex align-items-left mt-4">
+                    <p class="ml-auto mb-0" style="padding-right: 100px">
                         <span style="color: orangered;">Creator:</span>
-                        <a href="#!" style="color:black"><%= user.rollNo %></a>
+                        <a href="#!" style="color:black"><%= creator.name %></a>
                     </p>
-                    <p class="mb-0"><a href="/projects/<%= _id %>" class="btn btn-primary">Read More<span class="ion-ios-arrow-round-forward"></span></a></p>
                 </div>
+                <div class="d-flex align-items-left mt-4">
+                        <p class="ml-auto mb-0" style="padding-right: 180px">
+                            <span style="color: orangered;">Domain:</span>
+                            <a href="#!" style="color:black"><%= domain %></a>
+                        </p>
+                    </div>
+                    <div class="d-flex align-items-left mt-4">
+                            <p class="mb-0"><a href="/projects/<%= _id %>" class="btn btn-primary">Read More<span class="ion-ios-arrow-round-forward"></span></a></p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -10,7 +10,7 @@ router.use(express.urlencoded({extended: true}));
 router.get('/', async (req,res) => {
     try {
         
-        res.render('login.ejs')
+        res.render('login.ejs',{logged: user.logged});
 
     } catch (err) {
         console.error(err.message);
@@ -51,7 +51,7 @@ router.post('/register', async (req,res) => {
             console.error(err.message);
         }
 
-        res.render('login.ejs');
+        res.render('login.ejs',{logged: user.logged});
 
     } catch (err) {
         console.error(err.message);
@@ -68,7 +68,7 @@ router.post('/', async (req, res) => {
         
 
         if(password !== currentUser.password){
-            res.render('login.ejs',{msg:'Incorrect password'});
+            res.render('login.ejs',{msg:'Incorrect password', logged:user.logged});
         }else{
             user.name = currentUser.name;
             user.logged = true;
