@@ -26,6 +26,26 @@ router.get('/', async function(req, res){
     }
 });
 
+// ML
+router.get('/ml', async function(req, res){
+    try{
+
+        const uploads = await Project.find({'domain': "ML"}).populate('uploader',['rollNo', 'dept','year']);
+        console.log(uploads);
+        if(uploads == []){     
+            res.render('projects.ejs',{msg:'No Projects To Show'});
+        }else{
+            res.render('projects.ejs',{uploads});
+        }
+        
+
+    }catch(err){
+        
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 router.get('/:id', async function(req, res){
     try{
 
