@@ -106,18 +106,18 @@ router.get('/', async function(req, res){
 //     }
 // });
 
-// router.get('/:id', async function(req, res){
-//     try{
+router.get('/:id', async function(req, res){
+    try{
 
-//         const project = await Project.findOne({_id: req.params.id}).populate('uploader',['rollNo','dept','year']);
-//         res.render('project.ejs',project);
+        const project = await Project.findOne({_id: req.params.id}).populate('uploader',['rollNo','dept','year']);
+        res.render('project.ejs',project);
 
-//     }catch(err){
+    }catch(err){
         
-//         console.error(err.message);
-//         res.status(500).send('Server Error');
-//     }
-// });
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
 
 router.get('/delete/:id', async function(req, res){
     try{
