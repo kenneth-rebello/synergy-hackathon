@@ -81,13 +81,13 @@
                         <span style="color: orangered;">Creator:</span>
                         <a href="#!" style="color:black"><%= user.rollNo %></a>
                     </p>
-                    <p class="mb-0"><a href="/projects/_id:<%= _id %>" class="btn btn-primary">Read More <span class="ion-ios-arrow-round-forward"></span></a></p>
+                    <p class="mb-0"><a href="/projects/<%= _id %>" class="btn btn-primary">Read More<span class="ion-ios-arrow-round-forward"></span></a></p>
                 </div>
                 </div>
             </div>
         </div>
     <% } %>
-
+<% if(uploads){ %>
     <section class="ftco-section bg-light contact-section">
         <div class="container">
             <div class="row d-flex align-items-stretch no-gutters">
@@ -99,7 +99,11 @@
         </div>
     </section>
     </div>
-
+<% } %>
+    <% let msg = '';
+        if(msg != ''){ %>
+            <label class="px-5"  style="font-size:30px; color: white; background-color:orangered; padding:10px"><%= msg %></label>    
+        <% } %>
 
     <script src="/styles/js/jquery.min.js"></script>
     <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>

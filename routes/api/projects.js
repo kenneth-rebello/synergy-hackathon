@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
+const path = require('path');
 const Project = require('../../models/Project');
 const Student = require('../../models/Student');
 
@@ -9,11 +11,11 @@ router.get('/', async function(req, res){
     try{
 
         const uploads = await Project.find().populate('uploader',['rollNo', 'dept','year']);
-        if(uploads){  
-            
-            res.render('projects.ejs', {uploads});
+        console.log(uploads);
+        if(uploads == []){     
+            res.render('projects.ejs',{msg:'No Projects To Show'});
         }else{
-            res.render('upload.ejs',{msg:'No Projects To Show'});
+            res.render('projects.ejs',{uploads});
         }
         
 
@@ -27,8 +29,8 @@ router.get('/', async function(req, res){
 router.get('/:id', async function(req, res){
     try{
 
-        const uploads = await Project.find().populate('student',['rollNo', 'dept','year']);
-        res.render('projects.ejs', {uploads});
+        const project = await Project.findOne({_id: req.params.id}).populate('uploader',['rollNo','dept','year']);
+        res.render('project.ejs',project);
 
     }catch(err){
         
@@ -37,17 +39,35 @@ router.get('/:id', async function(req, res){
     }
 });
 
-router.delete('/', async function(req, res){
+router.get('/delete/:id', async function(req, res){
     try{
-        //Remove Profile
-        await Project.findOneAndRemove({_id: req.body._id});
-        //Remove User
-        let check = await Project.findOne({uploader: req.body.uploader})
-        if(!check){
-            await Student.findOneAndRemove({_id: req.body.uploader});    
+
+        
+        const toDelete = await Project.findOne({_id: req.params.id});
+        //Remove file from server public folder
+        console.log(typeof(toDelete.reportName));
+        fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',toDelete.reportName), (err) => {
+            if(err){
+                throw err;
+            }
+        })
+        if(toDelete.pptName){
+            fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',toDelete.pptName), (err) => {
+                if(err){
+                    throw err;
+                }
+            });
+        }
+        await Project.findOneAndRemove({_id: req.params.id});
+
+
+        let uploads = await Project.find().populate('uploader',['rollNo', 'dept','year']);
+        if(uploads != []){  
+            res.render('projects.ejs', {uploads});
+        }else{
+            res.render('upload.ejs',{msg:'No Projects To Show'});
         }
          
-        return res.json({msg: 'User removed'});
     }catch(err){
         
         console.error(err.message);
@@ -55,5 +75,6 @@ router.delete('/', async function(req, res){
 
     }
 });
+
 
 module.exports = router;
