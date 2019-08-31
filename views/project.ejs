@@ -20,9 +20,10 @@
     <link rel="stylesheet" href="/styles/css/flaticon.css">
     <link rel="stylesheet" href="/styles/css/icomoon.css">
     <link rel="stylesheet" href="/styles/css/style.css">
-    <title><%= title %> - <%= uploader.rollNo %> - Project Hub</title>
+    <title>Project Hub</title>
 </head>
 <body>
+    <% let logged=false %>
     <div style="background-color: midnightblue">
         <div class="bg-top navbar-light">
                 <div class="container">
@@ -66,8 +67,7 @@
             <!-- END nav -->
         <% if(project){
             let {_id, datOfUpload, keywords, reportName, pptName, title, uploader, youtubeLink, githubRepo, desc, published, domain} = project;
-            id = parseString(_id);
-        }%>
+        %>
         <section class="ftco-section">
             <div class="container" style="background-color: white; padding: 20px;">
                 <div class="row">
