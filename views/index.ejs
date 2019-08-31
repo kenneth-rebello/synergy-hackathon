@@ -41,9 +41,9 @@
         </button>
         <% if(logged) { %>
 
-	      <form action="#" class="searchform order-lg-last">
+	      <form action="/projects/search" method="post" class="searchform order-lg-last">
           <div class="form-group d-flex">
-            <input type="text" class="form-control pl-3" placeholder="Search">
+            <input type="text" name="keywords" class="form-control pl-3" placeholder="Search">
             <button type="submit" placeholder="" class="form-control search"><span class="ion-ios-search"></span></button>
           </div>
         </form>
@@ -52,15 +52,20 @@
 	        <ul class="navbar-nav mr-auto">
 
             <li class="nav-item active"><a href="/" class="nav-link pl-0">Home</a></li>
-            <% if(logged) { %>
-            <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-            <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
-            <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
-            <% } else { %>
-            <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-            <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-            <li class="nav-item"><a href="/login/register" class="nav-link">Register</a></li>
-            <% } %>
+            <% if(logged) {
+                if (admin){ %>
+                <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="/projects/report" class="nav-link">Generate Report</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                <% }else{ %>
+                <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                <% }} else{ %>
+                <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+                <li class="nav-item"><a href="/login/register" class="nav-link">Register</a></li>
+                <% } %>
 	        </ul>
 	      </div>
 	    </div>

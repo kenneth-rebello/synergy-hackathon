@@ -8,6 +8,7 @@ router.get('/',(req,res) => {
     user.rollNo = "";
     user.dept = "";
     user.year = "";
+    user.admin = false;
 
     try {
         res.render('index.ejs',{logged: user.logged});

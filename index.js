@@ -11,7 +11,7 @@ app.use(express.static('./public'));
 
 
 app.set('view engine', ejs);
-app.get('/', (req, res) => {res.render('index.ejs',{logged:user.logged})});
+app.get('/', (req, res) => {res.render('index.ejs',{logged:user.logged, admin:user.admin})});
 
 app.use('/upload', require('./routes/api/upload'));
 app.use('/projects', require('./routes/api/projects'));

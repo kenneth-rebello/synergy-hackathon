@@ -2,5 +2,6 @@
     "rollNo": "",
     "dept": "",
     "year":"",
-    "logged":false
+    "logged":false,
+    "admin" : false
 }

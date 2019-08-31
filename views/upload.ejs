@@ -28,7 +28,7 @@
       <div class="container">
         <div class="row no-gutters d-flex align-items-center align-items-stretch">
           <div class="col-md-4 d-flex align-items-center py-4">
-            <a class="navbar-brand" style="color: whitesmoke" href="#!">Project Hub<span>FR.CRCE</span></a>
+            <a class="navbar-brand" style="color: whitesmoke" href="/">Project Hub<span>FR.CRCE</span></a>
           </div>
           <div class="col-lg-8 d-block">
             <div class="row d-flex">
@@ -42,7 +42,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="oi oi-menu"></span> Menu
         </button>
-        <form action="#" class="searchform order-lg-last">
+        <form action="/projects/search" method="post" class="searchform order-lg-last">
           <div class="form-group d-flex">
             <input type="text" class="form-control pl-3" placeholder="Search">
             <button type="submit" placeholder="" class="form-control search"><span class="ion-ios-search"></span></button>
@@ -90,7 +90,7 @@
                 <input type="text" name="githubRepo" style="border-radius: 25px; padding: 10px; width:50%">
               </div>
               <div class="form-group">
-                <span>Field</span>
+                <span>Domain</span>
                 <select name="domain" class="btn btn-primary" required>
                   <option value="ML">ML</option>
                   <option value="WEB">WEB</option>
@@ -99,7 +99,7 @@
                 </select><sup style="font-size: 25px;">*</sup>
               </div>
               <div class="form-group">
-                <textarea name="desc" id="" cols="30" rows="7" class="form-control" placeholder="Enter the description of your project*" style="width:80%"></textarea>
+                <textarea name="desc" id="" cols="30" rows="7" class="form-control" placeholder="Enter the keywords of your project seperated by comma *" style="width:80%" required></textarea>
               </div>
               <div class="form-group">
                 <span>Is report published?</span>

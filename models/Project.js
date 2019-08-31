@@ -21,6 +21,9 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    grade:{
+        type: String,
+    },
     dateOfUpload:{
         type: Date,
         default: Date() 

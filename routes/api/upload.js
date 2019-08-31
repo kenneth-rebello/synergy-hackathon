@@ -66,7 +66,7 @@ router.post('/', (req, res)=>{
             newUpload.title = p_title;
             newUpload.uploader = student._id
             newUpload.desc = desc;
-            newUpload.keywords = desc.split(' ').map(word => word.trim());
+            newUpload.keywords = desc.split(',').map(word => word.trim());
             newUpload.published = published;
             newUpload.domain = domain;
             newUpload.githubRepo = githubRepo;

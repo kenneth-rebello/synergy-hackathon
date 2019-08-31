@@ -21,7 +21,12 @@ const studentSchema = new mongoose.Schema({
         type: Number,
         minimum: 1,
         maximum: 4
-    }
+    },
+    admin:{
+        type: Boolean,
+        required: true,
+        default: false
+    },
 
 });
 

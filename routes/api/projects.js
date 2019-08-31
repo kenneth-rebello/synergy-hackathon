@@ -5,18 +5,23 @@ const path = require('path');
 const Project = require('../../models/Project');
 const Student = require('../../models/Student');
 const user = require('../../public/config/default');
+const pdf = require('pdfkit');
+const createPDF = require('../../public/config/Pdf');
 
+//Body Parser Middleware
+router.use(express.json());
+router.use(express.urlencoded({extended: true}));
 
-//
+//Get all projects
 router.get('/', async function(req, res){
     try{
 
         const uploads = await Project.find().populate('uploader',['rollNo', 'dept','year','name']);
         console.log(uploads);
         if(uploads == []){     
-            res.render('projects.ejs',{msg:'No Projects To Show',logged:user.logged});
+            res.render('projects.ejs',{msg:'No Projects To Show',logged:user.logged, admin:user.admin});
         }else{
-            res.render('projects.ejs',{uploads,logged:user.logged});
+            res.render('projects.ejs',{uploads,logged:user.logged, admin:user.admin});
         }
         
 
@@ -34,9 +39,9 @@ router.get('/ml', async function(req, res){
         const uploads = await Project.find({'domain': "ML"}).populate('uploader',['rollNo', 'dept','year','name']);
         console.log(uploads);
         if(uploads == []){     
-            res.render('projects.ejs',{msg:'No Projects To Show'});
+            res.render('projects.ejs',{msg:'No Projects To Show', admin:user.admin});
         }else{
-            res.render('projects.ejs',{uploads,logged:user.logged});
+            res.render('projects.ejs',{uploads,logged:user.logged, admin:user.admin});
         }
         
 
@@ -54,9 +59,9 @@ router.get('/web', async function(req, res){
         const uploads = await Project.find({'domain': "WEB"}).populate('uploader',['rollNo', 'dept','year','name']);
         console.log(uploads);
         if(uploads == []){     
-            res.render('projects.ejs',{msg:'No Projects To Show'});
+            res.render('projects.ejs',{msg:'No Projects To Show', admin:user.admin});
         }else{
-            res.render('projects.ejs',{uploads,logged:user.logged});
+            res.render('projects.ejs',{uploads,logged:user.logged, admin:user.admin});
         }
         
 
@@ -74,9 +79,9 @@ router.get('/dsa', async function(req, res){
         const uploads = await Project.find({'domain': "DSA"}).populate('uploader',['rollNo', 'dept','year','name']);
         console.log(uploads);
         if(uploads == []){     
-            res.render('projects.ejs',{msg:'No Projects To Show'});
+            res.render('projects.ejs',{msg:'No Projects To Show', admin:user.admin});
         }else{
-            res.render('projects.ejs',{uploads,logged:user.logged});
+            res.render('projects.ejs',{uploads,logged:user.logged, admin:user.admin});
         }
         
 
@@ -94,9 +99,9 @@ router.get('/iot', async function(req, res){
         const uploads = await Project.find({'domain': "IOT"}).populate('uploader',['rollNo', 'dept','year','name']);
         console.log(uploads);
         if(uploads == []){     
-            res.render('projects.ejs',{msg:'No Projects To Show'});
+            res.render('projects.ejs',{msg:'No Projects To Show', admin:user.admin});
         }else{
-            res.render('projects.ejs',{uploads,logged:user.logged});
+            res.render('projects.ejs',{uploads,logged:user.logged, admin:user.admin});
         }
         
 
@@ -107,13 +112,24 @@ router.get('/iot', async function(req, res){
     }
 });
 
+router.get('/report', async function(req, res){
+    if(user.admin){
+        let projects = await Project.find().populate('uploader',['rollNo', 'dept','year','name']);
+        createPDF(projects);
+        console.log(projects);
+        res.render('index.ejs',{logged: user.logged, admin:user.admin});
+    }else{
+        res.send('Error 401: Not Authorized')
+    }
+});
+
 router.get('/:id', async function(req, res){
     try{
 
         console.log(user);
         const project = await Project.findOne({_id: req.params.id}).populate('uploader',['rollNo','dept','year','name']);
         console.log(project);
-        res.render('project.ejs',{project});
+        res.render('project.ejs',{project, admin:user.admin});
 
     }catch(err){
         
@@ -146,7 +162,7 @@ router.get('/delete/:id', async function(req, res){
 
         let uploads = await Project.find().populate('uploader',['rollNo', 'dept','year','name']);
         if(uploads != []){  
-            res.render('projects.ejs', {uploads,logged:user.logged});
+            res.render('projects.ejs', {uploads,logged:user.logged, admin:user.admin});
         }else{
             res.render('upload.ejs',{msg:'No Projects To Show'});
         }
@@ -157,6 +173,17 @@ router.get('/delete/:id', async function(req, res){
         res.status(500).send('Server Error');
 
     }
+});
+
+router.post('/search', async (req, res) => {
+
+    let { keywords } = req.body;
+    searchwords = keywords.split(',').map(word => word.trim());
+
+    let results = await Project.find({keywords: {$elemMatch: {keywords:searchwords}}});
+    console.log(results);
+    console.log('searched');
+    res.render('projects.ejs',{uploads:results, logged:user.logged, admin:user.admin});
 });
 
 

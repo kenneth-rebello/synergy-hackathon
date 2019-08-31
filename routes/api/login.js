@@ -18,6 +18,41 @@ router.get('/', async (req,res) => {
     }
 });
 
+router.post('/', async (req, res) => {
+
+    const {rollNo, password, admin} = req.body;
+    try {
+
+        currentUser = await Student.findOne({rollNo:rollNo});
+        
+
+        if(password !== currentUser.password){
+            return res.render('login.ejs',{msg:'Incorrect password', logged:user.logged});
+        }else{
+            user.name = currentUser.name;
+            user.logged = true;
+            user.rollNo = currentUser.rollNo;
+            user.dept = currentUser.dept;
+            user.year = currentUser.year;
+            user.name = currentUser.name;
+            console.log(admin);
+            if(admin){
+                if(currentUser.admin){
+                    user.admin = true;
+                }else{
+                    // res.send('Error 403: Forbidden');
+                } 
+            }else{
+                user.admin = false;
+            }
+            res.render('index.ejs',{logged: user.logged, admin:user.admin});
+        }
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+})
+
 router.get('/register', async (req,res) => {
     try {
         
@@ -61,7 +96,7 @@ router.post('/register', async (req,res) => {
 
 router.post('/', async (req, res) => {
 
-    const {rollNo, password} = req.body;
+    const {rollNo, password, admin} = req.body;
     try {
 
         currentUser = await Student.findOne({rollNo:rollNo});
@@ -76,7 +111,10 @@ router.post('/', async (req, res) => {
             user.dept = currentUser.dept;
             user.year = currentUser.year;
             user.name = currentUser.name;
-            res.render('index.ejs',{logged: user.logged});
+            if(admin){
+                user.admin = true;
+            }
+            res.render('index.ejs',{logged: user.logged, admin:user.admin});
         }
         
 
