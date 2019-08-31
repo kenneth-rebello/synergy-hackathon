@@ -38,24 +38,32 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="oi oi-menu"></span> Menu
                 </button>
+                <% if(logged) { %>
                 <form action="#" class="searchform order-lg-last">
                     <div class="form-group d-flex">
                     <input type="text" class="form-control pl-3" placeholder="Search">
                     <button type="submit" placeholder="" class="form-control search"><span class="ion-ios-search"></span></button>
                     </div>
                 </form>
+                <% } %>
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav mr-auto">
                     <li class="nav-item"><a href="/" class="nav-link pl-0">Home</a></li>
-                    <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
-                    <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
+                    <% if(logged) { %>
+                        <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
+                        <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
+                        <% } else { %>
+                        <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
+                        <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
+                        <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+                        <li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
+                        <% } %>
                     </ul>
                 </div>
                 </div>
             </nav>
     
             <!-- END nav -->
-        <% let project %>
         <% if(project){
             let {_id, datOfUpload, keywords, reportName, pptName, title, uploader, youtubeLink, githubRepo, desc, published, domain} = project;
             id = parseString(_id);
