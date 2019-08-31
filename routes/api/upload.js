@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const Project = require('../../models/Project');
 const Student = require('../../models/Student');
+const user = require('../../public/config/default')
 
 
 //Set Storage engine
@@ -31,25 +32,6 @@ router.post('/', (req, res)=>{
         if(!err){
             console.log('Success');
             
-            //Student Details in Student Obj
-            const {rollNo, dept, year} = req.body;
-            try {
-
-                let existing = await Student.findOne({rollNo: req.body.rollNo});
-                if(existing){
-                    console.log('Student exists...')
-                    newStudent = existing;
-                }else{
-                    console.log('Creating Student Record...')
-                    newStudent = new Student({
-                        rollNo, dept, year
-                    });
-                    await newStudent.save();    
-                }
-
-            } catch (err) {
-                console.error(err.message);
-            }
 
             //Project Details in Project Obj
             const newUpload = {};
@@ -78,8 +60,11 @@ router.post('/', (req, res)=>{
                 }
                 
             }
+            console.log(user);
+            let student = await Student.findOne({rollNo:user.rollNo})
+            console.log(student);
             newUpload.title = p_title;
-            newUpload.uploader = newStudent._id
+            newUpload.uploader = student._id
             newUpload.desc = desc;
             newUpload.keywords = desc.split(' ').map(word => word.trim());
             newUpload.published = published;
@@ -91,7 +76,7 @@ router.post('/', (req, res)=>{
 
             try {
 
-                let existing = await Project.findOne({title: req.body.p_title, uploader: newStudent._id});
+                let existing = await Project.findOne({title: req.body.p_title, uploader: student._id});
                 if(existing){
                     console.log('Updating Record...')
                     updatedEntry = await Project.findOneAndUpdate({_id: existing._id}, newUpload , {new:true});
