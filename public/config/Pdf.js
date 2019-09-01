@@ -3,8 +3,12 @@ module.exports =  function createPDF(projects){
     const fs = require('fs');
     const path = require('path');
     let tx=0,nx=100,dx=200,ty=0,ny=0,dy=0;
+    let i = 0;
     
     projects.forEach(function(project){
+        // if (i === 0){
+
+        // }
         const {uploader, title, dateOfUpload, domain} = project;
         const { name, dept} = uploader
         const doc = new PDFDocument;

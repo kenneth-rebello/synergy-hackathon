@@ -129,7 +129,7 @@ router.get('/:id', async function(req, res){
         console.log(user);
         const project = await Project.findOne({_id: req.params.id}).populate('uploader',['rollNo','dept','year','name']);
         console.log(project);
-        res.render('project.ejs',{project, admin:user.admin});
+        res.render('project.ejs',{project,logged: user.logged, admin:user.admin});
 
     }catch(err){
         
@@ -180,7 +180,7 @@ router.post('/search', async (req, res) => {
     let { keywords } = req.body;
     searchwords = keywords.split(',').map(word => word.trim());
 
-    let results = await Project.find({keywords: {$elemMatch: {keywords:searchwords}}});
+    let results = await Project.find({keywords: {$in: searchwords}});
     console.log(results);
     console.log('searched');
     res.render('projects.ejs',{uploads:results, logged:user.logged, admin:user.admin});

@@ -79,19 +79,19 @@
                 <div class="row">
                     <div class="col-lg-8 ftco-animate">
                         <h1 class="mb-3" style="color: orangered; font-weight: bold; font-family: Georgia"><%= title %></h1>
-                        <p style="font-size:25px"><%= desc %></p>
+                        <p style="font-size:25px"></p>
                         <br><br>
                         <% if(youtubeLink){ %>
                         <iframe src="<%= youtubeLink %>" width=960 height=480></iframe>
                         <% } %>
                         <h3 style="padding:5px" >
                             <span><strong>Project Report: </strong></span>
-                            <a style="text-decoration: underline" href="/uploads/<%=reportName%>"><%=reportName%></a>
+                            <a style="text-decoration: underline" href="/uploads/<%=reportName%>" target="_blank"><%=reportName%></a>
                         </h3>
                         <h3 style="padding:5px" >
                             <span><strong>Presentation: </strong></span>
                             <% if(pptName){ %>
-                                <a style="text-decoration: underline" href="/uploads/<%=pptName%>"><%=pptName%></a>
+                                <a style="text-decoration: underline" href="/uploads/<%=pptName%>" target=_blank"><%=pptName%></a>
                             <% }else{ %>
                                 <span>Not Available</span>
                             <% } %>
@@ -113,10 +113,10 @@
                         </h4>
                         <div class="tag-widget post-tag-container mb-5 mt-5">
                             <div class="tagcloud">
-                            <a href="#" class="tag-cloud-link">Life</a>
-                            <a href="#" class="tag-cloud-link">Sport</a>
-                            <a href="#" class="tag-cloud-link">Tech</a>
-                            <a href="#" class="tag-cloud-link">Travel</a>
+                                <% keywords.forEach(function(key){ %>
+                            <a href="#" class="tag-cloud-link"><%= key %></a>
+                            
+                                <% }) %>
                             </div>
                         </div>
                         <a class="btn btn-danger" href="/projects/delete/<%=_id %>">Delete</a>
