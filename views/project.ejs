@@ -50,13 +50,13 @@
                     <ul class="navbar-nav mr-auto">
                     <li class="nav-item"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
                     <% if(logged){
-                        if(admin){ %>
-                        <li class="nav-item" style="color:darkgoldenrod"><a href="/" class="nav-link" style="font-size: 20px"><%= name %></a></li>
+                        if(role == 'admin'){ %>
+                        <li class="nav-item" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
                         <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                         <li class="nav-item"><a href="/projects/report" class="nav-link" style="font-size: 20px">Generate Report</a></li>
                         <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                         <% }else{ %>
-                        <li class="nav-item" style="color:darkgoldenrod"><a href="/" class="nav-link" style="font-size: 20px"><%= name %>></a></li>    
+                        <li class="nav-item" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
                         <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                         <li class="nav-item"><a href="/upload" class="nav-link" style="font-size: 20px">Upload</a></li>
                         <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
@@ -80,7 +80,7 @@
                 <div class="row">
                     <div class="col-lg-8 ftco-animate">
                         <h1 class="mb-3" style="color: orangered; font-weight: bold; font-family: Georgia"><%= title %></h1>
-                        <p style="font-size:25px"></p>
+                        <p style="font-size:25px"><%= desc %></p>
                         <br><br>
                         <% if(youtubeLink){ %>
                         <iframe src="<%= youtubeLink %>" width=960 height=480></iframe>
@@ -88,24 +88,24 @@
                         <% if(githubRepo){ %>
                         <a href="<%= githubRepo %>">Link To Github Repository</a>
                         <% } %>
-                        <h3 style="padding:5px" >
+                        <h5 style="padding:5px" >
                             <span><strong>Project Report: </strong></span>
                             <a style="text-decoration: underline" href="/uploads/<%=reportName%>" target="_blank"><%=reportName%></a>
-                        </h3>
-                        <h3 style="padding:5px" >
+                        </h5>
+                        <h5 style="padding:5px" >
                             <span><strong>Presentation: </strong></span>
                             <% if(pptName){ %>
                                 <a style="text-decoration: underline" href="/uploads/<%=pptName%>" target=_blank"><%=pptName%></a>
                             <% }else{ %>
                                 <span>Not Available</span>
                             <% } %>
-                        </h3>
+                        </h5>
                         <hr>
                         <h4 style="padding:10px">
                             Project Creator:<br>
                             <table cellpadding="8">
                                 <tr>
-                                    <td><strong>Roll No: </strong></td><td><%= uploader.rollNo %></td>
+                                    <td><strong>Roll No: </strong></td><td><%= uploader.username %></td>
                                 </tr>
                                 <tr>
                                     <td><strong>Department:</strong></td><td><%= uploader.dept %></td>

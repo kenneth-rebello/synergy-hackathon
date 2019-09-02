@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const user = require('../../public/config/default');
+const User = require('../../models/User');
 
 //Body Parser Middleware
 router.use(express.json());
@@ -19,10 +20,10 @@ router.get('/', async (req,res) => {
 
 router.post('/', async (req, res) => {
 
-    const {rollNo, password, admin} = req.body;
+    const {username, password, role} = req.body;
     try {
 
-        currentUser = await Student.findOne({rollNo:rollNo});
+        currentUser = await User.findOne({username:username});
         
         if(!currentUser){
             return res.render('login.ejs',{msg:'User does not exist'});
@@ -31,24 +32,24 @@ router.post('/', async (req, res) => {
         if(password !== currentUser.password){
             return res.render('login.ejs',{msg:'Incorrect password'});
         }
-        console.log(admin);
-        if(admin == true){
-            console.log('going in');
-            if(currentUser.admin){
-                user.admin = true;
+    
+        if(role == 'admin'){
+
+            if(currentUser.role == 'admin'){
+                user.role = 'admin';
             }else{
                 return res.render('login.ejs',{msg:'Not Authorized'});
             } 
         }else{
-            user.admin = false;
+            user.role = role;
         }
         user.name = currentUser.name;
         user.logged = true;
-        user.rollNo = currentUser.rollNo;
+        user.username = currentUser.username;
         user.dept = currentUser.dept;
         user.year = currentUser.year;
         user.name = currentUser.name;
-        res.render('index.ejs',{logged: user.logged, admin:user.admin, name:user.name});
+        res.render('index.ejs',{logged: user.logged, role:user.role, name:user.name});
         
     } catch (err) {
         console.error(err.message);

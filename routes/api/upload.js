@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const Project = require('../../models/Project');
-const Student = require('../../models/Student');
+const User = require('../../models/User');
 const user = require('../../public/config/default')
 
 
@@ -22,11 +22,11 @@ const upload = multer({
 
 //Call Upload page
 router.get('/', (req, res) => {
-    if(user.logged && !user.admin){
-        return res.render('upload.ejs',{msg:'', name:user.name, logged:user.logged, admin:user.admin});
+    if(user.logged && user.role != 'admin'){
+        return res.render('upload.ejs',{msg:'', name:user.name, logged:user.logged, role:user.role});
     }
     else{
-        res.render('index.ejs',{logged:user.logged, admin:user.admin, name:user.name})
+        res.render('index.ejs',{logged:user.logged, role:user.role, name:user.name})
     }
 });
 
@@ -51,18 +51,18 @@ router.post('/', (req, res)=>{
                     newUpload.pptName = file1.filename;
                 }
                 else{
-                    res.render('upload.ejs',{msg: 'Report of .pdf type required', name:user.name,logged:user.logged, admin:user.admin})
+                    res.render('upload.ejs',{msg: 'Report of .pdf type required', name:user.name,logged:user.logged, role:user.role})
                 }
             }else{
                 if(file1.mimetype == 'application/pdf'){
                     newUpload.reportName = file1.filename;
                 }else{
-                    res.render('upload.ejs',{msg: 'Report of .pdf type required', name:user.name,logged:user.logged, admin:user.admin})
+                    res.render('upload.ejs',{msg: 'Report of .pdf type required', name:user.name,logged:user.logged, role:user.role})
                 }
                 
             }
 
-            let student = await Student.findOne({rollNo:user.rollNo})
+            let student = await User.findOne({username:user.username})
             newUpload.uploader = student._id
             newUpload.title = p_title;
             newUpload.desc = desc;
@@ -75,7 +75,7 @@ router.post('/', (req, res)=>{
                 if(youtubeLink.includes('https://www.youtube.com/embed/')){
                     newUpload.youtubeLink = youtubeLink;    
                 }else{
-                    res.render('upload.ejs',{msg:'Only youtube embed links allowed', name:user.name,logged:user.logged, admin:user.admin});
+                    res.render('upload.ejs',{msg:'Only youtube embed links allowed', name:user.name,logged:user.logged, role:user.role});
                 }         
             };
 
@@ -95,10 +95,10 @@ router.post('/', (req, res)=>{
                 console.error(err.message);
             }
 
-            res.render('upload.ejs',{msg:'Upload Successful', name:user.name, logged:user.logged, admin:user.admin});
+            res.render('upload.ejs',{msg:'Upload Successful', name:user.name, logged:user.logged, role:user.role});
             
         }else{
-            res.render('upload.ejs', {msg:err.message, name:user.name, logged:user.logged, admin:user.admin})
+            res.render('upload.ejs', {msg:err.message, name:user.name, logged:user.logged, role:user.role})
         }
     });
 });

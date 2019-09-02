@@ -3,7 +3,6 @@ const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 const Project = require('../../models/Project');
-const Student = require('../../models/Student');
 const user = require('../../public/config/default');
 const pdf = require('pdfkit');
 const createPDF = require('../../public/config/Pdf');
@@ -16,11 +15,11 @@ router.use(express.urlencoded({extended: true}));
 router.get('/', async function(req, res){
     try{
 
-        const projects = await Project.find().populate('uploader',['rollNo', 'dept','year','name']);
+        const projects = await Project.find().populate('uploader',['username', 'dept','year','name']);
         if(projects.length <= 0){     
-            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, admin:user.admin, msg:'No Projects To Show'});
+            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, role:user.role, msg:'No Projects To Show'});
         }else{
-            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, admin:user.admin, msg:''});
+            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, role:user.role, msg:''});
         }
         
 
@@ -35,11 +34,11 @@ router.get('/', async function(req, res){
 router.get('/ml', async function(req, res){
     try{
 
-        const projects = await Project.find({'domain': "ML"}).populate('uploader',['rollNo', 'dept','year','name']);
+        const projects = await Project.find({'domain': "ML"}).populate('uploader',['username', 'dept','year','name']);
         if(projects.length <= 0 && user.logged){     
-            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, admin:user.admin, msg:'No Projects To Show'});
+            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, role:user.role, msg:'No Projects To Show'});
         }else{
-            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, admin:user.admin, msg:''});
+            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, role:user.role, msg:''});
         }
         
     }catch(err){
@@ -53,11 +52,11 @@ router.get('/ml', async function(req, res){
 router.get('/web', async function(req, res){
     try{
 
-        const projects = await Project.find({'domain': "WEB"}).populate('uploader',['rollNo', 'dept','year','name']);
+        const projects = await Project.find({'domain': "WEB"}).populate('uploader',['username', 'dept','year','name']);
         if(projects.length <= 0 && user.logged){     
-            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, admin:user.admin, msg:'No Projects To Show'});
+            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, role:user.role, msg:'No Projects To Show'});
         }else{
-            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, admin:user.admin, msg:''});
+            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, role:user.role, msg:''});
         }
         
     }catch(err){
@@ -71,11 +70,11 @@ router.get('/web', async function(req, res){
 router.get('/dsa', async function(req, res){
     try{
 
-        const projects = await Project.find({'domain': "DSA"}).populate('uploader',['rollNo', 'dept','year','name']);
+        const projects = await Project.find({'domain': "DSA"}).populate('uploader',['username', 'dept','year','name']);
         if(projects.length <= 0 && user.logged){     
-            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, admin:user.admin, msg:'No Projects To Show'});
+            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, role:user.role, msg:'No Projects To Show'});
         }else{
-            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, admin:user.admin, msg:''});
+            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, role:user.role, msg:''});
         }
 
     }catch(err){
@@ -89,11 +88,11 @@ router.get('/dsa', async function(req, res){
 router.get('/iot', async function(req, res){
     try{
 
-        const projects = await Project.find({'domain': "IOT"}).populate('uploader',['rollNo', 'dept','year','name']);
+        const projects = await Project.find({'domain': "IOT"}).populate('uploader',['username', 'dept','year','name']);
         if(projects.length <= 0 && user.logged){     
-            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, admin:user.admin, msg:'No Projects To Show'});
+            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, role:user.role, msg:'No Projects To Show'});
         }else{
-            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, admin:user.admin, msg:''});
+            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, role:user.role, msg:''});
         }
 
     }catch(err){
@@ -104,10 +103,10 @@ router.get('/iot', async function(req, res){
 });
 
 router.get('/report', async function(req, res){
-    if(user.admin){
-        let projects = await Project.find().populate('uploader',['rollNo', 'dept','year','name']);
+    if(user.roll == 'admin'){
+        let projects = await Project.find().populate('uploader',['username', 'dept','year','name']);
         createPDF(projects);
-        res.render('index.ejs',{logged: user.logged, name:user.name, admin:user.admin});
+        res.render('index.ejs',{logged: user.logged, name:user.name, role:user.role});
     }else{
         res.send('Error 401: Not Authorized')
     }
@@ -116,10 +115,8 @@ router.get('/report', async function(req, res){
 router.get('/:id', async function(req, res){
     try{
 
-        const project = await Project.findOne({_id: req.params.id}).populate('uploader',['rollNo','dept','year','name']);
-        console.log(user.logged);
-        console.log(user.admin);
-        res.render('project.ejs',{project, name:user.name, logged:user.logged, admin:user.admin});
+        const project = await Project.findOne({_id: req.params.id}).populate('uploader',['username','dept','year','name']);
+        res.render('project.ejs',{project, name:user.name, logged:user.logged, role:user.role});
 
     }catch(err){
         
@@ -130,8 +127,7 @@ router.get('/:id', async function(req, res){
 
 router.get('/delete/:id', async function(req, res){
     try{
-
-        
+     
         const toDelete = await Project.findOne({_id: req.params.id});
         //Remove file from server public folder
         fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',toDelete.reportName), (err) => {
@@ -150,11 +146,11 @@ router.get('/delete/:id', async function(req, res){
         await Project.findOneAndRemove({_id: req.params.id});
 
 
-        let projects = await Project.find().populate('uploader',['rollNo', 'dept','year','name']);
+        let projects = await Project.find().populate('uploader',['username', 'dept','year','name']);
         if(projects.length <= 0 && user.logged){     
-            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, admin:user.admin, msg:'No Projects To Show'});
+            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, role:user.role, msg:'No Projects To Show'});
         }else{
-            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, admin:user.admin, msg:''});
+            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, role:user.role, msg:''});
         }
          
     }catch(err){
@@ -172,9 +168,9 @@ router.post('/search', async (req, res) => {
 
     let projects = await Project.find({keywords: {$in: searchwords}});
     if(projects.length <= 0 && user.logged){     
-        res.render('projects.ejs',{projects, name:user.name, logged:user.logged, admin:user.admin, msg:'No Projects To Show'});
+        res.render('projects.ejs',{projects, name:user.name, logged:user.logged, role:user.role, msg:'No Projects To Show'});
     }else{
-        res.render('projects.ejs',{projects, name:user.name,logged:user.logged, admin:user.admin, msg:''});
+        res.render('projects.ejs',{projects, name:user.name,logged:user.logged, role:user.role, msg:''});
     }
     
 });

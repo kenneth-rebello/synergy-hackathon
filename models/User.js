@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const studentSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     
-    rollNo:{
+    username:{
         type: String,
         required: true
     },
@@ -15,19 +15,23 @@ const studentSchema = new mongoose.Schema({
         required: true
     },
     dept:{
-        type: String
+        type: String,
+        required: true
     },
     year:{
         type: Number,
         minimum: 1,
         maximum: 4
     },
-    admin:{
-        type: Boolean,
-        required: true,
-        default: false
+    role:{
+        type: String,
+        default: 'student',
+        required:true
     },
-
+    logged:{
+        type: Boolean,
+        default: false
+    }
 });
 
-module.exports = Student = mongoose.model('student', studentSchema);
+module.exports = User = mongoose.model('user', userSchema);

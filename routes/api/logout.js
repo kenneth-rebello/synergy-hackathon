@@ -5,13 +5,13 @@ const user = require('../../public/config/default');
 router.get('/',(req,res) => {
     user.logged = false;
     user.name = "";
-    user.rollNo = "";
+    user.username = "";
     user.dept = "";
     user.year = "";
-    user.admin = false;
+    user.role = 'student';
 
     try {
-        res.render('index.ejs',{logged: user.logged, amdin:user.admin, name:''});
+        res.render('index.ejs',{logged: user.logged, user:user.role, name:''});
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

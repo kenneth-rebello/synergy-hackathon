@@ -20,19 +20,19 @@ router.get('/', async (req,res) => {
 router.post('/', async (req,res) => {
     try {
         
-        //Student Details in Student Obj
-        const {rollNo, password, name, dept, year} = req.body;
+        //User Details in User Obj
+        const {username, password, name, dept, year, role} = req.body;
         try {
 
-            let existing = await Student.findOne({rollNo: rollNo});
+            let existing = await User.findOne({username: username});
             if(existing){
                 res.render('register.ejs',{msg:'User Already Exits'});
             }else{
-                console.log('Creating Student Record...');
-                newStudent = new Student({
-                    rollNo, dept, year, name, password
+                console.log('Creating User Record...');
+                newUser = new User({
+                    username, dept, year, name, password, role
                 });
-                await newStudent.save();    
+                await newUser.save();    
             }
 
         } catch (err) {

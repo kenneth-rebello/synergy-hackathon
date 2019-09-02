@@ -53,13 +53,13 @@
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
                 <% if(logged) { %>                    
-                    <% if (admin){ %>
-                    <li class="nav-item" style="color:darkgoldenrod"><a href="/" class="nav-link" style="font-size: 20px"><%= name %></a></li>
+                    <% if (role == 'admin'){ %>
+                    <li class="nav-item" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
                     <li class="nav-item active"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                     <li class="nav-item"><a href="/projects/report" class="nav-link" style="font-size: 20px">Generate Report</a></li>
                     <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                     <% }else{ %>
-                    <li class="nav-item" style="color:darkgoldenrod"><a href="/" class="nav-link" style="font-size: 20px"><%= name %>></a></li>
+                    <li class="nav-item" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
                     <li class="nav-item active"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                     <li class="nav-item"><a href="/upload" class="nav-link" style="font-size: 20px">Upload</a></li>
                     <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
@@ -115,7 +115,7 @@
     <% } %>
 <% if (msg!= ''){ %>
     <label style="background-color: orangered; color:whitesmoke; font-size: 25px" class="px-3 py-3"><%= msg %></label>
-    <% if(logged & !admin){ %>
+    <% if(logged && role != 'admin'){ %>
         <a href="/upload"></a>
 <% }} %>
 <% if(projects){ %>

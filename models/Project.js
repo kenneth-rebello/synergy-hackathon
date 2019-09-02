@@ -21,9 +21,14 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    grade:{
-        type: String,
-    },
+    eval:[{
+        teacher:{
+            type: String,
+        },
+        grade:{
+            type: String
+        }
+    }],
     dateOfUpload:{
         type: Date,
         default: Date() 
