@@ -22,7 +22,12 @@ const upload = multer({
 
 //Call Upload page
 router.get('/', (req, res) => {
-    res.render('upload.ejs',{msg:''});
+    if(user.logged && !user.admin){
+        return res.render('upload.ejs',{msg:'', name:user.name, logged:user.logged, admin:user.admin});
+    }
+    else{
+        res.render('index.ejs',{logged:user.logged, admin:user.admin, name:user.name})
+    }
 });
 
 
@@ -32,7 +37,6 @@ router.post('/', (req, res)=>{
         if(!err){
             console.log('Success');
             
-
             //Project Details in Project Obj
             const newUpload = {};
             const {p_title, githubRepo, youtubeLink, desc, published, domain, keywords} = req.body;
@@ -42,20 +46,18 @@ router.post('/', (req, res)=>{
                 if(file1.mimetype == 'application/pdf'){
                     newUpload.reportName = file1.filename;
                     newUpload.pptName = file2.filename;
-                    console.log(file1);
                 }else if(file2.mimetype == 'application/pdf'){
                     newUpload.reportName = file2.filename;
                     newUpload.pptName = file1.filename;
-                    console.log(file2);
                 }
                 else{
-                    res.render('upload.ejs',{msg: 'Report of .pdf type required'})
+                    res.render('upload.ejs',{msg: 'Report of .pdf type required', name:user.name,logged:user.logged, admin:user.admin})
                 }
             }else{
                 if(file1.mimetype == 'application/pdf'){
                     newUpload.reportName = file1.filename;
                 }else{
-                    res.render('upload.ejs',{msg: 'Report of .pdf type required'})
+                    res.render('upload.ejs',{msg: 'Report of .pdf type required', name:user.name,logged:user.logged, admin:user.admin})
                 }
                 
             }
@@ -64,14 +66,17 @@ router.post('/', (req, res)=>{
             newUpload.uploader = student._id
             newUpload.title = p_title;
             newUpload.desc = desc;
-            let keys = desc.split(',').map(word => word.trim());
-            newUpload.keywords = keys.filter(word => word in allowed);
-            newUpload.keywords.append(domain.toUpper());
+            newUpload.keywords = keywords.split(',').map(word => word.trim());
+            newUpload.keywords.push(domain);
             newUpload.published = published;
             newUpload.domain = domain;
             newUpload.githubRepo = githubRepo;
             if(youtubeLink){
-                newUpload.youtubeLink = youtubeLink;
+                if(youtubeLink.includes('https://www.youtube.com/embed/')){
+                    newUpload.youtubeLink = youtubeLink;    
+                }else{
+                    res.render('upload.ejs',{msg:'Only youtube embed links allowed', name:user.name,logged:user.logged, admin:user.admin});
+                }         
             };
 
             try {
@@ -79,7 +84,7 @@ router.post('/', (req, res)=>{
                 let existing = await Project.findOne({title: req.body.p_title, uploader: student._id});
                 if(existing){
                     console.log('Updating Record...')
-                    updatedEntry = await Project.findOneAndUpdate({_id: existing._id}, newUpload , {new:true});
+                    updatedEntry = await Project.findOneAndUpdate({_id: existing._id}, newUpload, {new:true});
                 }else{
                     console.log('Creating Record...')
                     newEntry = new Project(newUpload);
@@ -90,10 +95,10 @@ router.post('/', (req, res)=>{
                 console.error(err.message);
             }
 
-            res.render('upload.ejs',{msg:'Upload Successful'});
+            res.render('upload.ejs',{msg:'Upload Successful', name:user.name, logged:user.logged, admin:user.admin});
             
         }else{
-            res.render('upload.ejs', {msg:err.message})
+            res.render('upload.ejs', {msg:err.message, name:user.name, logged:user.logged, admin:user.admin})
         }
     });
 });

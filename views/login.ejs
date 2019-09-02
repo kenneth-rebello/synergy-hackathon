@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>New Project - Project Hub</title>
+    <title>Login - Project Hub</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -28,7 +28,7 @@
       <div class="container">
         <div class="row no-gutters d-flex align-items-center align-items-stretch">
           <div class="col-md-4 d-flex align-items-center py-4">
-            <a class="navbar-brand" style="color: whitesmoke" href="/">Login - Project Hub<span>FR.CRCE</span></a>
+            <a class="navbar-brand" style="color: whitesmoke" href="/">Project Hub<span>FR.CRCE</span></a>
           </div>
           <div class="col-lg-8 d-block">
             <div class="row d-flex">
@@ -61,7 +61,7 @@
 				<div class="row d-flex align-items-stretch no-gutters">
 					<div class="col-md-12 p-4 p-md-5 order-md-last bg-light">
             <% if(msg != ''){ %>
-              <label><%= msg %></label>
+              <label style="background-color: orangered; color:whitesmoke; font-size: 25px" class="px-3 py-3"><%= msg %></label>
             <% } %>
 						<form action='/login' method="post">
               

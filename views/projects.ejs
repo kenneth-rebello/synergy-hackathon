@@ -52,19 +52,21 @@
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
-                <% if(logged) {
-                    if (admin){ %>
-                    <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                <% if(logged) { %>                    
+                    <% if (admin){ %>
+                    <li class="nav-item" style="color:darkgoldenrod"><a href="/" class="nav-link" style="font-size: 20px"><%= name %></a></li>
+                    <li class="nav-item active"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                     <li class="nav-item"><a href="/projects/report" class="nav-link" style="font-size: 20px">Generate Report</a></li>
                     <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                     <% }else{ %>
-                    <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                    <li class="nav-item" style="color:darkgoldenrod"><a href="/" class="nav-link" style="font-size: 20px"><%= name %>></a></li>
+                    <li class="nav-item active"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                     <li class="nav-item"><a href="/upload" class="nav-link" style="font-size: 20px">Upload</a></li>
                     <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                     <% }} else{ %>
-                    <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                    <li class="nav-item active"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                     <li class="nav-item"><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
-                    <li class="nav-item"><a href="/login/register" class="nav-link" style="font-size: 20px">Register</a></li>
+                    <li class="nav-item"><a href="/register" class="nav-link" style="font-size: 20px">Register</a></li>
                     <% } %>
                 </ul>
             </div>
@@ -73,6 +75,8 @@
 
         <!-- END nav -->
 
+<section class="ftco-section bg-light contact-section">
+    <div class="container">
     <% function displayer(project, creator){ %>
         <% let{ _id, dateOfUpload, title, desc, domain} = project %>
         <div class="col-md-6 col-lg-4 ftco-animate" style="padding: 10px">
@@ -109,24 +113,23 @@
             </div>
         </div>
     <% } %>
-<% if (msg!= '' & !projects){ %>
-    <h1>No Projects To Show</h1>
+<% if (msg!= ''){ %>
+    <label style="background-color: orangered; color:whitesmoke; font-size: 25px" class="px-3 py-3"><%= msg %></label>
     <% if(logged & !admin){ %>
         <a href="/upload"></a>
 <% }} %>
 <% if(projects){ %>
-    <section class="ftco-section bg-light contact-section">
-        <div class="container">
-            <div class="row d-flex align-items-stretch no-gutters">
-                <% projects.forEach(function(each){
-                    let { uploader} = each
-                    displayer(each, uploader);
-                }) %>
-            </div>
-        </div>
-    </section>
+    
+    <div class="row d-flex align-items-stretch no-gutters">
+        <% projects.forEach(function(each){
+            let { uploader} = each
+            displayer(each, uploader);
+        }) %>
     </div>
+
 <% } %>
+    </div>
+</section>
     
     <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>

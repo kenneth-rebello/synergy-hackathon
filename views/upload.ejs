@@ -44,7 +44,7 @@
         </button>
         <form action="/projects/search" method="post" class="searchform order-lg-last">
           <div class="form-group d-flex">
-            <input type="text" class="form-control pl-3" placeholder="Search">
+            <input type="text" name="keywords" class="form-control pl-3" placeholder="Search">
             <button type="submit" placeholder="" class="form-control search"><span class="ion-ios-search"></span></button>
           </div>
         </form>
@@ -53,17 +53,19 @@
             <li class="nav-item"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
               <% if(logged) {
                 if (admin){ %>
+                <li class="nav-item" style="color:darkgoldenrod"><a href="/" class="nav-link" style="font-size: 20px"><%= name %></a></li>
                 <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                 <li class="nav-item"><a href="/projects/report" class="nav-link" style="font-size: 20px">Generate Report</a></li>
                 <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                 <% }else{ %>
+                <li class="nav-item" style="color:darkgoldenrod"><a href="/" class="nav-link" style="font-size: 20px"><%= name %>></a></li>
                 <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
-                <li class="nav-item"><a href="/upload" class="nav-link" style="font-size: 20px">Upload</a></li>
+                <li class="nav-item active"><a href="/upload" class="nav-link" style="font-size: 20px">Upload</a></li>
                 <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                 <% }} else{ %>
                 <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                 <li class="nav-item"><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
-                <li class="nav-item"><a href="/login/register" class="nav-link" style="font-size: 20px">Register</a></li>
+                <li class="nav-item"><a href="/register" class="nav-link" style="font-size: 20px">Register</a></li>
               <% } %>
           </ul>
         </div>
@@ -78,7 +80,7 @@
 				<div class="row d-flex align-items-stretch no-gutters">
 					<div class="col-md-12 p-4 p-md-5 order-md-last bg-light">
               <% if(msg != ''){ %>
-                <label><%= msg %></label>
+                <label style="background-color: orangered; color:whitesmoke; font-size: 25px" class="px-3 py-3"><%= msg %></label>
               <% } %>
 						<form action='/upload' method="post" enctype="multipart/form-data">
                 
@@ -106,7 +108,7 @@
                 <span>Domain</span>
                 <select name="domain" class="btn btn-primary" required>
                   <option value="ML">ML</option>
-                  <option value="WEB">WEB</option>
+                  <option value="Web">WEB</option>
                   <option value="IOT">IOT</option>
                   <option value="DSA">DSA</option>
                 </select><sup style="font-size: 25px;">*</sup>

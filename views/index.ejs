@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Project Hub</title>
+    <% if (logged) { %>
+      <title><%= name %> - Project Hub </title>
+    <% } else { %>
+      <title>Project Hub</title>
+    <% } %>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -39,8 +43,8 @@
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu" style="font-size: 30px">Menu</span> 
         </button>
-        <% if(logged) { %>
 
+        <% if(logged) { %>
 	      <form action="/projects/search" method="post" class="searchform order-lg-last">
           <div class="form-group d-flex">
             <input type="text" name="keywords" class="form-control pl-3" placeholder="Search">
@@ -48,23 +52,26 @@
           </div>
         </form>
         <% } %>
+
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav mr-auto">
 
             <li class="nav-item active"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
             <% if(logged) {
                 if (admin){ %>
+                <li class="nav-item" style="color:darkgoldenrod"><a href="/" class="nav-link" style="font-size: 20px"><%= name %></a></li>
                 <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                 <li class="nav-item"><a href="/projects/report" class="nav-link" style="font-size: 20px">Generate Report</a></li>
                 <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                 <% }else{ %>
+                <li class="nav-item" style="color:darkgoldenrod"><a href="/" class="nav-link" style="font-size: 20px"><%= name %>></a></li>  
                 <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                 <li class="nav-item"><a href="/upload" class="nav-link" style="font-size: 20px">Upload</a></li>
                 <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                 <% }} else{ %>
                 <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                 <li class="nav-item"><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
-                <li class="nav-item"><a href="/login/register" class="nav-link" style="font-size: 20px">Register</a></li>
+                <li class="nav-item"><a href="/register" class="nav-link" style="font-size: 20px">Register</a></li>
                 <% } %>
 	        </ul>
 	      </div>
