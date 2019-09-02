@@ -17,6 +17,7 @@ app.use('/upload', require('./routes/api/upload'));
 app.use('/projects', require('./routes/api/projects'));
 app.use('/login', require('./routes/api/login'));
 app.use('/logout', require('./routes/api/logout'));
+app.use('/register', require('./routes/api/register'));
 
 const port = 5000;
 app.listen(port, () => console.log(`Server started on ${port}`));

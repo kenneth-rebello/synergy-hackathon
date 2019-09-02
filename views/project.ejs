@@ -37,7 +37,7 @@
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar">
                 <div class="container d-flex align-items-center px-4">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="oi oi-menu"></span> Menu
+                    <span class="oi oi-menu" style="font-size: 30px">Menu</span>
                 </button>
                 <% if(logged) { %>
                 <form action="/projects/search" method="post" class="searchform order-lg-last">
@@ -52,18 +52,18 @@
                     <li class="nav-item"><a href="/" class="nav-link pl-0">Home</a></li>
                     <% if(logged) {
                         if (admin){ %>
-                        <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-                        <li class="nav-item"><a href="/projects/report" class="nav-link">Generate Report</a></li>
-                        <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                        <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                        <li class="nav-item"><a href="/projects/report" class="nav-link" style="font-size: 20px">Generate Report</a></li>
+                        <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                         <% }else{ %>
-                        <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-                        <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
-                        <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                        <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                        <li class="nav-item"><a href="/upload" class="nav-link" style="font-size: 20px">Upload</a></li>
+                        <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                         <% }
                     }else{ %>
-                        <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-                        <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-                        <li class="nav-item"><a href="/login/register" class="nav-link">Register</a></li>
+                        <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                        <li class="nav-item"><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
+                        <li class="nav-item"><a href="/login/register" class="nav-link" style="font-size: 20px">Register</a></li>
                     <% } %>
                     </ul>
                 </div>
@@ -83,6 +83,9 @@
                         <br><br>
                         <% if(youtubeLink){ %>
                         <iframe src="<%= youtubeLink %>" width=960 height=480></iframe>
+                        <% } %>
+                        <% if(githubRepo){ %>
+                        <a href="<%= githubRepo %>">Link To Github Repository</a>
                         <% } %>
                         <h3 style="padding:5px" >
                             <span><strong>Project Report: </strong></span>

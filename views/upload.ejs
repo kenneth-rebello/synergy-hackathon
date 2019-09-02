@@ -40,7 +40,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar" style="width:100%">
       <div class="container d-flex align-items-center px-4">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="oi oi-menu"></span> Menu
+          <span class="oi oi-menu" style="font-size: 20px">Menu</span>
         </button>
         <form action="/projects/search" method="post" class="searchform order-lg-last">
           <div class="form-group d-flex">
@@ -50,10 +50,21 @@
         </form>
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a href="/" class="nav-link pl-0">Home</a></li>
-            <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-            <li class="nav-item active"><a href="/upload" class="nav-link">Upload</a></li>
-            <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+            <li class="nav-item"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
+              <% if(logged) {
+                if (admin){ %>
+                <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                <li class="nav-item"><a href="/projects/report" class="nav-link" style="font-size: 20px">Generate Report</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
+                <% }else{ %>
+                <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                <li class="nav-item"><a href="/upload" class="nav-link" style="font-size: 20px">Upload</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
+                <% }} else{ %>
+                <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                <li class="nav-item"><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
+                <li class="nav-item"><a href="/login/register" class="nav-link" style="font-size: 20px">Register</a></li>
+              <% } %>
           </ul>
         </div>
       </div>
@@ -66,10 +77,9 @@
 			<div class="container" >
 				<div class="row d-flex align-items-stretch no-gutters">
 					<div class="col-md-12 p-4 p-md-5 order-md-last bg-light">
-            <% let msg=''; 
-            if(msg!=''){ %>
-                  <label class="px-5"  style="font-size:30px; color: white; background-color:orangered; padding:10px"><%= msg %></label>
-            <%  } %>
+              <% if(msg != ''){ %>
+                <label><%= msg %></label>
+              <% } %>
 						<form action='/upload' method="post" enctype="multipart/form-data">
                 
               <h1>Project Information</h1>
@@ -77,9 +87,12 @@
                 <span>Project Title</span>
                 <input type="text" name="p_title" style="border-radius: 25px; padding: 10px" required><sup style="font-size: 25px">*</sup>
               </div>
+              <div class="form-group">
+                <span>Description</span>
+                <textarea name="desc" style="border-radius: 25px; padding: 10px"></textarea>
+              </div>
               <div class="form-group"><span>Upload Report & Presentation</span>
                 <input type="file" name="project" class="btn btn-primary py-3 " multiple><sup style="font-size: 25px">*</sup><br><br>
-
               </div>
               <div class="form-group">
                 <span>Youtube Embeded Link</span>
@@ -99,7 +112,7 @@
                 </select><sup style="font-size: 25px;">*</sup>
               </div>
               <div class="form-group">
-                <textarea name="desc" id="" cols="30" rows="7" class="form-control" placeholder="Enter the keywords of your project seperated by comma *" style="width:80%" required></textarea>
+                <input name="keywords" id="" cols="30" rows="7" class="form-control" placeholder="Enter keywords related to your project seperated by a comma(,) to help others find your project" style="width:80%" required>
               </div>
               <div class="form-group">
                 <span>Is report published?</span>

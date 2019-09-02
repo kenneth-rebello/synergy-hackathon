@@ -39,7 +39,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container d-flex align-items-center px-4">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="oi oi-menu"></span> Menu
+                <span class="oi oi-menu" style="font-size: 30px">Menu</span>
             </button>
             <% if(logged) { %>
             <form action="/projects/search" method="post" class="searchform order-lg-last">
@@ -51,20 +51,20 @@
             <% } %>
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a href="/" class="nav-link pl-0">Home</a></li>
+                <li class="nav-item"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
                 <% if(logged) {
                     if (admin){ %>
-                    <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-                    <li class="nav-item"><a href="/projects/report" class="nav-link">Generate Report</a></li>
-                    <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                    <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                    <li class="nav-item"><a href="/projects/report" class="nav-link" style="font-size: 20px">Generate Report</a></li>
+                    <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                     <% }else{ %>
-                    <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-                    <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
-                    <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                    <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                    <li class="nav-item"><a href="/upload" class="nav-link" style="font-size: 20px">Upload</a></li>
+                    <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                     <% }} else{ %>
-                    <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-                    <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-                    <li class="nav-item"><a href="/login/register" class="nav-link">Register</a></li>
+                    <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                    <li class="nav-item"><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
+                    <li class="nav-item"><a href="/login/register" class="nav-link" style="font-size: 20px">Register</a></li>
                     <% } %>
                 </ul>
             </div>
@@ -73,8 +73,8 @@
 
         <!-- END nav -->
 
-    <% function displayer(upload, creator){ %>
-        <% let{ _id, dateOfUpload, title, desc, domain} = upload %>
+    <% function displayer(project, creator){ %>
+        <% let{ _id, dateOfUpload, title, desc, domain} = project %>
         <div class="col-md-6 col-lg-4 ftco-animate" style="padding: 10px">
             <div class="blog-entry">
                 <a href="/projects/<%= _id %>" class="block-20 d-flex align-items-end" style="background-image: url('/styles/images/image_6.jpg');">
@@ -109,11 +109,16 @@
             </div>
         </div>
     <% } %>
-<% if(uploads){ %>
+<% if (msg!= '' & !projects){ %>
+    <h1>No Projects To Show</h1>
+    <% if(logged & !admin){ %>
+        <a href="/upload"></a>
+<% }} %>
+<% if(projects){ %>
     <section class="ftco-section bg-light contact-section">
         <div class="container">
             <div class="row d-flex align-items-stretch no-gutters">
-                <% uploads.forEach(function(each){
+                <% projects.forEach(function(each){
                     let { uploader} = each
                     displayer(each, uploader);
                 }) %>
@@ -122,10 +127,6 @@
     </section>
     </div>
 <% } %>
-    <% let msg = '';
-        if(msg != ''){ %>
-            <label class="px-5"  style="font-size:30px; color: white; background-color:orangered; padding:10px"><%= msg %></label>    
-        <% } %>
     
     <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>

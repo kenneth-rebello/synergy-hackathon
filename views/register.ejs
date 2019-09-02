@@ -40,7 +40,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar" style="width:100%">
       <div class="container d-flex align-items-center px-4">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="oi oi-menu"></span> Menu
+          <span class="oi oi-menu" style="font-size: 20px">Menu</span>
         </button>
         <form action="#" class="searchform order-lg-last">
           <div class="form-group d-flex">
@@ -50,9 +50,9 @@
         </form>
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a href="/" class="nav-link pl-0">Home</a></li>
-            <li class="nav-item active"><a href="/upload" class="nav-link">Upload</a></li>
-            <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
+            <li class="nav-item"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
+            <li class="nav-item active"><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
+            <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
           </ul>
         </div>
       </div>
@@ -65,10 +65,9 @@
 			<div class="container" >
 				<div class="row d-flex align-items-stretch no-gutters">
 					<div class="col-md-12 p-4 p-md-5 order-md-last bg-light">
-            <% let msg ='';
-            if(msg!=''){ %>
-                  <label class="px-5"  style="font-size:30px; color: white; background-color:orangered; padding:10px"><%= msg %></label>
-            <%  } %>
+            <% if(msg != ''){ %>
+              <label><%= msg %></label>
+            <% } %>
 						<form action='/login/register' method="post">
               
                 

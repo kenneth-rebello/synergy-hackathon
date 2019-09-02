@@ -34,10 +34,10 @@
 		    </div>
 		  </div>
     </div>
-	  <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar">
+	  <nav class="navbar nav-fill w-100 navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container d-flex align-items-center px-4">
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="oi oi-menu"></span> Menu
+	        <span class="oi oi-menu" style="font-size: 30px">Menu</span> 
         </button>
         <% if(logged) { %>
 
@@ -51,20 +51,20 @@
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav mr-auto">
 
-            <li class="nav-item active"><a href="/" class="nav-link pl-0">Home</a></li>
+            <li class="nav-item active"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
             <% if(logged) {
                 if (admin){ %>
-                <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-                <li class="nav-item"><a href="/projects/report" class="nav-link">Generate Report</a></li>
-                <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                <li class="nav-item"><a href="/projects/report" class="nav-link" style="font-size: 20px">Generate Report</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                 <% }else{ %>
-                <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-                <li class="nav-item"><a href="/upload" class="nav-link">Upload</a></li>
-                <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                <li class="nav-item"><a href="/upload" class="nav-link" style="font-size: 20px">Upload</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                 <% }} else{ %>
-                <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-                <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-                <li class="nav-item"><a href="/login/register" class="nav-link">Register</a></li>
+                <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                <li class="nav-item"><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
+                <li class="nav-item"><a href="/login/register" class="nav-link" style="font-size: 20px">Register</a></li>
                 <% } %>
 	        </ul>
 	      </div>
@@ -78,8 +78,8 @@
         <div class="container">
           <div class="row no-gutters slider-text align-items-center justify-content-start" data-scrollax-parent="true">
           <div class="col-md-6 ftco-animate" style="vertical-align: super;">
-            <h1 class="mb-4">Education Needs Complete Solution</h1>
-            <p>A site for uploading and searching projects</p>
+            <h1 style="font-size: 80px">Project Hub</h1>
+            <p style="font-size: 30px">Upload your projects to be seen by all visitors and graded by any college professor</p>
           </div>
         </div>
         </div>
@@ -90,8 +90,8 @@
         <div class="container">
           <div class="row no-gutters slider-text align-items-center justify-content-start" data-scrollax-parent="true">
           <div class="col-md-6 ftco-animate" style="vertical-align: super;">
-            <h1 class="mb-4">University, College Education</h1>
-            <p>Convenient guide for Professors and Students</p>
+            <h1 style="font-size: 80px">Project Hub</h1>
+            <p style="font-size: 30px">A collection of projects created by students of Fr. CRCE</p>
           </div>
         </div>
         </div>

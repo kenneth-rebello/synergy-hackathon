@@ -35,10 +35,10 @@ router.post('/', (req, res)=>{
 
             //Project Details in Project Obj
             const newUpload = {};
-            const {p_title, githubRepo, youtubeLink, desc, published, domain} = req.body;
+            const {p_title, githubRepo, youtubeLink, desc, published, domain, keywords} = req.body;
             let file1 = req.files[0];
-            let file2 = req.files[1];
             if(req.files.length >= 2){
+                let file2 = req.files[1];
                 if(file1.mimetype == 'application/pdf'){
                     newUpload.reportName = file1.filename;
                     newUpload.pptName = file2.filename;
@@ -52,7 +52,6 @@ router.post('/', (req, res)=>{
                     res.render('upload.ejs',{msg: 'Report of .pdf type required'})
                 }
             }else{
-                console.log(req);
                 if(file1.mimetype == 'application/pdf'){
                     newUpload.reportName = file1.filename;
                 }else{
@@ -60,13 +59,14 @@ router.post('/', (req, res)=>{
                 }
                 
             }
-            console.log(user);
+
             let student = await Student.findOne({rollNo:user.rollNo})
-            console.log(student);
-            newUpload.title = p_title;
             newUpload.uploader = student._id
+            newUpload.title = p_title;
             newUpload.desc = desc;
-            newUpload.keywords = desc.split(',').map(word => word.trim());
+            let keys = desc.split(',').map(word => word.trim());
+            newUpload.keywords = keys.filter(word => word in allowed);
+            newUpload.keywords.append(domain.toUpper());
             newUpload.published = published;
             newUpload.domain = domain;
             newUpload.githubRepo = githubRepo;

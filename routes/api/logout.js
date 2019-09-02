@@ -11,8 +11,7 @@ router.get('/',(req,res) => {
     user.admin = false;
 
     try {
-        res.render('index.ejs',{logged: user.logged});
-
+        res.render('index.ejs',{logged: user.logged, amdin:user.admin});
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
