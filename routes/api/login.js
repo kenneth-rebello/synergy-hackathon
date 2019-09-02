@@ -33,17 +33,14 @@ router.post('/', async (req, res) => {
             return res.render('login.ejs',{msg:'Incorrect password'});
         }
     
-        if(role == 'admin'){
-
-            if(currentUser.role == 'admin'){
-                user.role = 'admin';
-            }else{
-                return res.render('login.ejs',{msg:'Not Authorized'});
-            } 
-        }else{
+        
+        if(currentUser.role == role){
             user.role = role;
-        }
-        user.name = currentUser.name;
+        }else{
+            return res.render('login.ejs',{msg:'Not Authorized'});
+        } 
+    
+        user.username = currentUser.username;
         user.logged = true;
         user.username = currentUser.username;
         user.dept = currentUser.dept;

@@ -52,7 +52,7 @@ router.get('/ml', async function(req, res){
 router.get('/web', async function(req, res){
     try{
 
-        const projects = await Project.find({'domain': "WEB"}).populate('uploader',['username', 'dept','year','name']);
+        const projects = await Project.find({'domain': "Web"}).populate('uploader',['username', 'dept','year','name']);
         if(projects.length <= 0 && user.logged){     
             res.render('projects.ejs',{projects, name:user.name, logged:user.logged, role:user.role, msg:'No Projects To Show'});
         }else{

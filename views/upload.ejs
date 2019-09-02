@@ -21,6 +21,10 @@
     <link rel="stylesheet" href="/styles/css/flaticon.css">
     <link rel="stylesheet" href="/styles/css/icomoon.css">
     <link rel="stylesheet" href="/styles/css/style.css" type="text/css">
+
+    <script src="/styles/js/jquery.min.js"></script>
+    <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
+
   </head>
   <body>
   <div style="background-color: midnightblue;">
@@ -52,7 +56,7 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
               <% if(logged) {
-                if (role != 'admin'){ %>
+                if (role == 'admin'){ %>
                 <li class="nav-item" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></%=>
                 <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                 <li class="nav-item"><a href="/projects/report" class="nav-link" style="font-size: 20px">Generate Report</a></li>
@@ -140,19 +144,27 @@
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 </div>
 
-  <script src="/styles/js/jquery.min.js"></script>
-  <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="/styles/js/popper.min.js"></script>
-  <script src="/styles/js/bootstrap.min.js"></script>
-  <script src="/styles/js/jquery.easing.1.3.js"></script>
-  <script src="/styles/js/jquery.waypoints.min.js"></script>
-  <script src="/styles/js/jquery.stellar.min.js"></script>
-  <script src="/styles/js/owl.carousel.min.js"></script>
-  <script src="/styles/js/jquery.magnific-popup.min.js"></script>
-  <script src="/styles/js/aos.js"></script>
-  <script src="/styles/js/jquery.animateNumber.min.js"></script>
-  <script src="/styles/js/scrollax.min.js"></script>
-  <script src="/styles/js/main.js"></script>
-   
+<script>
+  
+  $('input').focus(function(){
+   $(this).css('background-color','orange');
+ });
+
+ $('input').blur(function(){
+   $(this).css('background-color','white');
+ }); 
+ 
+ </script>
+<script src="/styles/js/popper.min.js"></script>
+<script src="/styles/js/bootstrap.min.js"></script>
+<script src="/styles/js/jquery.easing.1.3.js"></script>
+<script src="/styles/js/jquery.waypoints.min.js"></script>
+<script src="/styles/js/jquery.stellar.min.js"></script>
+<script src="/styles/js/owl.carousel.min.js"></script>
+<script src="/styles/js/jquery.magnific-popup.min.js"></script>
+<script src="/styles/js/aos.js"></script>
+<script src="/styles/js/jquery.animateNumber.min.js"></script>
+<script src="/styles/js/scrollax.min.js"></script>
+<script src="/styles/js/main.js"></script> 
   </body>
 </html>

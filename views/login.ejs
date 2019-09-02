@@ -21,6 +21,10 @@
     <link rel="stylesheet" href="/styles/css/flaticon.css">
     <link rel="stylesheet" href="/styles/css/icomoon.css">
     <link rel="stylesheet" href="/styles/css/style.css" type="text/css">
+
+    <script src="/styles/js/jquery.min.js"></script>
+    <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
+    
   </head>
   <body>
   <div style="background-color: midnightblue;">
@@ -57,8 +61,8 @@
       <!-- END nav -->
   
 		<section class="ftco-section ftco-no-pt ftco-no-pb contact-section">
-			<div class="container" >
-				<div class="row d-flex align-items-stretch no-gutters">
+			<div class="container" style="padding-bottom: 150px">
+				<div class="row d-flex align-items-stretch no-gutters" >
 					<div class="col-md-12 p-4 p-md-5 order-md-last bg-light">
             <% if(msg != ''){ %>
               <label style="background-color: orangered; color:whitesmoke; font-size: 25px" class="px-3 py-3"><%= msg %></label>
@@ -76,7 +80,7 @@
 
               <div class = "form-group">
                 <span>Role</span>
-                <select name="role" class="btn btn-primary" required>
+                <select name="role" class="btn btn-primary px-5 py-3" required>
                     <option value="student">Student</option>
                     <option value='teacher'>Teacher</option>
                     <option value='admin'>Admin</option>
@@ -84,7 +88,7 @@
               </div>
               
               <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-primary py-2 px-3">
+                <input type="submit" value="Login" class="btn btn-primary py-3 px-5">
               </div>
             </form>
             <a href="/register">Not a user? Register Now!</a>
@@ -99,19 +103,28 @@
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 </div>
 
-  <script src="/styles/js/jquery.min.js"></script>
-  <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="/styles/js/popper.min.js"></script>
-  <script src="/styles/js/bootstrap.min.js"></script>
-  <script src="/styles/js/jquery.easing.1.3.js"></script>
-  <script src="/styles/js/jquery.waypoints.min.js"></script>
-  <script src="/styles/js/jquery.stellar.min.js"></script>
-  <script src="/styles/js/owl.carousel.min.js"></script>
-  <script src="/styles/js/jquery.magnific-popup.min.js"></script>
-  <script src="/styles/js/aos.js"></script>
-  <script src="/styles/js/jquery.animateNumber.min.js"></script>
-  <script src="/styles/js/scrollax.min.js"></script>
-  <script src="/styles/js/main.js"></script>
+<script>
+  
+  $('input').focus(function(){
+   $(this).css('background-color','orange');
+ });
+
+ $('input').blur(function(){
+   $(this).css('background-color','white');
+ }); 
+ 
+ </script>
+<script src="/styles/js/popper.min.js"></script>
+<script src="/styles/js/bootstrap.min.js"></script>
+<script src="/styles/js/jquery.easing.1.3.js"></script>
+<script src="/styles/js/jquery.waypoints.min.js"></script>
+<script src="/styles/js/jquery.stellar.min.js"></script>
+<script src="/styles/js/owl.carousel.min.js"></script>
+<script src="/styles/js/jquery.magnific-popup.min.js"></script>
+<script src="/styles/js/aos.js"></script>
+<script src="/styles/js/jquery.animateNumber.min.js"></script>
+<script src="/styles/js/scrollax.min.js"></script>
+<script src="/styles/js/main.js"></script>
    
   </body>
 </html>

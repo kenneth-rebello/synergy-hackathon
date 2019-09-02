@@ -15,7 +15,7 @@ const projectSchema = new mongoose.Schema({
     },
     uploader:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'student'
+        ref: 'user'
     },
     domain:{
         type: String,

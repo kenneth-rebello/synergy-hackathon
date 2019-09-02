@@ -4,7 +4,8 @@ const multer = require('multer');
 const path = require('path');
 const Project = require('../../models/Project');
 const User = require('../../models/User');
-const user = require('../../public/config/default')
+const user = require('../../public/config/default');
+const fs = require('fs');
 
 
 //Set Storage engine
@@ -51,16 +52,21 @@ router.post('/', (req, res)=>{
                     newUpload.pptName = file1.filename;
                 }
                 else{
-                    res.render('upload.ejs',{msg: 'Report of .pdf type required', name:user.name,logged:user.logged, role:user.role})
+                    
+                    fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',file1.filename), (err) => {});
+                    fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',file2.filename), (err) => {});
+                    return res.render('upload.ejs',{msg: 'Report of .pdf type required', name:user.name,logged:user.logged, role:user.role});
                 }
             }else{
                 if(file1.mimetype == 'application/pdf'){
                     newUpload.reportName = file1.filename;
                 }else{
-                    res.render('upload.ejs',{msg: 'Report of .pdf type required', name:user.name,logged:user.logged, role:user.role})
+                    fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',file1.filename), (err) => {});
+                    return res.render('upload.ejs',{msg: 'Report of .pdf type required', name:user.name,logged:user.logged, role:user.role})
                 }
                 
             }
+
 
             let student = await User.findOne({username:user.username})
             newUpload.uploader = student._id
@@ -75,8 +81,13 @@ router.post('/', (req, res)=>{
                 if(youtubeLink.includes('https://www.youtube.com/embed/')){
                     newUpload.youtubeLink = youtubeLink;    
                 }else{
-                    res.render('upload.ejs',{msg:'Only youtube embed links allowed', name:user.name,logged:user.logged, role:user.role});
-                }         
+                    
+                    fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',newUpload.reportName), (err) => {});
+                    if(newUpload.pptName){
+                        fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',toDelete.pptName), (err) => {});
+                    };
+                    return res.render('upload.ejs',{msg:'Only youtube embed links allowed', name:user.name,logged:user.logged, role:user.role});
+                }        
             };
 
             try {
@@ -85,6 +96,13 @@ router.post('/', (req, res)=>{
                 if(existing){
                     console.log('Updating Record...')
                     updatedEntry = await Project.findOneAndUpdate({_id: existing._id}, newUpload, {new:true});
+                    if(newUpload.reportName){
+                        fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',existing.reportName), (err) => {});
+                    }
+                    if(newUpload.pptName && existing.pptName){
+                        fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',existing.pptName), (err) => {});
+                    };
+
                 }else{
                     console.log('Creating Record...')
                     newEntry = new Project(newUpload);
@@ -95,10 +113,10 @@ router.post('/', (req, res)=>{
                 console.error(err.message);
             }
 
-            res.render('upload.ejs',{msg:'Upload Successful', name:user.name, logged:user.logged, role:user.role});
+            return res.render('upload.ejs',{msg:'Upload Successful', name:user.name, logged:user.logged, role:user.role});
             
         }else{
-            res.render('upload.ejs', {msg:err.message, name:user.name, logged:user.logged, role:user.role})
+            return res.render('upload.ejs', {msg:err.message, name:user.name, logged:user.logged, role:user.role})
         }
     });
 });

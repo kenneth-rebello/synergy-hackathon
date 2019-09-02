@@ -86,7 +86,7 @@
                         <iframe src="<%= youtubeLink %>" width=960 height=480></iframe>
                         <% } %>
                         <% if(githubRepo){ %>
-                        <a href="<%= githubRepo %>">Link To Github Repository</a>
+                        <a style="font-size: 40px" href="<%= githubRepo %>">Link To Github Repository</a>
                         <% } %>
                         <h5 style="padding:5px" >
                             <span><strong>Project Report: </strong></span>
@@ -119,7 +119,6 @@
                             <div class="tagcloud">
                                 <% keywords.forEach(function(key){ %>
                             <a href="#" class="tag-cloud-link"><%= key %></a>
-                            
                                 <% }) %>
                             </div>
                         </div>
