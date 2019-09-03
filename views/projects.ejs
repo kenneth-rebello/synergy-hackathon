@@ -72,6 +72,55 @@
             </div>
             </div>
         </nav>
+        <nav class="navbar navbar-expand-lg bg-light ftco-navbar-light" id="ftco-navbar">
+            <div class="container d-flex align-items-center px-4 my-4" style="background-color: orangered; border-radius: 50px">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".filter-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu" style="font-size: 20px">Filter</span>
+            </button>
+            <div class="collapse navbar-collapse filter-nav" id="ftco-nav">
+                <ul class="navbar-nav mr-auto">
+                    <li><h1 style="font-size:30px; padding:5px; ">Filters:</h1></li>
+                    <form action="/projects/filter" method="POST">
+                        <li class="nav-item" style="color:midnightblue; font-size:25px; display:inline">      
+                            <span>By Department</span>
+                            <select name="dept" style="padding:10px">
+                                <option value="">NONE</option>
+                                <option value="InfoTech">IT</option>
+                                <option value="Computers">COMPS</option>
+                                <option value="Electronics">ELEX</option>
+                                <option value="Production">PROD</option>
+                                <option value="Mechanical">MECH</option>
+                            </select>   
+                        </li>
+                        <li  class="nav-item" style="color:midnightblue; font-size:25px; display:inline">
+                            <span>By Year</span>
+                            <select name="year"style="padding:10px">
+                                <option value="">NONE</option>
+                                <option value="1">I</option>
+                                <option value="2">II</option>
+                                <option value="3">III</option>
+                                <option value="4">IV</option>
+                            </select>    
+                        </li>
+                        <li  class="nav-item" style="color:midnightblue; font-size:25px; display:inline">
+                            <span>By Domain</span>
+                            <select name="domain"style="padding:10px">
+                                <option value="">NONE</option>
+                                <option value="Web">WEB</option>
+                                <option value="ML">ML</option>
+                                <option value="IOT">IOT</option>
+                                <option value="DSA">DSA</option>
+                            </select>    
+                        </li>
+                        <li class="nav-item" style="padding-left :30px; display:inline">
+                            <input class="btn " type="submit" value="Search" style="background-color: midnightblue; color:white">
+                        </li>
+                    </form>
+                </ul>
+            </div>
+            </div>
+        </nav>
+
 
         <!-- END nav -->
 
@@ -80,7 +129,7 @@
     <% function displayer(project, creator){ %>
         <% let{ _id, dateOfUpload, title, desc, domain} = project %>
         <div class="col-md-6 col-lg-4 ftco-animate" style="padding: 10px">
-            <div class="blog-entry">
+            <div class="blog-entry" style="align-self: left">
                 <a href="/projects/<%= _id %>" class="block-20 d-flex align-items-end" style="background-image: url('/styles/images/image_6.jpg');">
                 <div class="meta-date text-center p-2">
                     <% let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] %>
@@ -94,14 +143,14 @@
                 <p>
                     <%= desc %>
                 </p>
-                <div class="d-flex align-items-left mt-4">
-                    <p class="ml-auto mb-0" style="padding-right: 100px">
+                <div class="d-flex ">
+                    <p class="mb-0" >
                         <span style="color: orangered;">Creator:</span>
                         <a href="#!" style="color:black"><%= creator.name %></a>
                     </p>
                 </div>
-                <div class="d-flex align-items-left mt-4">
-                        <p class="ml-auto mb-0" style="padding-right: 180px">
+                <div class="d-flex">
+                        <p class="mb-0" >
                             <span style="color: orangered;">Domain:</span>
                             <a href="#!" style="color:black"><%= domain %></a>
                         </p>

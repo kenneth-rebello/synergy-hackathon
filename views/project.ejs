@@ -116,6 +116,15 @@
                         </table>
                         <% }} %>
 
+                        <% if(role == 'teacher' && eval.filter((one) => one.teacher == name).length>0){ 
+                            givenGrade = eval.filter((one) => one.teacher == name); %>
+                            <tr>
+                                <td><h3 style="font-weight: bold; color: black">Grade given by you</h3></td>
+                                <td><p style="color:black; padding:5px; font-size: 20px"><%= givenGrade[0].grade %></p></td>
+                                <td><a class="btn btn-primary" href="/projects/grade/remove/<%=givenGrade[0]._id%>">Remove Grade</a></td>
+                            </tr>
+                        <% } %>
+
                         <% if(role == 'teacher' && eval.filter((one) => one.teacher == name).length<=0){ %>
                             <h3>Like the project? Leave a grade for the creator to see</h3>
                             <form action="/projects/grade/<%= _id %>" method="POST">

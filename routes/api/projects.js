@@ -30,65 +30,13 @@ router.get('/', async function(req, res){
     }
 });
 
-// ML
-router.get('/ml', async function(req, res){
+
+router.get('/domain/:domain', async function(req, res){
     try{
 
-        const projects = await Project.find({'domain': "ML"}).populate('uploader',['username', 'dept','year','name']);
-        if(projects.length <= 0 && user.logged){     
-            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, role:user.role, msg:'No Projects To Show'});
-        }else{
-            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, role:user.role, msg:''});
-        }
-        
-    }catch(err){
-        
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-});
-
-// WEB
-router.get('/web', async function(req, res){
-    try{
-
-        const projects = await Project.find({'domain': "Web"}).populate('uploader',['username', 'dept','year','name']);
-        if(projects.length <= 0 && user.logged){     
-            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, role:user.role, msg:'No Projects To Show'});
-        }else{
-            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, role:user.role, msg:''});
-        }
-        
-    }catch(err){
-        
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-});
-
-// DSA
-router.get('/dsa', async function(req, res){
-    try{
-
-        const projects = await Project.find({'domain': "DSA"}).populate('uploader',['username', 'dept','year','name']);
-        if(projects.length <= 0 && user.logged){     
-            res.render('projects.ejs',{projects, name:user.name, logged:user.logged, role:user.role, msg:'No Projects To Show'});
-        }else{
-            res.render('projects.ejs',{projects, name:user.name,logged:user.logged, role:user.role, msg:''});
-        }
-
-    }catch(err){
-        
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-});
-
-// IOT
-router.get('/iot', async function(req, res){
-    try{
-
-        const projects = await Project.find({'domain': "IOT"}).populate('uploader',['username', 'dept','year','name']);
+        domain = req.params.domain;
+        console.log(req.params.domain)
+        const projects = await Project.find({'domain': domain}).populate('uploader',['username', 'dept','year','name']);
         if(projects.length <= 0 && user.logged){     
             res.render('projects.ejs',{projects, name:user.name, logged:user.logged, role:user.role, msg:'No Projects To Show'});
         }else{
@@ -166,13 +114,41 @@ router.post('/search', async (req, res) => {
     let { keywords } = req.body;
     searchwords = keywords.split(',').map(word => word.trim());
 
-    let projects = await Project.find({keywords: {$in: searchwords}});
+    let projects = await Project.find({keywords: {$in: searchwords}}).populate('uploader',['username', 'dept','year','name']);;
     if(projects.length <= 0 && user.logged){     
         res.render('projects.ejs',{projects, name:user.name, logged:user.logged, role:user.role, msg:'No Projects To Show'});
     }else{
         res.render('projects.ejs',{projects, name:user.name,logged:user.logged, role:user.role, msg:''});
     }
     
+});
+
+router.post('/filter', async(req, res) => {
+    let { dept, year, domain } = req.body;
+    
+
+    let filters={}
+    let domainCheck;
+    if(dept != ""){
+        filters.dept = dept;
+    }
+    if(domain != ""){
+        domainCheck = domain;
+    }else{
+        domainCheck = ['Web','ML','IOT','DSA'];
+    }
+    if(year != ""){
+        filters.year = year;
+    }
+
+    let users = await User.find(filters)
+    let publisher = [];
+    users.forEach( (user) => {
+        publisher.push(user._id);
+    });
+    
+    let projects = await Project.find({uploader : publisher, domain: {$in :domainCheck}}).populate('uploader',['username', 'dept','year','name']);
+    res.render('projects.ejs',{projects, name:user.name,logged:user.logged,role:user.role,msg:''});
 });
 
 router.post('/grade/:id', async(req, res) => {
