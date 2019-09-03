@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="/styles/css/flaticon.css">
     <link rel="stylesheet" href="/styles/css/icomoon.css">
     <link rel="stylesheet" href="/styles/css/style.css">
+    <script src="/styles/js/jquery.min.js"></script>
+    <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
     <title><%= project.title %> - Project Hub</title>
 </head>
 <body>
@@ -73,20 +75,20 @@
     
             <!-- END nav -->
         <% 
-            let {_id, dateOfUpload, keywords, reportName, pptName, title, uploader, youtubeLink, githubRepo, desc, published, domain} = project;
+            let {_id, dateOfUpload, keywords, reportName, pptName, title, uploader, youtubeLink, githubRepo, desc, published, domain, eval} = project;
         %>
         <section class="ftco-section">
             <div class="container" style="background-color: white; padding: 20px;">
                 <div class="row">
                     <div class="col-lg-8 ftco-animate">
-                        <h1 class="mb-3" style="color: orangered; font-weight: bold; font-family: Georgia"><%= title %></h1>
+                        <h1 style="color: orangered; font-weight: bold; font-family: Georgia; font-size: 60px"><a href="/projects/<%=_id%>"><%= title %></a></h1>
                         <p style="font-size:25px"><%= desc %></p>
                         <br><br>
                         <% if(youtubeLink){ %>
                         <iframe src="<%= youtubeLink %>" width=960 height=480></iframe>
                         <% } %>
                         <% if(githubRepo){ %>
-                        <a style="font-size: 40px" href="<%= githubRepo %>">Link To Github Repository</a>
+                        <a style="font-size: 40px; color:midnightblue; text-decoration: underline" href="<%= githubRepo %>">Link To Github Repository</a>
                         <% } %>
                         <h5 style="padding:5px" >
                             <span><strong>Project Report: </strong></span>
@@ -99,22 +101,66 @@
                             <% }else{ %>
                                 <span>Not Available</span>
                             <% } %>
-                        </h5>
+                        </h5>    
                         <hr>
-                        <h4 style="padding:10px">
-                            Project Creator:<br>
-                            <table cellpadding="8">
-                                <tr>
-                                    <td><strong>Roll No: </strong></td><td><%= uploader.username %></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Department:</strong></td><td><%= uploader.dept %></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Year: </strong></td><td><%= uploader.year %></td>
-                                </tr>
-                            </table>
-                        </h4>
+                        <% if(name == uploader.name){ %>
+                        <% if(eval){ %>      
+                        <table cellpadding='10' style="color: black; font-size: 20px">
+                            <th style="font-size: 30px">Grades</th>
+                            <% eval.forEach((grade) => { %>
+                            <tr>
+                                <td><%= grade.teacher %></td>
+                                <td><%= grade.grade %></td>
+                            </tr>
+                            <% }) %>
+                        </table>
+                        <% }} %>
+
+                        <% if(role == 'teacher' && eval.filter((one) => one.teacher == name).length<=0){ %>
+                            <h3>Like the project? Leave a grade for the creator to see</h3>
+                            <form action="/projects/grade/<%= _id %>" method="POST">
+                                <div class="form-group">
+                                    <span>Username</span>
+                                    <input type="text" name="name" style="border-radius: 25px; padding: 10px" value="<%= name %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <span>Grade</span>
+                                    <select name="grade" style="border-radius: 25px; padding: 10px" required>
+                                        <option value="A+">A+</option>
+                                        <option value="A">A</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B">B</option>
+                                        <option value="B-">B-</option>
+                                        <option value="C+">C+</option>
+                                        <option value="C">C</option>
+                                        <option value="C-">C-</option>
+                                        <option value="D">D</option>
+                                        <option value="F">F</option>
+                                    </select>
+                                </div>
+                                <div class="form-goup">
+                                    <input type="submit" value="Submit" class="btn btn-primary enableName">
+                                </div>
+                            </form>
+                        <% } %>
+                        <hr>
+                        <h4 style="padding:10px; font-weight: bold; font-size: 30px; color:black">Project Creator:</h4>
+                        <table cellpadding="5">
+                            <tr>
+                                <td><strong>Username: </strong></td><td><%= uploader.username %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Name: </strong></td><td><%= uploader.name %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Department:</strong></td><td><%= uploader.dept %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Year: </strong></td><td><%= uploader.year %></td>
+                            </tr>
+                        </table>
+                        
                         <div class="tag-widget post-tag-container mb-5 mt-5">
                             <div class="tagcloud">
                                 <% keywords.forEach(function(key){ %>
@@ -122,7 +168,9 @@
                                 <% }) %>
                             </div>
                         </div>
+                        <% if(name == uploader.name){ %>
                         <a class="btn btn-danger" href="/projects/delete/<%=_id %>">Delete</a>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -133,8 +181,15 @@
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
     </div>
     
-    <script src="/styles/js/jquery.min.js"></script>
-    <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
+    <script>
+        $(document).ready( function(){
+            console.log('called');
+            $('form input[type="text"]').prop("disabled", true);
+            $('.enableName').click(function(){
+                $('form input[type="text"]').prop("disabled", false);
+            })
+        })
+    </script>
     <script src="/styles/js/popper.min.js"></script>
     <script src="/styles/js/bootstrap.min.js"></script>
     <script src="/styles/js/jquery.easing.1.3.js"></script>

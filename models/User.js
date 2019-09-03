@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     },
     year:{
         type: Number,
-        minimum: 1,
+        minimum: 0,
         maximum: 4
     },
     role:{
@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
     logged:{
         type: Boolean,
         default: false
+    },
+    graded:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref: 'project'
     }
 });
 

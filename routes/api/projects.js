@@ -175,5 +175,19 @@ router.post('/search', async (req, res) => {
     
 });
 
+router.post('/grade/:id', async(req, res) => {
+
+    let project = await Project.findOne({_id: req.params.id});
+    let { name, grade} = req.body;
+    newGrade = { teacher: name, grade: grade}
+    project.eval.push(newGrade);
+    let updated = await Project.findOneAndUpdate({_id: project.id}, {eval: project.eval}, {new: true});
+    let teacher = await User.findOne({name: name});
+    teacher.graded.push(project._id);
+    await User.findOneAndUpdate({name: name}, {graded: teacher.graded}, {new:true});
+
+    res.render('project.ejs',{project:updated, name:user.name, logged:user.logged, role:user.role})
+});
+
 
 module.exports = router;
