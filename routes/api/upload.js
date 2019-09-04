@@ -80,7 +80,8 @@ router.post('/', (req, res)=>{
             newUpload.title = p_title;
             newUpload.desc = desc;
             newUpload.keywords = keywords.split(',').map(word => word.trim());
-            newUpload.keywords.push(domain);
+            newkeywords = [domain, user.username, user.dept, user.year];
+            newUpload.keywords = newUpload.keywords.concat(newkeywords);
             newUpload.published = published;
             newUpload.domain = domain;
             newUpload.githubRepo = githubRepo;

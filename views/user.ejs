@@ -56,8 +56,8 @@
                 <li class="nav-item"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
                 <% if(logged) { %>                    
                     <% if (role == 'admin'){ %>
-                    <li class="nav-item" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
-                    <li class="nav-item active"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                    <li class="nav-item active" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
+                    <li class="nav-item "><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                     <li class="nav-item"><a href="/report/generate" class="nav-link" style="font-size: 20px">Generate Report</a></li>
                     <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                     <% }else{ %>
@@ -82,29 +82,8 @@
             <div class="collapse navbar-collapse filter-nav" id="ftco-nav">
                 <ul class="navbar-nav mr-auto">
                     <li><h1 style="font-size:30px; padding:5px; ">Filters:</h1></li>
-                    <form action="/projects/filter" method="POST">
-                        <li class="nav-item" style="color:midnightblue; font-size:25px; display:inline">      
-                            <span>By Department</span>
-                            <select name="dept" style="padding:10px">
-                                <option value="">NONE</option>
-                                <option value="InfoTech">IT</option>
-                                <option value="Computers">COMPS</option>
-                                <option value="Electronics">ELEX</option>
-                                <option value="Production">PROD</option>
-                                <option value="Mechanical">MECH</option>
-                            </select>   
-                        </li>
-                        <li  class="nav-item" style="color:midnightblue; font-size:25px; display:inline">
-                            <span>By Year</span>
-                            <select name="year"style="padding:10px">
-                                <option value="">NONE</option>
-                                <option value="FE">I</option>
-                                <option value="SE">II</option>
-                                <option value="TE">III</option>
-                                <option value="BE">IV</option>
-                            </select>    
-                        </li>
-                        <li  class="nav-item" style="color:midnightblue; font-size:25px; display:inline">
+                    <form action="/users/filter/<%=user%>" method="POST">
+                        <li  class="nav-item" style="color:midnightblue; font-size:25px; display:inline; padding-left:30px">
                             <span>By Domain</span>
                             <select name="domain"style="padding:10px">
                                 <option value="">NONE</option>
@@ -164,13 +143,19 @@
             </div>
         </div>
     <% } %>
+    
+    
 <% if (msg!= ''){ %>
     <label style="background-color: orangered; color:whitesmoke; font-size: 25px" class="px-3 py-3"><%= msg %></label>
     <% if(logged && role != 'admin'){ %>
         <a href="/upload"></a>
 <% }} %>
-<% if(projects){ %>
-    
+<% if(projects.length>0){ 
+    let {uploader} = projects[0]; %>
+    <h1 style="color: orangered; font-weight: bold; font-family: Georgia; font-size: 60px"><%= user %></h1>
+    <span style="color:midnightblue; font-weight: bold; font-size:20px; padding:20px"><%= uploader.year %></span>
+    <span style="color:midnightblue; font-weight: bold; font-size:20px; padding:20px"><%= uploader.dept %></span>
+    <span style="color:midnightblue; font-weight: bold; font-size:20px; padding:20px">Roll Number: <%= uploader.username %></span>
     <div class="row d-flex align-items-stretch no-gutters">
         <% projects.forEach(function(each){
             let { uploader} = each

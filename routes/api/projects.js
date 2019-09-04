@@ -101,6 +101,16 @@ router.get('/delete/:id', async function(req, res){
 router.post('/search', async (req, res) => {
 
     let { keywords } = req.body;
+    let current = await User.findOne({username:keywords});
+    if(current){
+        let projects = await Project.find({uploader:current._id}).populate('uploader',['username','dept', 'year','name']);
+    
+        if(projects.length>0){
+            return res.render('user.ejs',{projects, user:current.name, name:user.name, logged:user.logged,role:user.role,msg:''});
+        }else{
+            res.render('user.ejs',{projects, user:current.name, name:user.name,logged:user.logged,role:user.role,msg:'No Projects To Show'})
+        }
+    }
     searchwords = keywords.split(',').map(word => word.trim());
 
     let projects = await Project.find({keywords: {$in: searchwords}}).populate('uploader',['username', 'dept','year','name']);;
@@ -113,11 +123,14 @@ router.post('/search', async (req, res) => {
 });
 
 router.post('/filter', async(req, res) => {
-    let { dept, year, domain } = req.body;
+    let { username, dept, year, domain } = req.body;
     
 
     let filters={}
     let domainCheck;
+    if(username){
+        filters.username = username;
+    }
     if(dept != ""){
         filters.dept = dept;
     }

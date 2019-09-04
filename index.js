@@ -19,6 +19,7 @@ app.use('/login', require('./routes/api/login'));
 app.use('/logout', require('./routes/api/logout'));
 app.use('/register', require('./routes/api/register'));
 app.use('/report', require('./routes/api/report'));
+app.use('/users', require('./routes/api/users'));
 
 const port = 5000;
 app.listen(port, () => console.log(`Server started on ${port}`));
