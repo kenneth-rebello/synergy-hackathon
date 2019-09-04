@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <table border="1" cellpadding="10" style="font-size: 30px; width:780px">
+    <tr>
+        <th colspan="5" style="color:midnightblue">Fr. Conceicao Rodrigues College Of Engineering</th>
+    </tr>
+    <tr>    
+        <th colspan="2">Date: <%=date%></th>
+        <th colspan="3">Report By: <%=username%></th>
+    </tr>
+    <tr>
+        <th>Title</th>
+        <th>Domain</th>
+        <th>Creator</th>
+        <th>Year</th>
+        <th>Department</th>
+    </tr>
+    <%  projects.forEach((project) => { 
+        let {dateOfUpload, title, uploader, domain, eval} = project;
+        let {name, dept, year} = uploader; %>
+        <tr>
+            <td><%= title %></td>
+            <td><%= domain %></td>
+            <td><%= name %></td>
+            <td><%= year %></td>
+            <td><%= dept %></td>
+        </tr>
+    <% }); %>
+    </table>
+    <a style="text-decoration: underline" href="/reports/<%= report %>" target="_blank">Download Report</a>
+</body>
+</html>

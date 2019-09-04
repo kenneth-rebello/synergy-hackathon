@@ -3,9 +3,8 @@ const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 const Project = require('../../models/Project');
+const User = require('../../models/User');
 const user = require('../../public/config/default');
-const pdf = require('pdfkit');
-const createPDF = require('../../public/config/Pdf');
 
 //Body Parser Middleware
 router.use(express.json());
@@ -22,7 +21,6 @@ router.get('/', async function(req, res){
             res.render('projects.ejs',{projects, name:user.name,logged:user.logged, role:user.role, msg:''});
         }
         
-
     }catch(err){
         
         console.error(err.message);
@@ -50,15 +48,7 @@ router.get('/domain/:domain', async function(req, res){
     }
 });
 
-router.get('/report', async function(req, res){
-    if(user.roll == 'admin'){
-        let projects = await Project.find().populate('uploader',['username', 'dept','year','name']);
-        createPDF(projects);
-        res.render('index.ejs',{logged: user.logged, name:user.name, role:user.role});
-    }else{
-        res.send('Error 401: Not Authorized')
-    }
-});
+
 
 router.get('/:id', async function(req, res){
     try{

@@ -14,10 +14,12 @@
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "get-google-fonts": "^1.2.0",
+    "html-pdf": "^2.2.0",
     "mongoose": "^5.6.11",
     "multer": "^1.4.2",
     "nodemon": "^1.19.1",
-    "pdfkit": "^0.10.0"
+    "pdfkit": "^0.10.0",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {},
   "repository": {

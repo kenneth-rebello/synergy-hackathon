@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="/styles/css/flaticon.css">
     <link rel="stylesheet" href="/styles/css/icomoon.css">
     <link rel="stylesheet" href="/styles/css/style.css">
+    <script src="/styles/js/jquery.min.js"></script>
+    <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
 
     <title>Projects</title>
 </head>
@@ -56,7 +58,7 @@
                     <% if (role == 'admin'){ %>
                     <li class="nav-item" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
                     <li class="nav-item active"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
-                    <li class="nav-item"><a href="/projects/report" class="nav-link" style="font-size: 20px">Generate Report</a></li>
+                    <li class="nav-item"><a href="/report/generate" class="nav-link" style="font-size: 20px">Generate Report</a></li>
                     <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
                     <% }else{ %>
                     <li class="nav-item" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
@@ -139,17 +141,17 @@
                 </div>
                 </a>
                 <div class="text bg-white p-4">
-                <h1 class="heading"><a href="/projects/<%= _id %>"><strong><%= title %></strong></a></h1>
-                <p>
-                    <%= desc %>
-                </p>
-                <div class="d-flex ">
-                    <p class="mb-0" >
-                        <span style="color: orangered;">Creator:</span>
-                        <a href="#!" style="color:black"><%= creator.name %></a>
+                    <h1 class="heading"><a href="/projects/<%= _id %>"><strong><%= title %></strong></a></h1>
+                    <p>
+                        <%= desc %>
                     </p>
-                </div>
-                <div class="d-flex">
+                    <div class="d-flex ">
+                        <p class="mb-0" >
+                            <span style="color: orangered;">Creator:</span>
+                            <a href="#!" style="color:black"><%= creator.name %></a>
+                        </p>
+                    </div>
+                    <div class="d-flex">
                         <p class="mb-0" >
                             <span style="color: orangered;">Domain:</span>
                             <a href="#!" style="color:black"><%= domain %></a>
@@ -175,17 +177,16 @@
             displayer(each, uploader);
         }) %>
     </div>
-
+    <a href="/projects/report" class="btn btn-primary">Generate Report</a>
 <% } %>
     </div>
 </section>
+
     
     <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 </div>
 
-    <script src="/styles/js/jquery.min.js"></script>
-    <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
     <script src="/styles/js/popper.min.js"></script>
     <script src="/styles/js/bootstrap.min.js"></script>
     <script src="/styles/js/jquery.easing.1.3.js"></script>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Register New User - Project Hub</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/styles/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/css/animate.css">
+    
+    <link rel="stylesheet" href="/styles/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/styles/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/styles/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/styles/css/aos.css">
+
+    <link rel="stylesheet" href="/styles/css/ionicons.min.css">
+    
+    <link rel="stylesheet" href="/styles/css/flaticon.css">
+    <link rel="stylesheet" href="/styles/css/icomoon.css">
+    <link rel="stylesheet" href="/styles/css/style.css" type="text/css">
+
+    <script src="/styles/js/jquery.min.js"></script>
+    <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
+  
+  </head>
+  <body>
+  <div style="background-color: midnightblue; padding-bottom: 100px">
+    <div class="bg-top navbar-light" style="width: 100%">
+      <div class="container">
+        <div class="row no-gutters d-flex align-items-center align-items-stretch">
+          <div class="col-md-4 d-flex align-items-center py-4">
+            <a class="navbar-brand" style="color: whitesmoke" href="/">Project Hub<span>FR.CRCE</span></a>
+          </div>
+          <div class="col-lg-8 d-block">
+            <div class="row d-flex">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar" style="width:100%">
+      <div class="container d-flex align-items-center px-4">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu" style="font-size: 20px">Menu</span>
+        </button>
+        <form action="#" class="searchform order-lg-last">
+          <div class="form-group d-flex">
+            <input type="text" class="form-control pl-3" placeholder="Search">
+            <button type="submit" placeholder="" class="form-control search"><span class="ion-ios-search"></span></button>
+          </div>
+        </form>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
+                <% if(logged) { %>                    
+                    <% if (role == 'admin'){ %>
+                    <li class="nav-item" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
+                    <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                    <li class="nav-item active"><a href="/report/generate" class="nav-link" style="font-size: 20px">Generate Report</a></li>
+                    <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
+                    <% }else{ %>
+                    <li class="nav-item" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
+                    <li class="nav-item active"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                    <li class="nav-item"><a href="/upload" class="nav-link" style="font-size: 20px">Upload</a></li>
+                    <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
+                    <% }} else{ %>
+                    <li class="nav-item active"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                    <li class="nav-item"><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
+                    <li class="nav-item"><a href="/register" class="nav-link" style="font-size: 20px">Register</a></li>
+                <% } %>
+            </ul>
+        </div>
+      </div>
+      <br>
+    </nav>
+
+      <!-- END nav -->
+  
+		<section class="ftco-section ftco-no-pt ftco-no-pb contact-section">
+			<div class="container" >
+				<div class="row d-flex align-items-stretch no-gutters">
+					<div class="col-md-12 p-4 p-md-5 order-md-last bg-light">
+            <% if(msg != ''){ %>
+              <label style="background-color: orangered; color:whitesmoke; font-size: 25px"><%= msg %></label>
+            <% } %>
+
+            <form action='/report' method="post">    
+              <div class="form-group">
+                <span>Username</span>
+                <input type="text" name="username" style="border-radius: 25px; padding: 10px" placeholder="Enter username" required>
+              </div>
+              <div class="form-group">
+                <span>Date Of Report</span>
+                <input type="date" name="date" style="border-radius: 25px; padding: 10px" required>
+              </div>
+              <div class="form-group">
+                <span>Select A Department</span>
+                <select name="dept" class="btn btn-primary">
+                    <option value="">ALL</option>
+                    <option value="InfoTech">IT</option>
+                    <option value="Computers">COMPS</option>
+                    <option value="Electronics">ELEX</option>
+                    <option value="Production">PROD</option>
+                    <option value="Mechanical">MECH</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <span>Select A Year</span>
+                <select name="year" class="btn btn-primary">
+                    <option value="">All</option>
+                    <option value=1>I</option>
+                    <option value=2>II</option>
+                    <option value=3>III</option>
+                    <option value=4>IV</option>
+                </select>
+              </div>
+              <div class="form-group">
+            <span>Select A Domain</span>
+            <select name="domain" class="btn btn-primary">
+                <option value="">All</option>
+                <option value="Web">WEB</option>
+                <option value="ML">ML</option>
+                <option value="IOT">IOT</option>
+                <option value="DSA">DSA</option>
+            </select>
+            </div>
+              <div class="form-group">
+                <input type="submit" value="Get Report" class="btn btn-primary py-3 px-5">
+              </div>
+            </form>
+            
+      </div>
+      </div>
+    </div>
+    </section>
+    <br>
+    <br>
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+</div>
+
+  <script>
+  
+   $('input').focus(function(){
+    $(this).css('background-color','orange');
+  });
+
+  $('input').blur(function(){
+    $(this).css('background-color','white');
+  }); 
+  
+  </script>
+  <script src="/styles/js/popper.min.js"></script>
+  <script src="/styles/js/bootstrap.min.js"></script>
+  <script src="/styles/js/jquery.easing.1.3.js"></script>
+  <script src="/styles/js/jquery.waypoints.min.js"></script>
+  <script src="/styles/js/jquery.stellar.min.js"></script>
+  <script src="/styles/js/owl.carousel.min.js"></script>
+  <script src="/styles/js/jquery.magnific-popup.min.js"></script>
+  <script src="/styles/js/aos.js"></script>
+  <script src="/styles/js/jquery.animateNumber.min.js"></script>
+  <script src="/styles/js/scrollax.min.js"></script>
+  <script src="/styles/js/main.js"></script>
+   
+  </body>
+</html>
