@@ -46,6 +46,12 @@ const projectSchema = new mongoose.Schema({
     published:{
         type: Boolean,
         required: true
+    },
+    mentor:{
+        type:[String]
+    },
+    team:{
+        type:[String]
     }
 });
 

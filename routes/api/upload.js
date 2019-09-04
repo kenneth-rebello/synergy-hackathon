@@ -22,12 +22,17 @@ const upload = multer({
 }).array('project',2);
 
 //Call Upload page
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    let teachers = await User.find({role:"teacher"});
+    let students = await User.find({role:"student"});
     if(user.logged && user.role != 'admin'){
-        return res.render('upload.ejs',{msg:'', name:user.name, logged:user.logged, role:user.role});
+        let teachers = await User.find({role:"teacher"});
+        let students = await User.find({role:"student"});
+        console.log(students);
+        return res.render('upload.ejs',{msg:'', name:user.name, logged:user.logged, role:user.role, teachers, students});
     }
     else{
-        res.render('index.ejs',{logged:user.logged, role:user.role, name:user.name})
+        res.render('index.ejs',{logged:user.logged, role:user.role, name:user.name, teachers, students})
     }
 });
 
@@ -40,8 +45,10 @@ router.post('/', (req, res)=>{
             
             //Project Details in Project Obj
             const newUpload = {};
-            const {p_title, githubRepo, youtubeLink, desc, published, domain, keywords} = req.body;
+            const {p_title, githubRepo, youtubeLink, desc, published, domain, keywords, mentors, members} = req.body;
             let file1 = req.files[0];
+            let teachers = await User.find({role:"teacher"});
+            let students = await User.find({role:"student"});
             if(req.files.length >= 2){
                 let file2 = req.files[1];
                 if(file1.mimetype == 'application/pdf'){
@@ -55,14 +62,14 @@ router.post('/', (req, res)=>{
                     
                     fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',file1.filename), (err) => {});
                     fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',file2.filename), (err) => {});
-                    return res.render('upload.ejs',{msg: 'Report of .pdf type required', name:user.name,logged:user.logged, role:user.role});
+                    return res.render('upload.ejs',{msg: 'Report of .pdf type required', teachers, students, name:user.name,logged:user.logged, role:user.role});
                 }
             }else{
                 if(file1.mimetype == 'application/pdf'){
                     newUpload.reportName = file1.filename;
                 }else{
                     fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',file1.filename), (err) => {});
-                    return res.render('upload.ejs',{msg: 'Report of .pdf type required', name:user.name,logged:user.logged, role:user.role})
+                    return res.render('upload.ejs',{msg: 'Report of .pdf type required', teachers, students, name:user.name,logged:user.logged, role:user.role})
                 }
                 
             }
@@ -77,6 +84,12 @@ router.post('/', (req, res)=>{
             newUpload.published = published;
             newUpload.domain = domain;
             newUpload.githubRepo = githubRepo;
+            if(mentors){
+                newUpload.mentor = mentors;
+            }
+            if(members){
+                newUpload.team = members;
+            } 
             if(youtubeLink){
                 if(youtubeLink.includes('https://www.youtube.com/embed/')){
                     newUpload.youtubeLink = youtubeLink;    
@@ -86,7 +99,7 @@ router.post('/', (req, res)=>{
                     if(newUpload.pptName){
                         fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',toDelete.pptName), (err) => {});
                     };
-                    return res.render('upload.ejs',{msg:'Only youtube embed links allowed', name:user.name,logged:user.logged, role:user.role});
+                    return res.render('upload.ejs',{msg:'Only youtube embed links allowed', teachers, students, name:user.name,logged:user.logged, role:user.role});
                 }        
             };
 
@@ -113,10 +126,10 @@ router.post('/', (req, res)=>{
                 console.error(err.message);
             }
 
-            return res.render('upload.ejs',{msg:'Upload Successful', name:user.name, logged:user.logged, role:user.role});
+            return res.render('upload.ejs',{msg:'Upload Successful', teachers, students, name:user.name, logged:user.logged, role:user.role});
             
         }else{
-            return res.render('upload.ejs', {msg:err.message, name:user.name, logged:user.logged, role:user.role})
+            return res.render('upload.ejs', {msg:err.message, teachers, students, name:user.name, logged:user.logged, role:user.role})
         }
     });
 });

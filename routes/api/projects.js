@@ -83,7 +83,6 @@ router.get('/delete/:id', async function(req, res){
         //Remove from database
         await Project.findOneAndRemove({_id: req.params.id});
 
-
         let projects = await Project.find().populate('uploader',['username', 'dept','year','name']);
         if(projects.length <= 0 && user.logged){     
             res.render('projects.ejs',{projects, name:user.name, logged:user.logged, role:user.role, msg:'No Projects To Show'});
@@ -151,6 +150,19 @@ router.post('/grade/:id', async(req, res) => {
     let teacher = await User.findOne({name: name});
     teacher.graded.push(project._id);
     await User.findOneAndUpdate({name: name}, {graded: teacher.graded}, {new:true});
+
+    res.render('project.ejs',{project:updated, name:user.name, logged:user.logged, role:user.role})
+});
+
+router.get('/grade/remove/:id', async(req, res) => {
+
+    let project = await Project.findOne({_id: req.params.id});
+    newEval = project.eval.filter((eval)=>{ return eval.teacher!=user.name});
+    let updated = await Project.findOneAndUpdate({_id: project.id}, {eval: newEval}, {new: true});
+    
+    let teacher = await User.findOne({name: user.name});
+    newGraded = teacher.graded.filter((grade) => { return grade === project._id});
+    await User.findOneAndUpdate({name: user.name}, {graded: newGraded}, {new:true});
 
     res.render('project.ejs',{project:updated, name:user.name, logged:user.logged, role:user.role})
 });

@@ -19,9 +19,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     year:{
-        type: Number,
-        minimum: 0,
-        maximum: 4
+        type: String,
     },
     role:{
         type: String,

@@ -75,7 +75,7 @@
     
             <!-- END nav -->
         <% 
-            let {_id, dateOfUpload, keywords, reportName, pptName, title, uploader, youtubeLink, githubRepo, desc, published, domain, eval} = project;
+            let {_id, dateOfUpload, keywords, reportName, pptName, title, uploader, team, mentor, youtubeLink, githubRepo, desc, published, domain, eval} = project;
         %>
         <section class="ftco-section">
             <div class="container" style="background-color: white; padding: 20px;">
@@ -121,7 +121,7 @@
                             <tr>
                                 <td><h3 style="font-weight: bold; color: black">Grade given by you</h3></td>
                                 <td><p style="color:black; padding:5px; font-size: 20px"><%= givenGrade[0].grade %></p></td>
-                                <td><a class="btn btn-primary" href="/projects/grade/remove/<%=givenGrade[0]._id%>">Remove Grade</a></td>
+                                <td><a class="btn btn-primary" href="/projects/grade/remove/<%=_id%>">Remove Grade</a></td>
                             </tr>
                         <% } %>
 
@@ -168,7 +168,22 @@
                             <tr>
                                 <td><strong>Year: </strong></td><td><%= uploader.year %></td>
                             </tr>
+                            <tr>
+                                <td><strong>Team Members:</strong></td>
+                                <% if(team.length>0){
+                                    team.forEach((member) => { %>
+                                    <td><%= member %></td>
+                                <% })} %>
+                            </tr>
+                            <tr>
+                                <td><strong>Mentors:</strong></td>
+                                <% if(mentor.length>0){
+                                    mentor.forEach((mentor) => { %>
+                                    <td><%= mentor %></td>
+                                <% })} %>
+                            </tr>
                         </table>
+                       
                         
                         <div class="tag-widget post-tag-container mb-5 mt-5">
                             <div class="tagcloud">

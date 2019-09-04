@@ -22,8 +22,12 @@
     <link rel="stylesheet" href="/styles/css/icomoon.css">
     <link rel="stylesheet" href="/styles/css/style.css" type="text/css">
 
+    <link rel="stylesheet" href="/styles/css/chosen.css">
+
     <script src="/styles/js/jquery.min.js"></script>
     <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="/styles/js/chosen.jquery.js"></script>
+    <script src="/styles/js/chosen.jquery.min.js"></script>
 
   </head>
   <body>
@@ -121,6 +125,25 @@
                 <input name="keywords" id="" cols="30" rows="7" class="form-control" placeholder="Enter keywords related to your project seperated by a comma(,) to help others find your project" style="width:80%" required>
               </div>
               <div class="form-group">
+                <span>Team Members</span><span style="color:grey">(if any)</span>
+                <select name="members" class="chosen-select" style="border-radius: 0px" multiple>
+                  <option value="">None</option>
+                  <%  students.forEach((student) => {
+                      if(student.name !== name){ %>
+                    <option value="<%=student.name%>"><%=student.name%></option>
+                  <% }}) %>
+                </select>
+              </div>
+              <div class="form-group">
+                <span>Mentors</span><span style="color:grey">(if any)</span>
+                <select name="mentors" class=" chosen-select " style="width:200px; height:50px" multiple>
+                  <option value="">None</option>
+                    <% teachers.forEach((teacher) => { %>
+                      <option value="<%=teacher.name%>"><%=teacher.name%></option>
+                    <% }) %>
+                </select>
+              </div>
+              <div class="form-group">
                 <span>Is report published?</span>
                 <select name="published" class="btn btn-primary" required>
                   <option value="yes">YES</option>
@@ -146,6 +169,11 @@
 
 <script>
   
+  $(document).ready(function(){
+    $('.chosen-select').chosen();
+  });
+  
+
   $('input').focus(function(){
    $(this).css('background-color','orange');
  });
@@ -155,16 +183,16 @@
  }); 
  
  </script>
-<script src="/styles/js/popper.min.js"></script>
-<script src="/styles/js/bootstrap.min.js"></script>
-<script src="/styles/js/jquery.easing.1.3.js"></script>
-<script src="/styles/js/jquery.waypoints.min.js"></script>
-<script src="/styles/js/jquery.stellar.min.js"></script>
-<script src="/styles/js/owl.carousel.min.js"></script>
-<script src="/styles/js/jquery.magnific-popup.min.js"></script>
-<script src="/styles/js/aos.js"></script>
-<script src="/styles/js/jquery.animateNumber.min.js"></script>
-<script src="/styles/js/scrollax.min.js"></script>
-<script src="/styles/js/main.js"></script> 
+    <script src="/styles/js/popper.min.js"></script>
+    <script src="/styles/js/bootstrap.min.js"></script>
+    <script src="/styles/js/jquery.easing.1.3.js"></script>
+    <script src="/styles/js/jquery.waypoints.min.js"></script>
+    <script src="/styles/js/jquery.stellar.min.js"></script>
+    <script src="/styles/js/owl.carousel.min.js"></script>
+    <script src="/styles/js/jquery.magnific-popup.min.js"></script>
+    <script src="/styles/js/aos.js"></script>
+    <script src="/styles/js/jquery.animateNumber.min.js"></script>
+    <script src="/styles/js/scrollax.min.js"></script>
+    <script src="/styles/js/main.js"></script> 
   </body>
 </html>
