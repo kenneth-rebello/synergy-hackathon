@@ -16,7 +16,7 @@ router.get('/:user&:name', async function(req, res){
     if(profile.role=='student'){
         projects = await Project.find({uploader:profile._id}).populate('uploader',['username','dept', 'year','name']);
     }else if(profile.role=='teacher'){
-        projects = await Project.find({mentor: {$in: user}});
+        projects = await Project.find({mentor: {$in: user}}).populate('uploader',['username','dept', 'year','name']);;
     }
     
     if(projects.length>0){
