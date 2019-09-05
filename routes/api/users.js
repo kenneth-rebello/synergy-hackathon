@@ -10,14 +10,19 @@ router.use(express.urlencoded({extended: true}));
 router.get('/:user&:name', async function(req, res){
 
     let currentUser = await User.findOne({name: req.params.name});
-    let user = req.params.user;
-    let profile = await User.findOne({name:user});
-    let projects = await Project.find({uploader:profile._id}).populate('uploader',['username','dept', 'year','name']);
+    let user = [req.params.user];
+    let profile = await User.findOne({name:req.params.user});
+    let projects=[]
+    if(profile.role=='student'){
+        projects = await Project.find({uploader:profile._id}).populate('uploader',['username','dept', 'year','name']);
+    }else if(profile.role=='teacher'){
+        projects = await Project.find({mentor: {$in: user}});
+    }
     
     if(projects.length>0){
-        return res.render('user.ejs',{projects, user:user, name:currentUser.name, logged:currentUser.logged,role:currentUser.role,msg:''});
+        return res.render('user.ejs',{projects, user:req.params.user, name:currentUser.name, logged:currentUser.logged,role:currentUser.role,msg:''});
     }else{
-        res.render('user.ejs',{projects, user:user, name:currentUser.name,logged:currentUser.logged,role:currentUser.role,msg:'No Projects To Show'})
+        res.render('user.ejs',{projects, user:req.params.user, name:currentUser.name,logged:currentUser.logged,role:currentUser.role,msg:'No Projects To Show'})
     }
 });
 

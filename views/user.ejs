@@ -25,7 +25,7 @@
     <script src="/styles/js/jquery.min.js"></script>
     <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
 
-    <title>Projects</title>
+    <title><%=name%> - Project Hub</title>
 </head>
 <body>
     <div style="background-color: midnightblue">  
@@ -113,7 +113,13 @@
         <% let{ _id, dateOfUpload, title, desc, domain} = project %>
         <div class="col-md-6 col-lg-4 ftco-animate" style="padding: 10px">
             <div class="blog-entry" style="align-self: left">
-                <a href="/projects/project/<%= _id %>/<%=name%>" class="block-20 d-flex align-items-end" style="background-image: url('/styles/images/image_6.jpg');">
+                <%  
+                    if(domain=="ML"){imgURL = "/styles/images/ml512.png"};
+                    if(domain=="DSA"){imgURL = "/styles/images/dsa512.png"};
+                    if(domain=="IOT"){imgURL = "/styles/images/iot512.png"};
+                    if(domain=="Web"){imgURL = "/styles/images/web512.png"};
+                %>
+                <a href="/projects/project/<%= _id %>/<%=name%>" class="block-20 d-flex align-items-end" style="background-image: url(<%=imgURL%>);">
                 <div class="meta-date text-center p-2">
                     <% let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] %>
                     <span class="day"><%= dateOfUpload.getDate() %></span>
@@ -155,9 +161,6 @@
 <% if(projects.length>0){ 
     let {uploader} = projects[0]; %>
     <h1 style="color: orangered; font-weight: bold; font-family: Georgia; font-size: 60px"><%= user %></h1>
-    <span style="color:midnightblue; font-weight: bold; font-size:20px; padding:20px"><%= uploader.year %></span>
-    <span style="color:midnightblue; font-weight: bold; font-size:20px; padding:20px"><%= uploader.dept %></span>
-    <span style="color:midnightblue; font-weight: bold; font-size:20px; padding:20px">Roll Number: <%= uploader.username %></span>
     <div class="row d-flex align-items-stretch no-gutters">
         <% projects.forEach(function(each){
             let { uploader} = each

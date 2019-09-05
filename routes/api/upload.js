@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 //Init Upload
 const upload = multer({
     storage: storage,
-    limits: {fileSize: 1000000}
+    limits: {fileSize: 100000000}
 }).array('project',2);
 
 //Call Upload page
@@ -129,6 +129,9 @@ router.post('/:name', (req, res)=>{
             return res.render('upload.ejs',{msg:'Upload Successful', teachers, students, name:currentUser.name, logged:currentUser.logged, role:currentUser.role});
             
         }else{
+            let teachers = await User.find({role:"teacher"});
+            let students = await User.find({role:"student"});
+            let currentUser = await User.findOne({name:req.params.name});
             return res.render('upload.ejs', {msg:err.message, teachers, students, name:currentUser.name, logged:currentUser.logged, role:currentUser.role})
         }
     });
