@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
     const {username, password, role} = req.body;
     try {
 
-        currentUser = await User.findOne({username:username});
+        let currentUser = await User.findOne({username:username});
         
         if(!currentUser){
             return res.render('login.ejs',{msg:'User does not exist'});
@@ -40,13 +40,8 @@ router.post('/', async (req, res) => {
             return res.render('login.ejs',{msg:'Not Authorized'});
         } 
     
-        user.username = currentUser.username;
-        user.logged = true;
-        user.username = currentUser.username;
-        user.dept = currentUser.dept;
-        user.year = currentUser.year;
-        user.name = currentUser.name;
-        res.render('index.ejs',{logged: user.logged, role:user.role, name:user.name});
+        currentUser = await User.findOneAndUpdate({_id:currentUser._id},{logged:true},{new:true});
+        res.render('index.ejs',{logged: currentUser.logged, role:currentUser.role, name:currentUser.name});
         
     } catch (err) {
         console.error(err.message);

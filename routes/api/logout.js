@@ -1,17 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../../public/config/default');
+const User = require('../../models/User');
 
-router.get('/',(req,res) => {
-    user.logged = false;
-    user.name = "";
-    user.username = "";
-    user.dept = "";
-    user.year = "";
-    user.role = 'student';
+router.get('/:name', async(req,res) => {
+   
+    let currentUser = await User.findOneAndUpdate({name: req.params.name},{logged:false},{new:true});
 
     try {
-        res.render('index.ejs',{logged: user.logged, user:user.role, name:''});
+        res.render('index.ejs',{logged: currentUser.logged, role:currentUser.role, name:''});
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

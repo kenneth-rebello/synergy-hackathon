@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Register New User - Project Hub</title>
+    <title>Generate A Report - Project Hub</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -46,7 +46,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="oi oi-menu" style="font-size: 20px">Menu</span>
         </button>
-        <form action="/projects/search" class="searchform order-lg-last">
+        <form action="/projects/search/<%=name%>" class="searchform order-lg-last">
           <div class="form-group d-flex">
             <input type="text" name="keywords" class="form-control pl-3" placeholder="Search">
             <button type="submit" placeholder="" class="form-control search"><span class="ion-ios-search"></span></button>
@@ -54,23 +54,25 @@
         </form>
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
-                <% if(logged) { %>                    
-                    <% if (role == 'admin'){ %>
-                    <li class="nav-item" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
-                    <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
-                    <li class="nav-item active"><a href="/report/generate" class="nav-link" style="font-size: 20px">Generate Report</a></li>
-                    <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
-                    <% }else{ %>
-                    <li class="nav-item" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
-                    <li class="nav-item active"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
-                    <li class="nav-item"><a href="/upload" class="nav-link" style="font-size: 20px">Upload</a></li>
-                    <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
-                    <% }} else{ %>
-                    <li class="nav-item active"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
-                    <li class="nav-item"><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
-                    <li class="nav-item"><a href="/register" class="nav-link" style="font-size: 20px">Register</a></li>
-                <% } %>
+                <% if(logged) {
+                  if (role == 'admin'){ %>
+                  <li class="nav-item active"><a href="/logged/<%=name%>" class="nav-link pl-0" style="font-size: 20px">Home</a></li> 
+                  <li class="nav-item" ><a href="/users/<%=name%>&<%=name%>" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
+                  <li class="nav-item"><a href="/projects/<%=name%>" class="nav-link" style="font-size: 20px">Projects</a></li>
+                  <li class="nav-item"><a href="/report/generate/<%=name%>" class="nav-link" style="font-size: 20px">Generate Report</a></li>
+                  <li class="nav-item"><a href="/logout/<%=name%>" class="nav-link" style="font-size: 20px">Logout</a></li>
+                  <% }else{ %>
+                  <li class="nav-item active"><a href="/logged/<%=name%>" class="nav-link pl-0" style="font-size: 20px">Home</a></li> 
+                  <li class="nav-item" ><a href="/users/<%=name%>&<%=name%>" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
+                  <li class="nav-item"><a href="/projects/<%=name%>" class="nav-link" style="font-size: 20px">Projects</a></li>
+                  <li class="nav-item"><a href="/upload/<%=name%>" class="nav-link" style="font-size: 20px">Upload</a></li>
+                  <li class="nav-item"><a href="/logout/<%=name%>" class="nav-link" style="font-size: 20px">Logout</a></li>
+                  <% }} else{ %>
+                  <li class="nav-item active"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
+                  <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                  <li class="nav-item"><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
+                  <li class="nav-item"><a href="/register" class="nav-link" style="font-size: 20px">Register</a></li>
+                  <% } %>
             </ul>
         </div>
       </div>
@@ -87,10 +89,10 @@
               <label style="background-color: orangered; color:whitesmoke; font-size: 25px"><%= msg %></label>
             <% } %>
 
-            <form action='/report' method="post">    
+            <form action='/report/<%=name%>' method="post">    
               <div class="form-group">
                 <span>Username</span>
-                <input type="text" name="username" style="border-radius: 25px; padding: 10px" placeholder="Enter username" required>
+                <input type="text" name="username" style="border-radius: 25px; padding: 10px" value="<%=name%>" required>
               </div>
               <div class="form-group">
                 <span>Date Of Report</span>

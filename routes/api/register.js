@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../../public/config/default');
 const User = require('../../models/User');
 
 //Body Parser Middleware
@@ -11,6 +10,17 @@ router.get('/', async (req,res) => {
     try {
 
         res.render('register.ejs',{msg:''});
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }   
+});
+
+router.get('/promote', async (req,res) => {
+    try {
+
+        res.render('register.ejs',{msg:'Register To See More'});
 
     } catch (err) {
         console.error(err.message);

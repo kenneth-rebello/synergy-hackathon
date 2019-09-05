@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../../public/config/default');
 const User = require('../../models/User');
 const Project = require('../../models/Project');
 
@@ -8,21 +7,23 @@ const Project = require('../../models/Project');
 router.use(express.json());
 router.use(express.urlencoded({extended: true}));
 
-router.get('/:name', async function(req, res){
-    name = req.params.name;
-    let current = await User.findOne({name:name});
-    let projects = await Project.find({uploader:current._id}).populate('uploader',['username','dept', 'year','name']);
+router.get('/:user&:name', async function(req, res){
+
+    let currentUser = await User.findOne({name: req.params.name});
+    let user = req.params.user;
+    let profile = await User.findOne({name:user});
+    let projects = await Project.find({uploader:profile._id}).populate('uploader',['username','dept', 'year','name']);
     
     if(projects.length>0){
-        return res.render('user.ejs',{projects, user:name, name:user.name, logged:user.logged,role:user.role,msg:''});
+        return res.render('user.ejs',{projects, user:user, name:currentUser.name, logged:currentUser.logged,role:currentUser.role,msg:''});
     }else{
-        res.render('user.ejs',{projects, user:name, name:user.name,logged:user.logged,role:user.role,msg:'No Projects To Show'})
+        res.render('user.ejs',{projects, user:user, name:currentUser.name,logged:currentUser.logged,role:currentUser.role,msg:'No Projects To Show'})
     }
 });
 
-router.post('/filter/:name', async(req, res) => {
+router.post('/filter/:user&:name', async(req, res) => {
 
-    let name = req.params.name;
+    let currentUser = await User.findOne({name: req.params.name});
     let { domain } = req.body;
     let domainCheck;
 
@@ -32,14 +33,13 @@ router.post('/filter/:name', async(req, res) => {
         domainCheck = ['Web','ML','IOT','DSA'];
     }
 
-    let current = await User.findOne({name:name});
-
-    let projects = await Project.find({uploader : current.id, domain: {$in :domainCheck}}).populate('uploader',['username', 'dept','year','name']);
+    let profile = await User.findOne({name:req.params.user});
+    let projects = await Project.find({uploader : profile.id, domain: {$in :domainCheck}}).populate('uploader',['username', 'dept','year','name']);
     
     if(projects.length>0){
-        return res.render('user.ejs',{projects, user:name, name:user.name, logged:user.logged,role:user.role,msg:''});
+        return res.render('user.ejs',{projects, user:profile.name, name:currentUser.name, logged:currentUser.logged, role:currentUser.role,msg:''});
     }else{
-        res.render('user.ejs',{projects, user:name, name:user.name,logged:user.logged,role:user.role,msg:'No Projects To Show'})
+        res.render('user.ejs',{projects, user:profile.name, name:currentUser.name, logged:currentUser.logged, role:currentUser.role,msg:'No Projects To Show'})
     }
 
     

@@ -45,7 +45,7 @@
         </button>
 
         <% if(logged) { %>
-	      <form action="/projects/search" method="post" class="searchform order-lg-last">
+	      <form action="/projects/search/<%=name%>" method="post" class="searchform order-lg-last">
           <div class="form-group d-flex">
             <input type="text" name="keywords" class="form-control pl-3" placeholder="Search">
             <button type="submit" placeholder="" class="form-control search"><span class="ion-ios-search"></span></button>
@@ -55,20 +55,21 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav mr-auto">
-
-            <li class="nav-item active"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
             <% if(logged) {
                 if (role == 'admin'){ %>
-                <li class="nav-item" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
-                <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
-                <li class="nav-item"><a href="/report/generate" class="nav-link" style="font-size: 20px">Generate Report</a></li>
-                <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
+                <li class="nav-item active"><a href="/logged/<%=name%>" class="nav-link pl-0" style="font-size: 20px">Home</a></li> 
+                <li class="nav-item" ><a href="/users/<%=name%>&<%=name%>" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
+                <li class="nav-item"><a href="/projects/<%=name%>" class="nav-link" style="font-size: 20px">Projects</a></li>
+                <li class="nav-item"><a href="/report/generate/<%=name%>" class="nav-link" style="font-size: 20px">Generate Report</a></li>
+                <li class="nav-item"><a href="/logout/<%=name%>" class="nav-link" style="font-size: 20px">Logout</a></li>
                 <% }else{ %>
-                <li class="nav-item" ><a href="/users/<%= name %>" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
-                <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
-                <li class="nav-item"><a href="/upload" class="nav-link" style="font-size: 20px">Upload</a></li>
-                <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
+                <li class="nav-item active"><a href="/logged/<%=name%>" class="nav-link pl-0" style="font-size: 20px">Home</a></li> 
+                <li class="nav-item" ><a href="/users/<%=name%>&<%=name%>" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
+                <li class="nav-item"><a href="/projects/<%=name%>" class="nav-link" style="font-size: 20px">Projects</a></li>
+                <li class="nav-item"><a href="/upload/<%=name%>" class="nav-link" style="font-size: 20px">Upload</a></li>
+                <li class="nav-item"><a href="/logout/<%=name%>" class="nav-link" style="font-size: 20px">Logout</a></li>
                 <% }} else{ %>
+                <li class="nav-item active"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
                 <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                 <li class="nav-item"><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
                 <li class="nav-item"><a href="/register" class="nav-link" style="font-size: 20px">Register</a></li>
@@ -114,7 +115,7 @@
             		<span class="flaticon-teacher"></span>
               </div>
               <div class="media-body p-2 mt-3">
-                <a href="/projects/domain/Web"><h3 class="heading">Web Development</h3></a>
+                <a href="/projects/domain/Web&<%=name%>"><h3 class="heading">Web Development</h3></a>
                 <p>Ranges from developing the simplest static single page to the most complex web-based internet applications electronic businesses, and social network services.</p>
               </div>
             </div>      
@@ -125,7 +126,7 @@
             		<span class="flaticon-reading"></span>
               </div>
               <div class="media-body p-2 mt-3">
-                <a href="/projects/domain/ML"><h3 class="heading">Machine Learning</h3></a>
+                <a href="/projects/domain/ML&<%=name%>"><h3 class="heading">Machine Learning</h3></a>
                 <p>Machine learning is the science of getting computers to act without being explicitly programmed.</p>
               </div>
             </div>    
@@ -136,7 +137,7 @@
             		<span class="flaticon-books"></span>
               </div>
               <div class="media-body p-2 mt-3">
-                <a href="/projects/domain/DSA"><h3 class="heading">Data Structures & Algorithms</h3></a>
+                <a href="/projects/domain/DSA&<%=name%>"><h3 class="heading">Data Structures & Algorithms</h3></a>
                 <p>Every program depends on algorithms and data
                   structures, but few programs depend on the
                   invention of brand new ones.</p>
@@ -149,7 +150,7 @@
             		<span class="flaticon-diploma"></span>
               </div>
               <div class="media-body p-2 mt-3">
-                <a href="/projects/domain/IOT"><h3 class="heading">Internet of Things</h3></a>
+                <a href="/projects/domain/IOT&<%=name%>"><h3 class="heading">Internet of Things</h3></a>
                 <p>The network of physical devices, embedded with electronics, software, sensors  and connectivity which enables these things to connect and exchange data.</p>
               </div>
             </div>      

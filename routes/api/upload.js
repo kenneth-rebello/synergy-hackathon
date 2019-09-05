@@ -4,7 +4,6 @@ const multer = require('multer');
 const path = require('path');
 const Project = require('../../models/Project');
 const User = require('../../models/User');
-const user = require('../../public/config/default');
 const fs = require('fs');
 
 
@@ -22,23 +21,23 @@ const upload = multer({
 }).array('project',2);
 
 //Call Upload page
-router.get('/', async (req, res) => {
-    let teachers = await User.find({role:"teacher"});
-    let students = await User.find({role:"student"});
-    if(user.logged && user.role != 'admin'){
+router.get('/:name', async (req, res) => {
+
+    let currentUser = await User.findOne({name:req.params.name});
+    
+    if(currentUser.logged && currentUser.role != 'admin'){
         let teachers = await User.find({role:"teacher"});
         let students = await User.find({role:"student"});
-        console.log(students);
-        return res.render('upload.ejs',{msg:'', name:user.name, logged:user.logged, role:user.role, teachers, students});
+        return res.render('upload.ejs',{msg:'', name:currentUser.name, logged:currentUser.logged, role:currentUser.role, teachers, students});
     }
     else{
-        res.render('index.ejs',{logged:user.logged, role:user.role, name:user.name, teachers, students})
+        res.render('index.ejs',{logged:currentUser.logged, role:currentUser.role, name:currentUser.name})
     }
 });
 
 
 //Make An Upload
-router.post('/', (req, res)=>{
+router.post('/:name', (req, res)=>{
     upload(req, res, async (err) =>{
         if(!err){
             console.log('Success');
@@ -62,25 +61,25 @@ router.post('/', (req, res)=>{
                     
                     fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',file1.filename), (err) => {});
                     fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',file2.filename), (err) => {});
-                    return res.render('upload.ejs',{msg: 'Report of .pdf type required', teachers, students, name:user.name,logged:user.logged, role:user.role});
+                    return res.render('upload.ejs',{msg: 'Report of .pdf type required', teachers, students, name:currentUser.name,logged:currentUser.logged, role:currentUser.role});
                 }
             }else{
                 if(file1.mimetype == 'application/pdf'){
                     newUpload.reportName = file1.filename;
                 }else{
                     fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',file1.filename), (err) => {});
-                    return res.render('upload.ejs',{msg: 'Report of .pdf type required', teachers, students, name:user.name,logged:user.logged, role:user.role})
+                    return res.render('upload.ejs',{msg: 'Report of .pdf type required', teachers, students, name:currentUser.name,logged:currentUser.logged, role:currentUser.role})
                 }
                 
             }
 
 
-            let student = await User.findOne({username:user.username})
-            newUpload.uploader = student._id
+            let currentUser = await User.findOne({name:req.params.name})
+            newUpload.uploader = currentUser._id
             newUpload.title = p_title;
             newUpload.desc = desc;
             newUpload.keywords = keywords.split(',').map(word => word.trim());
-            newkeywords = [domain, user.username, user.dept, user.year];
+            newkeywords = [domain, currentUser.username, currentUser.dept, currentUser.year];
             newUpload.keywords = newUpload.keywords.concat(newkeywords);
             newUpload.published = published;
             newUpload.domain = domain;
@@ -100,13 +99,13 @@ router.post('/', (req, res)=>{
                     if(newUpload.pptName){
                         fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',toDelete.pptName), (err) => {});
                     };
-                    return res.render('upload.ejs',{msg:'Only youtube embed links allowed', teachers, students, name:user.name,logged:user.logged, role:user.role});
+                    return res.render('upload.ejs',{msg:'Only youtube embed links allowed', teachers, students, name:currentUser.name,logged:currentUser.logged, role:currentUser.role});
                 }        
             };
 
             try {
 
-                let existing = await Project.findOne({title: req.body.p_title, uploader: student._id});
+                let existing = await Project.findOne({title: req.body.p_title, uploader: currentUser._id});
                 if(existing){
                     console.log('Updating Record...')
                     updatedEntry = await Project.findOneAndUpdate({_id: existing._id}, newUpload, {new:true});
@@ -127,10 +126,10 @@ router.post('/', (req, res)=>{
                 console.error(err.message);
             }
 
-            return res.render('upload.ejs',{msg:'Upload Successful', teachers, students, name:user.name, logged:user.logged, role:user.role});
+            return res.render('upload.ejs',{msg:'Upload Successful', teachers, students, name:currentUser.name, logged:currentUser.logged, role:currentUser.role});
             
         }else{
-            return res.render('upload.ejs', {msg:err.message, teachers, students, name:user.name, logged:user.logged, role:user.role})
+            return res.render('upload.ejs', {msg:err.message, teachers, students, name:currentUser.name, logged:currentUser.logged, role:currentUser.role})
         }
     });
 });

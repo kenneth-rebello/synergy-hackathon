@@ -44,7 +44,7 @@
                 <span class="oi oi-menu" style="font-size: 30px">Menu</span>
             </button>
             <% if(logged) { %>
-            <form action="/projects/search" method="post" class="searchform order-lg-last">
+            <form action="/projects/search/<%=name%>" method="post" class="searchform order-lg-last">
                 <div class="form-group d-flex">
                 <input type="text" name="keywords" class="form-control pl-3" placeholder="Search">
                 <button type="submit" placeholder="" class="form-control search"><span class="ion-ios-search"></span></button>
@@ -53,20 +53,22 @@
             <% } %>
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
-                <% if(logged) { %>                    
-                    <% if (role == 'admin'){ %>
-                    <li class="nav-item" ><a href="/" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
-                    <li class="nav-item active"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
-                    <li class="nav-item"><a href="/report/generate" class="nav-link" style="font-size: 20px">Generate Report</a></li>
-                    <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
+                <% if(logged) {
+                    if (role == 'admin'){ %>
+                    <li class="nav-item active"><a href="/logged/<%=name%>" class="nav-link pl-0" style="font-size: 20px">Home</a></li> 
+                    <li class="nav-item" ><a href="/users/<%=name%>&<%=name%>" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
+                    <li class="nav-item"><a href="/projects/<%=name%>" class="nav-link" style="font-size: 20px">Projects</a></li>
+                    <li class="nav-item"><a href="/report/generate/<%=name%>" class="nav-link" style="font-size: 20px">Generate Report</a></li>
+                    <li class="nav-item"><a href="/logout/<%=name%>" class="nav-link" style="font-size: 20px">Logout</a></li>
                     <% }else{ %>
-                    <li class="nav-item" ><a href="/users/<%=name%>" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
-                    <li class="nav-item active"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
-                    <li class="nav-item"><a href="/upload" class="nav-link" style="font-size: 20px">Upload</a></li>
-                    <li class="nav-item"><a href="/logout" class="nav-link" style="font-size: 20px">Logout</a></li>
+                    <li class="nav-item active"><a href="/logged/<%=name%>" class="nav-link pl-0" style="font-size: 20px">Home</a></li> 
+                    <li class="nav-item" ><a href="/users/<%=name%>&<%=name%>" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
+                    <li class="nav-item"><a href="/projects/<%=name%>" class="nav-link" style="font-size: 20px">Projects</a></li>
+                    <li class="nav-item"><a href="/upload/<%=name%>" class="nav-link" style="font-size: 20px">Upload</a></li>
+                    <li class="nav-item"><a href="/logout/<%=name%>" class="nav-link" style="font-size: 20px">Logout</a></li>
                     <% }} else{ %>
-                    <li class="nav-item active"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
+                    <li class="nav-item active"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
+                    <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
                     <li class="nav-item"><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
                     <li class="nav-item"><a href="/register" class="nav-link" style="font-size: 20px">Register</a></li>
                     <% } %>
@@ -82,6 +84,44 @@
             <div class="collapse navbar-collapse filter-nav" id="ftco-nav">
                 <ul class="navbar-nav mr-auto">
                     <li><h1 style="font-size:30px; padding:5px; ">Filters:</h1></li>
+                    <% if(logged){ %>
+                    <form action="/projects/filter/<%= name%>" method="POST">
+                        <li class="nav-item" style="color:midnightblue; font-size:25px; display:inline">      
+                            <span>By Department</span>
+                            <select name="dept" style="padding:10px">
+                                <option value="">NONE</option>
+                                <option value="InfoTech">IT</option>
+                                <option value="Computers">COMPS</option>
+                                <option value="Electronics">ELEX</option>
+                                <option value="Production">PROD</option>
+                                <option value="Mechanical">MECH</option>
+                            </select>   
+                        </li>
+                        <li  class="nav-item" style="color:midnightblue; font-size:25px; display:inline">
+                            <span>By Year</span>
+                            <select name="year"style="padding:10px">
+                                <option value="">NONE</option>
+                                <option value="FE">I</option>
+                                <option value="SE">II</option>
+                                <option value="TE">III</option>
+                                <option value="BE">IV</option>
+                            </select>    
+                        </li>
+                        <li  class="nav-item" style="color:midnightblue; font-size:25px; display:inline">
+                            <span>By Domain</span>
+                            <select name="domain"style="padding:10px">
+                                <option value="">NONE</option>
+                                <option value="Web">WEB</option>
+                                <option value="ML">ML</option>
+                                <option value="IOT">IOT</option>
+                                <option value="DSA">DSA</option>
+                            </select>    
+                        </li>
+                        <li class="nav-item" style="padding-left :30px; display:inline">
+                            <input class="btn " type="submit" value="Search" style="background-color: midnightblue; color:white">
+                        </li>
+                    </form>    
+                    <% }else{ %>
                     <form action="/projects/filter" method="POST">
                         <li class="nav-item" style="color:midnightblue; font-size:25px; display:inline">      
                             <span>By Department</span>
@@ -118,6 +158,7 @@
                             <input class="btn " type="submit" value="Search" style="background-color: midnightblue; color:white">
                         </li>
                     </form>
+                    <% } %>
                 </ul>
             </div>
             </div>
@@ -132,16 +173,33 @@
         <% let{ _id, dateOfUpload, title, desc, domain} = project %>
         <div class="col-md-6 col-lg-4 ftco-animate" style="padding: 10px">
             <div class="blog-entry" style="align-self: left">
-                <a href="/projects/<%= _id %>" class="block-20 d-flex align-items-end" style="background-image: url('/styles/images/image_6.jpg');">
-                <div class="meta-date text-center p-2">
-                    <% let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] %>
-                    <span class="day"><%= dateOfUpload.getDate() %></span>
-                    <span class="mos"><%= months[dateOfUpload.getMonth()] %></span>
-                    <span class="yr"><%= dateOfUpload.getFullYear() %></span>
-                </div>
+                
+                <%if(logged){%>
+                <a href="/projects/project/<%= _id %>/<%=name%>" class="block-20 d-flex align-items-end" style="background-image: url('/styles/images/image_6.jpg');">
+                    <div class="meta-date text-center p-2">
+                        <% let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] %>
+                        <span class="day"><%= dateOfUpload.getDate() %></span>
+                        <span class="mos"><%= months[dateOfUpload.getMonth()] %></span>
+                        <span class="yr"><%= dateOfUpload.getFullYear() %></span>
+                    </div>
                 </a>
+                <%}else{%>
+                <a href="/register/promote" class="block-20 d-flex align-items-end" style="background-image: url('/styles/images/image_6.jpg');">
+                    <div class="meta-date text-center p-2">
+                        <% let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] %>
+                        <span class="day"><%= dateOfUpload.getDate() %></span>
+                        <span class="mos"><%= months[dateOfUpload.getMonth()] %></span>
+                        <span class="yr"><%= dateOfUpload.getFullYear() %></span>
+                    </div>
+                </a>
+                <%}%>
                 <div class="text bg-white p-4">
-                    <h1 class="heading"><a href="/projects/<%= _id %>"><strong><%= title %></strong></a></h1>
+                    <%if(logged){%>
+                        <h1 class="heading"><a href="/projects/project/<%= _id %>/<%=name%>"><strong><%= title %></strong></a></h1>
+                    <%}else{%>
+                        <h1 class="heading"><a href="/register/promote"><strong><%= title %></strong></a></h1>
+                    <%}%>
+                    
                     <p>
                         <%= desc %>
                     </p>
@@ -158,7 +216,11 @@
                         </p>
                     </div>
                     <div class="d-flex align-items-left mt-4">
-                            <p class="mb-0"><a href="/projects/<%= _id %>" class="btn btn-primary">Read More<span class="ion-ios-arrow-round-forward"></span></a></p>
+                        <%if(logged){%>
+                            <p class="mb-0"><a href="/projects/project/<%= _id %>/<%=name%>" class="btn btn-primary">Read More<span class="ion-ios-arrow-round-forward"></span></a></p>
+                        <%}else{%>
+                            <p class="mb-0"><a href="/register/promote" class="btn btn-primary">Read More<span class="ion-ios-arrow-round-forward"></span></a></p>
+                        <%}%>
                     </div>
                 </div>
             </div>

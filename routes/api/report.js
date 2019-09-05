@@ -1,25 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const pdf = require('html-pdf');
-const user = require('../../public/config/default')
 const Project = require('../../models/Project');
 
 //Body Parser Middleware
 router.use(express.json());
 router.use(express.urlencoded({extended: true}));
 
-router.get('/generate', async function (req, res){
+router.get('/generate/:name', async function (req, res){
+
+    let currentUser = await User.findOne({name: req.params.name});
     try {
-        res.render('generate.ejs',{logged:user.logged, role:user.role, name:user.name, msg:''})
+        res.render('generate.ejs',{logged:currentUser.logged, role:currentUser.role, name:currentUser.name, msg:''})
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
 });
 
-router.post('/', async function(req, res){
-    if(user.role == 'admin'){
-        let filter = {};
+router.post('/:name', async function(req, res){
+
+    let currentUser = await User.findOne({name: req.params.name});
+    if(currentUser.role == 'admin'){
+        
         let { username, date, domain, dept, year} = req.body;
         
         let filters={}
