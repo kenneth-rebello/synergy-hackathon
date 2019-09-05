@@ -114,6 +114,7 @@
         <div class="col-md-6 col-lg-4 ftco-animate" style="padding: 10px">
             <div class="blog-entry" style="align-self: left">
                 <%  
+                    let imgURL ='';
                     if(domain=="ML"){imgURL = "/styles/images/ml512.png"};
                     if(domain=="DSA"){imgURL = "/styles/images/dsa512.png"};
                     if(domain=="IOT"){imgURL = "/styles/images/iot512.png"};
@@ -156,7 +157,7 @@
 <% if (msg!= ''){ %>
     <label style="background-color: orangered; color:whitesmoke; font-size: 25px" class="px-3 py-3"><%= msg %></label>
     <% if(logged && role != 'admin'){ %>
-        <a href="/upload"></a>
+    <hr><a href="/upload" style="font-size: 30px">Create Project</a>
 <% }} %>
 <% if(projects.length>0){ 
     let {uploader} = projects[0]; %>
