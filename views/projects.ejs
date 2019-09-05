@@ -173,9 +173,16 @@
         <% let{ _id, dateOfUpload, title, desc, domain} = project %>
         <div class="col-md-6 col-lg-4 ftco-animate" style="padding: 10px">
             <div class="blog-entry" style="align-self: left">
-                
+                <%  
+                    
+                    if(domain=="ML"){imgURL = "/styles/images/ml512.png"};
+                    if(domain=="DSA"){imgURL = "/styles/images/dsa512.png"};
+                    if(domain=="IOT"){imgURL = "/styles/images/iot512.png"};
+                    if(domain=="Web"){imgURL = "/styles/images/web512.png"};
+                %>
+
                 <%if(logged){%>
-                <a href="/projects/project/<%= _id %>/<%=name%>" class="block-20 d-flex align-items-end" style="background-image: url('/styles/images/image_6.jpg');">
+                <a href="/projects/project/<%= _id %>/<%=name%>" class="block-20 d-flex align-items-end" style="background-image: url(<%=imgURL%>)">
                     <div class="meta-date text-center p-2">
                         <% let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] %>
                         <span class="day"><%= dateOfUpload.getDate() %></span>
@@ -184,7 +191,7 @@
                     </div>
                 </a>
                 <%}else{%>
-                <a href="/register/promote" class="block-20 d-flex align-items-end" style="background-image: url('/styles/images/image_6.jpg');">
+                <a href="/register/promote" class="block-20 d-flex align-items-end" style="background-image: url(<%=imgURL%>);">
                     <div class="meta-date text-center p-2">
                         <% let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] %>
                         <span class="day"><%= dateOfUpload.getDate() %></span>

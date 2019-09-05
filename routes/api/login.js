@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../../public/config/default');
 const User = require('../../models/User');
 
 //Body Parser Middleware
@@ -35,13 +34,13 @@ router.post('/', async (req, res) => {
     
         
         if(currentUser.role == role){
-            user.role = role;
+            currentUser = await User.findOneAndUpdate({_id:currentUser._id},{logged:true},{new:true});
+            res.render('index.ejs',{logged: currentUser.logged, role:currentUser.role, name:currentUser.name});    
         }else{
             return res.render('login.ejs',{msg:'Not Authorized'});
         } 
     
-        currentUser = await User.findOneAndUpdate({_id:currentUser._id},{logged:true},{new:true});
-        res.render('index.ejs',{logged: currentUser.logged, role:currentUser.role, name:currentUser.name});
+        
         
     } catch (err) {
         console.error(err.message);
