@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 const User = require('../../models/User');
 
 //Body Parser Middleware
@@ -46,8 +47,11 @@ router.post('/', async (req,res) => {
                 return res.render('register.ejs',{msg:'User Already Exits'});
             }else{
                 console.log('Creating User Record...');
+
+                let salt = bcrypt.genSaltSync(10);
+                let hashedPassword = bcrypt.hashSync(password, salt);
                 newUser = new User({
-                    username, dept, year, name, password, role, about
+                    username, dept, year, name, password:hashedPassword, role, about
                 });
                 await newUser.save();    
             }

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 const User = require('../../models/User');
 
 //Body Parser Middleware
@@ -28,7 +29,8 @@ router.post('/', async (req, res) => {
             return res.render('login.ejs',{msg:'User does not exist'});
         }
 
-        if(password !== currentUser.password){
+        let passwordCheck = bcrypt.compareSync(password, currentUser.password)
+        if(!passwordCheck){
             return res.render('login.ejs',{msg:'Incorrect password'});
         }
     
