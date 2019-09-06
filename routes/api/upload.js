@@ -21,27 +21,27 @@ const upload = multer({
 }).array('project',2);
 
 //Call Upload page
-router.get('/:name', async (req, res) => {
+router.get('/:user', async (req, res) => {
 
-    let currentUser = await User.findOne({name:req.params.name});
+    let currentUser = await User.findOne({name:req.params.user});
     
     if(currentUser.logged && currentUser.role != 'admin'){
         let teachers = await User.find({role:"teacher"});
         let students = await User.find({role:"student"});
-        return res.render('upload.ejs',{msg:'', name:currentUser.name, logged:currentUser.logged, role:currentUser.role, teachers, students});
+        return res.render('upload.ejs',{msg:'', user:currentUser, teachers, students});
     }
     else{
-        res.render('index.ejs',{logged:currentUser.logged, role:currentUser.role, name:currentUser.name})
+        res.render('index.ejs',{user: currentUser})
     }
 });
 
 
 //Make An Upload
-router.post('/:name', (req, res)=>{
+router.post('/:user', (req, res)=>{
     upload(req, res, async (err) =>{
         if(!err){
             console.log('Success');
-            
+            let currentUser = await User.findOne({name:req.params.user})
             //Project Details in Project Obj
             const newUpload = {};
             const {p_title, githubRepo, youtubeLink, desc, published, domain, keywords, mentors, members} = req.body;
@@ -61,20 +61,20 @@ router.post('/:name', (req, res)=>{
                     
                     fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',file1.filename), (err) => {});
                     fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',file2.filename), (err) => {});
-                    return res.render('upload.ejs',{msg: 'Report of .pdf type required', teachers, students, name:currentUser.name,logged:currentUser.logged, role:currentUser.role});
+                    return res.render('upload.ejs',{msg: 'Report of .pdf type required', teachers, students, user:currentUser});
                 }
             }else{
                 if(file1.mimetype == 'application/pdf'){
                     newUpload.reportName = file1.filename;
                 }else{
                     fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',file1.filename), (err) => {});
-                    return res.render('upload.ejs',{msg: 'Report of .pdf type required', teachers, students, name:currentUser.name,logged:currentUser.logged, role:currentUser.role})
+                    return res.render('upload.ejs',{msg: 'Report of .pdf type required', teachers, students, user:currentUser})
                 }
                 
             }
 
 
-            let currentUser = await User.findOne({name:req.params.name})
+            
             newUpload.uploader = currentUser._id
             newUpload.title = p_title;
             newUpload.desc = desc;
@@ -99,7 +99,7 @@ router.post('/:name', (req, res)=>{
                     if(newUpload.pptName){
                         fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',toDelete.pptName), (err) => {});
                     };
-                    return res.render('upload.ejs',{msg:'Only youtube embed links allowed', teachers, students, name:currentUser.name,logged:currentUser.logged, role:currentUser.role});
+                    return res.render('upload.ejs',{msg:'Only youtube embed links allowed', teachers, students, user:currentUser});
                 }        
             };
 
@@ -126,13 +126,13 @@ router.post('/:name', (req, res)=>{
                 console.error(err.message);
             }
 
-            return res.render('upload.ejs',{msg:'Upload Successful', teachers, students, name:currentUser.name, logged:currentUser.logged, role:currentUser.role});
+            return res.render('upload.ejs',{msg:'Upload Successful', teachers, students, user: currentUser});
             
         }else{
             let teachers = await User.find({role:"teacher"});
             let students = await User.find({role:"student"});
             let currentUser = await User.findOne({name:req.params.name});
-            return res.render('upload.ejs', {msg:err.message, teachers, students, name:currentUser.name, logged:currentUser.logged, role:currentUser.role})
+            return res.render('upload.ejs', {msg:err.message, teachers, students, user: currentUser})
         }
     });
 });

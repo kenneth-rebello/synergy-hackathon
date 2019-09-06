@@ -28,6 +28,7 @@
     <title>Projects - Project Hub</title>
 </head>
 <body>
+    <% let {name, logged, role} = user %>
     <div style="background-color: midnightblue">  
         <div class="bg-top navbar-light">
             <div class="container">
@@ -138,10 +139,11 @@
                             <span>By Year</span>
                             <select name="year"style="padding:10px">
                                 <option value="">NONE</option>
-                                <option value="FE">I</option>
-                                <option value="SE">II</option>
-                                <option value="TE">III</option>
-                                <option value="BE">IV</option>
+                                <option value="FE">FE</option>
+                                <option value="SE">SE</option>
+                                <option value="TE">TE</option>
+                                <option value="BE">BE</option>
+                                <option value="ALUMNI">ALUMNI</option>
                             </select>    
                         </li>
                         <li  class="nav-item" style="color:midnightblue; font-size:25px; display:inline">

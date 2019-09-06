@@ -31,6 +31,7 @@
 
   </head>
   <body>
+  <% let {logged, role, name} = user %>
   <div style="background-color: midnightblue;">
     <div class="bg-top navbar-light" style="width: 100%">
       <div class="container">
@@ -66,10 +67,10 @@
             <li class="nav-item"><a href="/report/generate/<%=name%>" class="nav-link" style="font-size: 20px">Generate Report</a></li>
             <li class="nav-item"><a href="/logout/<%=name%>" class="nav-link" style="font-size: 20px">Logout</a></li>
             <% }else{ %>
-            <li class="nav-item active"><a href="/logged/<%=name%>" class="nav-link pl-0" style="font-size: 20px">Home</a></li> 
+            <li class="nav-item"><a href="/logged/<%=name%>" class="nav-link pl-0" style="font-size: 20px">Home</a></li> 
             <li class="nav-item" ><a href="/users/<%=name%>&<%=name%>" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
             <li class="nav-item"><a href="/projects/<%=name%>" class="nav-link" style="font-size: 20px">Projects</a></li>
-            <li class="nav-item"><a href="/upload/<%=name%>" class="nav-link" style="font-size: 20px">Upload</a></li>
+            <li class="nav-item active"><a href="/upload/<%=name%>" class="nav-link" style="font-size: 20px">Upload</a></li>
             <li class="nav-item"><a href="/logout/<%=name%>" class="nav-link" style="font-size: 20px">Logout</a></li>
             <% }} else{ %>
             <li class="nav-item active"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>

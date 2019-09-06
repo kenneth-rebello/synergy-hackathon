@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Register New User - Project Hub</title>
+    <title>Edit Profile - Project Hub</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -27,6 +27,7 @@
   
   </head>
   <body>
+<% let {name, username, about, logged, role} = user %>
   <div style="background-color: midnightblue;">
     <div class="bg-top navbar-light" style="width: 100%">
       <div class="container">
@@ -46,7 +47,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="oi oi-menu" style="font-size: 20px">Menu</span>
         </button>
-        <form action="#" class="searchform order-lg-last">
+        <form action="/projects/search/<%=name%>" class="searchform order-lg-last">
           <div class="form-group d-flex">
             <input type="text" class="form-control pl-3" placeholder="Search">
             <button type="submit" placeholder="" class="form-control search"><span class="ion-ios-search"></span></button>
@@ -54,10 +55,25 @@
         </form>
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
+            <% if(logged) {
+            if (role == 'admin'){ %>
+            <li class="nav-item active"><a href="/logged/<%=name%>" class="nav-link pl-0" style="font-size: 20px">Home</a></li> 
+            <li class="nav-item" ><a href="/users/<%=name%>&<%=name%>" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
+            <li class="nav-item"><a href="/projects/<%=name%>" class="nav-link" style="font-size: 20px">Projects</a></li>
+            <li class="nav-item"><a href="/report/generate/<%=name%>" class="nav-link" style="font-size: 20px">Generate Report</a></li>
+            <li class="nav-item"><a href="/logout/<%=name%>" class="nav-link" style="font-size: 20px">Logout</a></li>
+            <% }else{ %>
+            <li class="nav-item active"><a href="/logged/<%=name%>" class="nav-link pl-0" style="font-size: 20px">Home</a></li> 
+            <li class="nav-item" ><a href="/users/<%=name%>&<%=name%>" class="nav-link" style="color: gold; font-size: 20px"><%= name %></a></li>
+            <li class="nav-item"><a href="/projects/<%=name%>" class="nav-link" style="font-size: 20px">Projects</a></li>
+            <li class="nav-item"><a href="/upload/<%=name%>" class="nav-link" style="font-size: 20px">Upload</a></li>
+            <li class="nav-item"><a href="/logout/<%=name%>" class="nav-link" style="font-size: 20px">Logout</a></li>
+            <% }} else{ %>
+            <li class="nav-item active"><a href="/" class="nav-link pl-0" style="font-size: 20px">Home</a></li>
             <li class="nav-item"><a href="/projects" class="nav-link" style="font-size: 20px">Projects</a></li>
-            <li class="nav-item "><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
-            <li class="nav-item active"><a href="/register" class="nav-link" style="font-size: 20px">Register</a></li>
+            <li class="nav-item"><a href="/login" class="nav-link" style="font-size: 20px">Login</a></li>
+            <li class="nav-item"><a href="/register" class="nav-link" style="font-size: 20px">Register</a></li>
+            <% } %>
           </ul>
         </div>
       </div>
@@ -73,47 +89,20 @@
             <% if(msg != ''){ %>
               <label style="background-color: orangered; color:whitesmoke; font-size: 25px"><%= msg %></label>
             <% } %>
-            <a href="/login" style="text-decoration: underline; font-size: 30px">Already have an account? Login here</a>
-						<form action='/register' method="post">
+            <p style="color:midnightblue">Only enter fields to update</p>
+			<form action='/users/update/<%=name%>' method="post">
               <table cellpadding="10">
                 <tr>
                   <div class="form-group">
                     <td><span>Username</span></td>
-                    <td><input type="text" name="username" style="border-radius: 25px; padding: 10px" placeholder="Enter username" required></td>
+                    <td><input type="text" name="username" style="border-radius: 25px; padding: 10px" value="<%=username%>" required></td>
                     <td><span>*Students kindly use your designated roll number</span></td> 
-                  </div>
-                </tr>
-                <tr>
-                  <div class="form-group">
-                    <td><span>Password</span></td>
-                    <td><input type="password" name="password" style="border-radius: 25px; padding: 10px" placeholder="Enter password" required></td>
-                  </div>
-                </tr>
-                <tr>
-                  <div class="form-group">
-                      <td><span>Confirm Password</span></td>
-                      <td><input type="password" name="password_c" style="border-radius: 25px; padding: 10px" placeholder="Enter password again" required></td>
-                  </div>
-                </tr>
-                <tr>
-                  <div class="form-group">
-                    <td><span>Name</span></td>
-                    <td><input type="text" name="name" style="border-radius: 25px; padding: 10px" placeholder="Enter your name" required></td>
                   </div>
                 </tr>
                 <tr>
                   <div class="form-group">
                     <td><span>About yourself</span></td>
                     <td><textarea type="text" name="about" style="border-radius: 25px; padding: 10px; width: 500px; height:150px;"></textarea></td>
-                  </div>
-                </tr>
-                <tr>
-                  <div class="form-group">
-                    <td><span>Choose Account Type</span></td>
-                    <td><select name="role" class="btn btn-primary" required>
-                      <option value="student">Student</option>
-                      <option value="teacher">Teacher</option>
-                    </select></td>
                   </div>
                 </tr>
                 <tr>
@@ -143,7 +132,7 @@
                 </tr>
               </table>              
               <div class="form-group">
-                <input type="submit" value="Register" class="btn btn-primary py-3 px-5">
+                <input type="submit" value="Done" class="btn btn-primary py-3 px-5">
               </div>
             </form>
             

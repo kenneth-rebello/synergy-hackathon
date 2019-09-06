@@ -27,6 +27,7 @@
   
   </head>
   <body>
+  <% let {logged, role , name} = user %>
   <div style="background-color: midnightblue; padding-bottom: 100px">
     <div class="bg-top navbar-light" style="width: 100%">
       <div class="container">
@@ -113,10 +114,11 @@
                 <span>Select A Year</span>
                 <select name="year" class="btn btn-primary">
                     <option value="">All</option>
-                    <option value="FE">I</option>
-                    <option value="SE">II</option>
-                    <option value="TE">III</option>
-                    <option value="BE">IV</option>
+                    <option value="FE">FE</option>
+                    <option value="SE">SE</option>
+                    <option value="TE">TE</option>
+                    <option value="BE">BE</option>
+                    <option value="ALUMNI">ALUMNI</option>
                 </select>
               </div>
               <div class="form-group">

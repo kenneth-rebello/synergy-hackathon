@@ -32,7 +32,7 @@ router.post('/', async (req,res) => {
     try {
         
         //User Details in User Obj
-        const {username, password, password_c, name, dept, year, role} = req.body;
+        const {username, password, password_c, name, about, dept, year, role} = req.body;
         try {
 
             if(password != password_c){
@@ -47,7 +47,7 @@ router.post('/', async (req,res) => {
             }else{
                 console.log('Creating User Record...');
                 newUser = new User({
-                    username, dept, year, name, password, role
+                    username, dept, year, name, password, role, about
                 });
                 await newUser.save();    
             }

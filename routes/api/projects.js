@@ -12,12 +12,15 @@ router.use(express.urlencoded({extended: true}));
 //Get all projects without logging in
 router.get('/', async function(req, res){
     try{
-
+        noUser = {}
+        noUser.logged= false;
+        noUser.role ="";
+        noUser.name ="";
         const projects = await Project.find({}).populate('uploader',['username', 'dept','year','name']);
         if(projects.length >0){     
-            res.render('projects.ejs',{projects, name:'', logged:false, role:'', msg:''});
+            res.render('projects.ejs',{projects, user:noUser, msg:''});
         }else{
-            res.render('projects.ejs',{projects, name:'',logged:false, role:'', msg:'No Projects To Show'});
+            res.render('projects.ejs',{projects, user:noUser, msg:'No Projects To Show'});
         }
         
     }catch(err){
@@ -28,15 +31,15 @@ router.get('/', async function(req, res){
 });
 
 //Get All Projects 
-router.get('/:name', async function(req, res){
+router.get('/:user', async function(req, res){
     try{
 
-        let currentUser = await User.findOne({name:req.params.name});
+        let currentUser = await User.findOne({name:req.params.user});
         const projects = await Project.find().populate('uploader',['username', 'dept','year','name']);
         if(projects.length <= 0){     
-            res.render('projects.ejs',{projects, name:currentUser.name, logged:currentUser.logged, role:currentUser.role, msg:'No Projects To Show'});
+            res.render('projects.ejs',{projects, user:currentUser, msg:'No Projects To Show'});
         }else{
-            res.render('projects.ejs',{projects, name:currentUser.name,logged:currentUser.logged, role:currentUser.role, msg:''});
+            res.render('projects.ejs',{projects, user:currentUser, msg:''});
         }
         
     }catch(err){
@@ -47,16 +50,15 @@ router.get('/:name', async function(req, res){
 });
 
 
-router.get('/domain/:domain&:name', async function(req, res){
+router.get('/domain/:domain&:user', async function(req, res){
     try{
 
-        domain = req.params.domain;
-        let currentUser = await User.findOne({name:req.params.name});
-        const projects = await Project.find({'domain': domain}).populate('uploader',['username', 'dept','year','name']);
+        let currentUser = await User.findOne({name:req.params.user});
+        const projects = await Project.find({'domain': req.params.domain}).populate('uploader',['username', 'dept','year','name']);
         if(projects.length <= 0 && currentUser.logged){     
-            res.render('projects.ejs',{projects, name:currentUser.name, logged:currentUser.logged, role:currentUser.role, msg:'No Projects To Show'});
+            res.render('projects.ejs',{projects, user:currentUser, msg:'No Projects To Show'});
         }else{
-            res.render('projects.ejs',{projects, name:currentUser.name,logged:currentUser.logged, role:currentUser.role, msg:''});
+            res.render('projects.ejs',{projects, user:currentUser, msg:''});
         }
 
     }catch(err){
@@ -68,13 +70,13 @@ router.get('/domain/:domain&:name', async function(req, res){
 
 
 //Get Each Project
-router.get('/project/:id/:name', async function(req, res){
+router.get('/project/:id/:user', async function(req, res){
     try{
 
-        let currentUser = await User.findOne({name: req.params.name});
+        let currentUser = await User.findOne({name: req.params.user});
         const project = await Project.findOne({_id: req.params.id}).populate('uploader',['username','dept','year','name']);
 
-        res.render('project.ejs',{project, name:currentUser.name, logged:currentUser.logged, role:currentUser.role});
+        res.render('project.ejs',{project, user:currentUser});
         
     }catch(err){
         
@@ -84,10 +86,10 @@ router.get('/project/:id/:name', async function(req, res){
 });
 
 
-router.get('/delete/:id/:name', async function(req, res){
+router.get('/delete/:id/:user', async function(req, res){
     try{
      
-        let currentUser = await User.findOne({name: req.params.name});
+        let currentUser = await User.findOne({name: req.params.user});
         const toDelete = await Project.findOne({_id: req.params.id});
         //Remove file from server public folder
         fs.unlinkSync(path.join(__dirname,'/../../public/uploads/',toDelete.reportName), (err) => {
@@ -107,9 +109,9 @@ router.get('/delete/:id/:name', async function(req, res){
 
         let projects = await Project.find().populate('uploader',['username', 'dept','year','name']);
         if(projects.length <= 0 && currentUser.logged){     
-            res.render('projects.ejs',{projects, name:currentUser.name, logged:currentUser.logged, role:currentUser.role, msg:'No Projects To Show'});
+            res.render('projects.ejs',{projects, user:currentUser, msg:'No Projects To Show'});
         }else{
-            res.render('projects.ejs',{projects, name:currentUser.name,logged:currentUser.logged, role:currentUser.role, msg:''});
+            res.render('projects.ejs',{projects, user:currentUser, msg:''});
         }
          
     }catch(err){
@@ -120,35 +122,35 @@ router.get('/delete/:id/:name', async function(req, res){
     }
 });
 
-router.post('/search/:name', async (req, res) => {
+router.post('/search/:user', async (req, res) => {
 
-    let currentUser = await User.findOne({name: req.params.name});
+    let currentUser = await User.findOne({name: req.params.user});
     let { keywords } = req.body;
     let current = await User.findOne({username:keywords});
     if(current){
         let projects = await Project.find({uploader:current._id}).populate('uploader',['username','dept', 'year','name']);
     
         if(projects.length>0){
-            return res.render('user.ejs',{projects, user:current.name, name:currentUser.name, logged:currentUser.logged,role:currentUser.role,msg:''});
+            return res.render('user.ejs',{projects, profile:current, user:currentUser,msg:''});
         }else{
-            res.render('user.ejs',{projects, user:current.name, name:currentUser.name,logged:currentUser.logged,role:currentUser.role,msg:'No Projects To Show'})
+            res.render('user.ejs',{projects, profile:current, user:currentUser,msg:'No Projects To Show'})
         }
     }
     searchwords = keywords.split(',').map(word => word.trim());
 
     let projects = await Project.find({keywords: {$in: searchwords}}).populate('uploader',['username', 'dept','year','name']);;
     if(projects.length <= 0 && currentUser.logged){     
-        res.render('projects.ejs',{projects, name:currentUser.name, logged:currentUser.logged, role:currentUser.role, msg:'No Projects To Show'});
+        res.render('projects.ejs',{projects, user:currentUser, msg:'No Projects To Show'});
     }else{
-        res.render('projects.ejs',{projects, name:currentUser.name,logged:currentUser.logged, role:currentUser.role, msg:''});
+        res.render('projects.ejs',{projects, user:currentUser, msg:''});
     }
     
 });
 
-router.post('/filter/:name', async(req, res) => {
+router.post('/filter/:user', async(req, res) => {
 
     let { dept, year, domain } = req.body;
-    let currentUser = await User.findOne({name: req.params.name});
+    let currentUser = await User.findOne({name: req.params.user});
 
     let filters={}
     let domainCheck;
@@ -165,14 +167,14 @@ router.post('/filter/:name', async(req, res) => {
         filters.year = year;
     }
 
-    let users = await User.find(filters)
+    let creators = await User.find(filters)
     let publisher = [];
-    users.forEach( (user) => {
-        publisher.push(user._id);
+    creators.forEach( (creator) => {
+        publisher.push(creator._id);
     });
     
     let projects = await Project.find({uploader : publisher, domain: {$in :domainCheck}}).populate('uploader',['username', 'dept','year','name']);
-    res.render('projects.ejs',{projects, name:currentUser.name,logged:currentUser.logged,role:currentUser.role,msg:''});
+    res.render('projects.ejs',{projects, user:currentUser,msg:''});
 });
 
 //Filter without logging in
@@ -199,15 +201,20 @@ router.post('/filter', async(req, res) => {
     users.forEach( (user) => {
         publisher.push(user._id);
     });
+
+    noUser = {}
+    noUser.logged= false;
+    noUser.role ="";
+    noUser.name ="";
     
     let projects = await Project.find({uploader : {$in:publisher}, domain: {$in :domainCheck}}).populate('uploader',['username', 'dept','year','name']);
-    res.render('projects.ejs',{projects, name:'',logged:false,role:'',msg:''});
+    res.render('projects.ejs',{projects, user:noUser ,msg:''});
 });
 
 
-router.post('/grade/:id/:name', async(req, res) => {
+router.post('/grade/:id/:user', async(req, res) => {
 
-    let currentUser = await User.findOne({name: req.params.name});
+    let currentUser = await User.findOne({name: req.params.user});
     let project = await Project.findOne({_id: req.params.id});
     let { name, grade} = req.body;
     newGrade = { teacher: name, grade: grade}
@@ -217,12 +224,12 @@ router.post('/grade/:id/:name', async(req, res) => {
     teacher.graded.push(project._id);
     await User.findOneAndUpdate({name: name}, {graded: teacher.graded}, {new:true});
 
-    res.render('project.ejs',{project:updated, name:currentUser.name, logged:currentUser.logged, role:currentUser.role})
+    res.render('project.ejs',{project:updated, user:currentUser})
 });
 
-router.get('/grade/remove/:id/:name', async(req, res) => {
+router.get('/grade/remove/:id/:user', async(req, res) => {
 
-    let currentUser = await User.findOne({name: req.params.name});
+    let currentUser = await User.findOne({name: req.params.user});
     let project = await Project.findOne({_id: req.params.id});
     newEval = project.eval.filter((eval)=>{ return eval.teacher!=currentUser.name});
     let updated = await Project.findOneAndUpdate({_id: project.id}, {eval: newEval}, {new: true});
@@ -231,7 +238,7 @@ router.get('/grade/remove/:id/:name', async(req, res) => {
     newGraded = teacher.graded.filter((grade) => { return grade === project._id});
     await User.findOneAndUpdate({name: currentUser.name}, {graded: newGraded}, {new:true});
 
-    res.render('project.ejs',{project:updated, name:currentUser.name, logged:currentUser.logged, role:currentUser.role})
+    res.render('project.ejs',{project:updated, user:currentUser})
 });
 
 

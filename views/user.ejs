@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="/styles/css/style.css">
     <script src="/styles/js/jquery.min.js"></script>
     <script src="/styles/js/jquery-migrate-3.0.1.min.js"></script>
-
+    <% let {name, logged, role } = user %>
     <title><%=name%> - Project Hub</title>
 </head>
 <body>
@@ -84,7 +84,7 @@
             <div class="collapse navbar-collapse filter-nav" id="ftco-nav">
                 <ul class="navbar-nav mr-auto">
                     <li><h1 style="font-size:30px; padding:5px; ">Filters:</h1></li>
-                    <form action="/users/filter/<%=user%>&<%=name%>" method="POST">
+                    <form action="/users/filter/<%=profile.name%>&<%=name%>" method="POST">
                         <li  class="nav-item" style="color:midnightblue; font-size:25px; display:inline; padding-left:30px">
                             <span>By Domain</span>
                             <select name="domain"style="padding:10px">
@@ -152,19 +152,29 @@
             </div>
         </div>
     <% } %>
-    
-    
+
+<h1 style="color: orangered; font-weight: bold; font-family: Georgia; font-size: 60px"><%= profile.name %></h1>
+<span>Department:</span><span style="font-size:30px; color:midnightblue; padding:10px"><%= profile.dept %></span>
+<%  if(user.role=="student"){ %>
+    <span>Year</span><span style="font-size:30px; color:midnightblue; padding:10px"><%= profile.year %></span>
+    <span>Roll No:</span><span style="font-size:30px; color:midnightblue; padding:10px"><%= profile.username %></span>
+<% } %>
+<hr>
+<span>About <%=profile.name%></span><p style="color:black; font-size: 30px"><%=profile.about%></p>
+<% if(name == profile.name){ %>
+    <a href="update/<%=name%>" class="btn btn-primary" style="float: right">Update Profile</a>
+<% } %>
+
 <% if (msg!= ''){ %>
     <label style="background-color: orangered; color:whitesmoke; font-size: 25px" class="px-3 py-3"><%= msg %></label>
-    <% if(logged && role != 'admin'){ %>
-    <hr><a href="/upload" style="font-size: 30px">Create Project</a>
-<% }} %>
-<% if(projects.length>0){ 
-    let {uploader} = projects[0]; %>
-    <h1 style="color: orangered; font-weight: bold; font-family: Georgia; font-size: 60px"><%= user %></h1>
+    <% if(name == profile.name && msg.includes('No Projects')){ %>
+    <br><a href="/upload" style="font-size: 30px">Create Project</a>
+<% }%><hr><%} %>
+
+<% if(projects.length>0){ %>
     <div class="row d-flex align-items-stretch no-gutters">
         <% projects.forEach(function(each){
-            let { uploader} = each
+            let { uploader } = each
             displayer(each, uploader);
         }) %>
     </div>

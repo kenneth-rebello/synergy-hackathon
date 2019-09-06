@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <% let {logged, role, name } = user %>
     <% if (logged) { %>
       <title><%= name %> - Project Hub </title>
     <% } else { %>

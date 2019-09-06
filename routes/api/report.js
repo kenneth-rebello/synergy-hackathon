@@ -7,20 +7,20 @@ const Project = require('../../models/Project');
 router.use(express.json());
 router.use(express.urlencoded({extended: true}));
 
-router.get('/generate/:name', async function (req, res){
+router.get('/generate/:user', async function (req, res){
 
-    let currentUser = await User.findOne({name: req.params.name});
+    let currentUser = await User.findOne({name: req.params.user});
     try {
-        res.render('generate.ejs',{logged:currentUser.logged, role:currentUser.role, name:currentUser.name, msg:''})
+        res.render('generate.ejs',{user:currentUser, msg:''})
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
 });
 
-router.post('/:name', async function(req, res){
+router.post('/:user', async function(req, res){
 
-    let currentUser = await User.findOne({name: req.params.name});
+    let currentUser = await User.findOne({name: req.params.user});
     if(currentUser.role == 'admin'){
         
         let { username, date, domain, dept, year} = req.body;

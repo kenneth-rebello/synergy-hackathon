@@ -25,6 +25,7 @@
     <title><%= project.title %> - Project Hub</title>
 </head>
 <body>
+    <% let {name, logged, role} = user %>
     <div style="background-color: midnightblue">
         <div class="bg-top navbar-light">
                 <div class="container">
@@ -161,7 +162,7 @@
                                 <td><strong>Username: </strong></td><td><%= uploader.username %></td>
                             </tr>
                             <tr>
-                                <td><strong>Name: </strong></td><td><a href="/users/<%=uploader.name%>"><%= uploader.name %></a></td>
+                                <td><strong>Name: </strong></td><td><a href="/users/<%=uploader.name%>&<%=name%>"><%= uploader.name %></a></td>
                             </tr>
                             <tr>
                                 <td><strong>Department:</strong></td><td><%= uploader.dept %></td>

@@ -13,7 +13,11 @@ app.use(express.static('./public'));
 app.set('view engine', ejs);
 
 app.get('/', (req, res) => {
-    return res.render('index.ejs',{logged:false, role:"", name:""});
+    noUser = {}
+    noUser.logged= false;
+    noUser.role ="";
+    noUser.name ="";
+    return res.render('index.ejs',{user:noUser});
 });
 
 app.get('/logged/:user', async (req, res) => {
@@ -21,7 +25,7 @@ app.get('/logged/:user', async (req, res) => {
     token = req.params.user;
     let currentUser = await User.findOne({name:token});
 
-    res.render('index.ejs',{logged:currentUser.logged, role:currentUser.role, name:currentUser.name});
+    res.render('index.ejs',{user: currentUser});
 });
 
 app.use('/upload', require('./routes/api/upload'));

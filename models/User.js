@@ -6,6 +6,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    token:{
+        type: Number
+    },
     name:{
         type:String,
         required: true
@@ -20,6 +23,9 @@ const userSchema = new mongoose.Schema({
     },
     year:{
         type: String,
+    },
+    about:{
+        type:String
     },
     role:{
         type: String,

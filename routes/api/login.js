@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
         
         if(currentUser.role == role){
             currentUser = await User.findOneAndUpdate({_id:currentUser._id},{logged:true},{new:true});
-            res.render('index.ejs',{logged: currentUser.logged, role:currentUser.role, name:currentUser.name});    
+            res.render('index.ejs',{user:currentUser});    
         }else{
             return res.render('login.ejs',{msg:'Not Authorized'});
         } 
